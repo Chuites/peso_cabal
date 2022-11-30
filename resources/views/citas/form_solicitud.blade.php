@@ -62,6 +62,17 @@
                                         {!! Form::text('telefono', '', array_merge(['class' => 'form-control', 'id' => 'telefono'])) !!}
                               </div>
                          </div>
+                         <div class="row">
+                              <div class="col-md-6" >
+                                        {!! Form::label('id_ci_tipo_solicitud', 'Tipo de Solicitud', ['class' => 'control-label requerido', 'id' => 'lb_tipo_solicitud']) !!}
+                                        {!! Form::select('id_ci_tipo_solicitud', @$id_ci_tipo_solicitud, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_solicitud'])) !!} 
+                              </div>
+                              <div class="col-md-6 ">
+                                        
+                              </div>
+                         </div>
+
+                         
   
                         <br>
                     </form>
@@ -97,7 +108,7 @@
         $(".resultados").hide();
 
         $("#btnCita").click(function(){
-          window.location="{{route('solicitud')}}";
+          window.location="{{route('solicitudIndex')}}";
         });
 
     </script>

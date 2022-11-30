@@ -22,7 +22,6 @@
      }
 </style>
 
-
 <div class="container">
     <div class="row">
             <div class="panel panel-default">
@@ -64,7 +63,7 @@
         $(".resultados").hide();
 
         $("#btnCita").click(function(){
-          window.location="{{route('solicitud')}}";
+          window.location="{{route('solicitudIndex')}}";
         });
 
     </script>

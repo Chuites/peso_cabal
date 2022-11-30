@@ -15,10 +15,12 @@
     return view('welcome');
 });*/
 
-Route::get('/', 'citas\citasController@index')->name('index');
-Route::get('solicitud', 'citas\citasController@solicitud')->name('solicitud');
+Route::get('/', 'CitaEscribania\T1SolicitudController@index')->name('index');
+Route::get('solicitud', 'CitaEscribania\T1SolicitudController@solicitudIndex')->name('solicitudIndex');
+
 Route::post('consulta','ConsultaEntidadesController@viewEntidades')->name('viewEntidades');
 Route::post('consulta/lista','ConsultaEntidadesController@listarNombresEntidades')->name('listarNombresEntidades');
+
 
 
 
