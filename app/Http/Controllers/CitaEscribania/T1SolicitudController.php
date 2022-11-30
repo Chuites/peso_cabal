@@ -8,6 +8,8 @@ use Response;
 use DB;
 use View;
 use Validate;
+use App\Models\baseModel;
+
 
 use App\Models\CitaEscribania\T1Solicitud;
 use App\Models\CitaEscribania\T3CatalogoItem;
