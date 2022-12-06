@@ -17,6 +17,8 @@
 
 Route::get('/', 'CitaEscribania\T1SolicitudController@index')->name('index');
 Route::get('solicitud', 'CitaEscribania\T1SolicitudController@solicitudIndex')->name('solicitudIndex');
+Route::post('solicitud/getform', 'CitaEscribania\T1SolicitudController@getForm')->name('getForm');
+
 
 Route::post('consulta','ConsultaEntidadesController@viewEntidades')->name('viewEntidades');
 Route::post('consulta/lista','ConsultaEntidadesController@listarNombresEntidades')->name('listarNombresEntidades');

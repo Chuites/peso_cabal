@@ -28,9 +28,14 @@ class T1SolicitudController extends Controller
 
     public function solicitudIndex()
     {
-        $catalogo =  T3CatalogoItem::where('id_catalogo', config('constantes.ID_C_TIPO_TRAMITE_CITA_LINEA'))->where('esta_activo', true)->pluck('catalogo_item', 'id_catalogo_item');
+        $catalogo =  T3CatalogoItem::where('id_catalogo', config('constantes.ID_C_TIPO_TRAMITE_CITA_LINEA'))->where('esta_activo', true)->pluck('catalogo_item', 'id_catalogo_item')->prepend('Seleccionar opción', '-1');
         $this->pageData['id_ci_tipo_solicitud'] = $catalogo;
         return view('citas.form_solicitud',$this->pageData);
+    }
+
+    public function getForm(request $request){
+        $html = View::make('citas.form_solicitud_protocolo', $this->pageData);
+        return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
     }
 
 }

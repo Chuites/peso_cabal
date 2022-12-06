@@ -71,14 +71,10 @@
                                         
                               </div>
                          </div>
-
-                        
-                         <div class="row" id="dynamicDiv" >
+                         <br>
+                         <div id="dynamicDiv" >
                               abc
                          </div>
-
-                         
-  
                         <br>
                     </form>
                 </div>
@@ -114,6 +110,24 @@
 
         $("#btnCita").click(function(){
           window.location="{{route('solicitudIndex')}}";
+        });
+
+        $("#id_ci_tipo_solicitud").change(function () {
+                    var URL ="{{route('getForm')}}";
+                    var token = '{{ csrf_token() }}';
+                    var data = {id_ci_tipo_solicitud:$(this).val()}//$('#form_ingreso').serialize();
+                    callAjaxBlock(URL,token, data, function (response) {
+                              $.unblockUI();
+                              if (response.status != 200) {
+                              //toastr.error(response.mensaje);  
+                              return false;
+                              }
+                              if (response.status === 200) {
+                                        $("#dynamicDiv").html(response.data.body);
+                              //toastr.success(response.mensaje);  
+
+                              }
+                    });
         });
 
     </script>
