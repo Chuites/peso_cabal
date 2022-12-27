@@ -1,10 +1,11 @@
+<div style="background: #a8bdf7; padding: 5px;">
+
 <hr>
-<h3>Datos de Instrumento Público</h3>
+<h3><strong>Datos de Instrumento Público</strong></h3>
 <div class="row">
-          
           <div class="col-md-6" >
                     {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                    {!! Form::date('fecha', '', array_merge(['class' => 'form-control', 'id' => 'fecha'])) !!}
+                    {!! Form::date('fecha_solicitud', '', array_merge(['class' => 'form-control', 'id' => 'fecha_solicitud'])) !!}
           </div>
           <div class="col-md-6 ">
                     {!! Form::label('Número', 'Número', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
@@ -14,7 +15,7 @@
 <div class="row">
           <div class="col-md-12" >
                     {!! Form::label('Escribano o Camara de Gobierno', 'Escribano o Camara de Gobierno', ['class' => 'control-label requerido', 'id' => 'lb_escribano']) !!}
-                    {!! Form::text('escribano_o_camara', '', array_merge(['class' => 'form-control', 'id' => 'escribano_o_camara'])) !!}
+                    {!! Form::text('escribana_camara', '', array_merge(['class' => 'form-control', 'id' => 'escribana_camara'])) !!}
           </div>
 </div>
 <div class="row">
@@ -57,11 +58,121 @@
           </div>
 </div>
 
+</div>
 
-   
+<hr>
+<h3><strong>Datos de Cita</strong></h3>
+
+ 
+    <center>
+            <a class="btn btn-primary opAgengarCitaProtocolo" href="#"><i class="fa fa-calendar "></i>&nbsp;Agendar cita</a>
+    </center>
+<div class="row">
+    <div class="col-md-6" >
+            {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
+            {!! Form::date('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
+    </div>
+    <div class="col-md-6 ">
+            {!! Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
+            {!! Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])) !!}
+    </div>
+</div>
+<br>
+<div class="row">
+    <center>
+    <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-file-pdf-o"></i>&nbsp;Generar solicitud</a>
+    </center>
+</div>
+
+
+
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalCitaProtocolo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">        
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agendar | <small id="modalSubtitle">Cita</small></h4>
+            </div>
+            <div class="modal-body">
+               
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label', 'id' => 'lb_fecha']) !!}  
+                    {!! Form::date('fecha_modal', false, array_merge(['class' => 'form-control', 'id' => 'fecha_modal'], [])) !!}
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label for="de:" class="control-label" id="lb-de">Hora:</label>
+                        <div class='input-group date' id='tiempoDiv1'>
+                            <input type='text' class="form-control " id="hora_modal" name="hora_modal" placeholder="Hora" value="" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    
+            </div>
+            <div class="modal-footer centrado_vertical">
+                {{ Form::boton('false', 'cancelar', false, false, false, 'data-dismiss="modal"') }}
+                {{ Form::boton('btnAgregar', 'guardar', 'link', false, false, false) }}
+            </div>        
+        </div>
+    </div>
+</div>
+
+<form id="form_view_imp_boleta" method="post" action="" target='_blank'>
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id='token'>
+    <input type="hidden" name="id" id="id">
+</form>
+
+ 
 
 
 <script>
+
+$(document).ready(function(){
+    $('#tiempoDiv1').datetimepicker({
+        format: 'HH:mm',
+    });
+});
+
+
+$("#btnGenerarSolicitud").click(function(e){
+    e.preventDefault();
+    var URL = "{{route('generarSolicitud')}}";
+    var TOKEN = '{{ csrf_token() }}';
+    var DATA = $('#form_consulta').serialize();
+    callAjaxBlock(URL, TOKEN, DATA, function(response){
+        $.unblockUI();
+        if (response.status != 200) {                    
+            toastr.error(response.mensaje);
+            return false;
+        }
+        //alert(response.data.id);
+        $('#id').val(response.data.id);
+        $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
+        $('#form_view_imp_boleta').submit();
+        
+       
+    })
+});
+
+$("#btnAgregar").click(function(e){
+    e.preventDefault();
+    $("#fecha_v").val($("#fecha_modal").val());
+    $("#hora_v").val($("#hora_modal").val());
+    $('#modalCitaProtocolo').modal('hide');
+});
+
+$(".opAgengarCitaProtocolo").click(function(e){
+          e.preventDefault();
+
+          $('#modalCitaProtocolo').modal('show');
+});
+
+
     function Select_Cod(campo,cod_credito,seleccionadas){
 	if(document.getElementById(seleccionadas)!= null){
 		valor_ant = document.getElementById(seleccionadas).value;

@@ -29,7 +29,7 @@
                 <div class="panel-body">
                     <h3>Agendar Cita</h3>
                     <br>
-                    <h3>DATOS SOLICITANTE</h3>
+                    <h3><strong>DATOS SOLICITANTE</strong></h3>
                     <br>
                     <form id="form_consulta">
                          <div class="row">
@@ -45,7 +45,7 @@
                          <div class="row">
                               <div class="col-md-6" >
                                         {!! Form::label('dpi', 'DPI', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                                        {!! Form::text('dpi', '', array_merge(['class' => 'form-control', 'id' => 'dpi'])) !!}
+                                        {!! Form::text('cui', '', array_merge(['class' => 'form-control', 'id' => 'cui'])) !!}
                               </div>
                               <div class="col-md-6 ">
                                         {!! Form::label('Telefono', 'Telefono', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
@@ -54,12 +54,12 @@
                          </div>
                          <div class="row">
                               <div class="col-md-6" >
-                                        {!! Form::label('dpi', 'Correo Electronio', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                                        {!! Form::text('dpi', '', array_merge(['class' => 'form-control', 'id' => 'dpi'])) !!}
+                                        {!! Form::label('email', 'Correo Electronio', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
+                                        {!! Form::text('email', '', array_merge(['class' => 'form-control', 'id' => 'email'])) !!}
                               </div>
                               <div class="col-md-6 ">
-                                        {!! Form::label('notificacion', 'Lugar para recibir notificacion', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
-                                        {!! Form::text('telefono', '', array_merge(['class' => 'form-control', 'id' => 'telefono'])) !!}
+                                        {!! Form::label('lugar_notificacion', 'Lugar para recibir notificacion', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
+                                        {!! Form::text('lugar_notificacion', '', array_merge(['class' => 'form-control', 'id' => 'lugar_notificacion'])) !!}
                               </div>
                          </div>
                          <div class="row">
@@ -73,7 +73,6 @@
                          </div>
                          <br>
                          <div id="dynamicDiv" >
-                              abc
                          </div>
                         <br>
                     </form>
@@ -105,6 +104,10 @@
 {{ Html::script('sources/DataTables-1.10.12/js/dataTables.bootstrap.min.js') }}
 {{ Html::script('js/toastr.js') }}
 {{ Html::style('css/toastr.css') }}
+{{ Html::style('sources/datetimepicker/css/bootstrap-datetimepicker.min.css') }}
+{{ Html::script('sources/datetimepicker/js/moment.js') }}
+{{ Html::script('sources/datetimepicker/js/bootstrap-datetimepicker.min.js') }}
+
     <script type="text/javascript">
         $(".resultados").hide();
 
@@ -129,6 +132,11 @@
                               }
                     });
         });
+
+
+        
+
+        
 
     </script>
 @endsection
