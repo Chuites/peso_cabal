@@ -108,6 +108,11 @@
 {{ Html::script('sources/datetimepicker/js/moment.js') }}
 {{ Html::script('sources/datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 
+{{ Html::style('sources/datepicker/css/bootstrap-datepicker.min.css') }}
+{{ Html::script('sources/datepicker/js/bootstrap-datepicker.min.js') }}
+{{ Html::script('sources/datepicker/locales/bootstrap-datepicker.es.min.js') }}
+
+
     <script type="text/javascript">
         $(".resultados").hide();
 

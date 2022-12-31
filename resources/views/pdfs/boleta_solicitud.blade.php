@@ -163,7 +163,7 @@
     </tr>
     <tr>    
         <td class="gray col-5 tb-td" >Fecha de entrega</td>
-        <td class="col-7 tb-td">{{@$data->fecha_entrega}}</td>       
+        <td class="col-7 tb-td">{{@$fh_entrega}}</td>       
     </tr>
 </table>
 

@@ -70,8 +70,9 @@
 <div class="row">
     <div class="col-md-6" >
             {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-            {!! Form::date('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
-    </div>
+            {!! Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
+    
+        </div>
     <div class="col-md-6 ">
             {!! Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
             {!! Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])) !!}
@@ -97,16 +98,22 @@
                
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                    {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label', 'id' => 'lb_fecha']) !!}  
-                    {!! Form::date('fecha_modal', false, array_merge(['class' => 'form-control', 'id' => 'fecha_modal'], [])) !!}
+                    
+                    <label >Fecha</label>                 
+                    <div class="input-group date" data-align="top" >
+                        <input type="text" class="form-control"  id="fecha_modal"  readonly>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-group">
                         <label for="de:" class="control-label" id="lb-de">Hora:</label>
-                        <div class='input-group date' id='tiempoDiv1'>
-                            <input type='text' class="form-control " id="hora_modal" name="hora_modal" placeholder="Hora" value="" />
+                        <div class='input-group date' data-align="top">
+                            <input type='text' class="form-control " id="hora_modal" name="hora_modal" readonly>
                             <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-time"></span>
+                                <span class="glyphicon glyphicon-time" ></span>
                             </span>
                         </div>
                     </div>
@@ -127,14 +134,34 @@
     <input type="hidden" name="id" id="id">
 </form>
 
+
  
 
 
 <script>
 
+
+
+$('#fecha_modal').datepicker({
+    format: "dd/mm/yyyy",
+    language: "es",
+    autoclose: true,
+    daysOfWeekDisabled: [0,6],
+    daysOfWeekHighlighted: [1,2,3,4,5]
+});
+
+$('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
+
 $(document).ready(function(){
-    $('#tiempoDiv1').datetimepicker({
+    $('#hora_modal').datetimepicker({
         format: 'HH:mm',
+        disabledTimeIntervals: [
+                                    [moment({ h: 00 }), moment({ h: 8 })],
+                                    [moment({ h: 12, m:59 }), moment({ h: 14 })],
+                                    [moment({ h: 18 }), moment({ h: 24 })]
+                                ],
+        ignoreReadonly: true,
+        showClose: true,
     });
 });
 

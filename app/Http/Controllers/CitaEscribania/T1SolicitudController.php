@@ -36,6 +36,18 @@ class T1SolicitudController extends Controller
     }
 
     public function getForm(request $request){
+        $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
+        
+       // $date = date_format(date_create(date('Y-m-d')), 'd/m/Y');
+        //$this->pageData['hoy'] = strtotime($date."+ 2 days");
+
+        //$date = date("d-m-Y");
+        //$mod_date = strtotime(date("d-m-Y")."+ 10 days");
+        //$aa =  date("d-m-Y",strtotime(date("d-m-Y")."+ 10 days"));
+        $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 10 days"));
+        //$this->pageData['hoy'] = date_format(date_create(  ), 'd/m/Y');
+        
+       
         $html = View::make('citas.form_solicitud_protocolo', $this->pageData);
         return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
     }
@@ -145,10 +157,10 @@ class T1SolicitudController extends Controller
 
     public function viewBoletaPDFSolicitud(request $req)
     {
-        
         $obj = T1Solicitud::find($req->id);
         //dd($obj);
         $this->pageData['data'] = $obj;
+        $this->pageDate['fh_entrega'] = date("d/m/Y", strtotime($obj->fecha_entrega)); 
         $view =  \View::make('pdfs.boleta_solicitud',$this->pageData)->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
