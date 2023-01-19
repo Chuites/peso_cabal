@@ -1,8 +1,3 @@
-{{ Html::style('sources/DataTables-1.10.12/css/jquery.dataTables.css') }}
-{{ Html::script('sources/DataTables-1.10.12/js/jquery.dataTables.js') }}
-{{ Html::script('sources/DataTables-1.10.12/js/dataTables.bootstrap.min.js') }}
-{{ Html::script('js/toastr.js') }}
-{{ Html::style('css/toastr.css') }}
 <style>
     .text-center { text-align: center; }
     .text-justify { text-align: justify; }
@@ -21,87 +16,82 @@
     .col-2 {width: 16.66%; }
     .col-1 {width: 8.33%; }
 </style>
-<div style="background: #5a6f9c9c; padding: 5px;">
+<div style="background: #aaaaaa; padding: 5px;">
 
-<hr>
-<h3><strong>Datos de Instrumento Público</strong></h3>
-<div class="row">
-        <div class="col-md-6" >
-                {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                {!! Form::date('fecha_solicitud', '', array_merge(['class' => 'form-control', 'id' => 'fecha_solicitud'])) !!}
+    <hr>
+    <h3><strong>Datos de Consulta de Seccion de Tierras</strong></h3>
+    <div class="row">
+            <div class="col-md-12 ">
+                    {!! Form::label('Expediente', 'Expediente', ['class' => 'control-label requerido', 'id' => 'lb_expediente']) !!}
+                    {!! Form::text('expediente', '', array_merge(['class' => 'form-control', 'id' => 'expediente'])) !!}
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            {!! Form::label('Ingeniero Medidor', 'Ingeniero Medidor', ['class' => 'control-label requerido', 'id' => 'lb_ing_medidor']) !!}
+            {!! Form::text('ing_medidor', '', array_merge(['class' => 'form-control', 'id' => 'ing_medidor'])) !!}
         </div>
         <div class="col-md-6 ">
-                {!! Form::label('Número', 'Número', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
-                {!! Form::text('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])) !!}
+            {!! Form::label('Ingeniero Revisor', 'Ingeniero Revisor', ['class' => 'control-label requerido', 'id' => 'lb_ing_revisor']) !!}
+            {!! Form::text('ing_revisor', '', array_merge(['class' => 'form-control', 'id' => 'ing_revisor'])) !!}
         </div>
-</div>
-<div class="row">
-        <div class="col-md-12" >
-                {!! Form::label('Escribano o Camara de Gobierno', 'Escribano o Camara de Gobierno', ['class' => 'control-label requerido', 'id' => 'lb_escribano']) !!}
-                {!! Form::text('escribana_camara', '', array_merge(['class' => 'form-control', 'id' => 'escribana_camara'])) !!}
+    </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            {!! Form::label('Finca Numero', 'Finca Numero', ['class' => 'control-label requerido', 'id' => 'lb_finca_numero']) !!}
+            {!! Form::text('finca_numero', '', array_merge(['class' => 'form-control', 'id' => 'finca_numero'])) !!}
         </div>
-</div>
-<div class="row">
-        <div class="col-md-12" >
-                {!! Form::label('Objeto del contrato', 'Objeto del contrato', ['class' => 'control-label requerido', 'id' => 'lb_objeto_contrato']) !!}
-                {!! Form::textarea('objeto_contrato', '', array_merge(['class' => 'form-control', 'id' => 'objeto_contrato', 'rows'=>'3'])) !!}
+        <div class="col-md-6 ">
+            {!! Form::label('Diligencia Administrativa', 'Diligencia Administrativa', ['class' => 'control-label requerido', 'id' => 'lb_diligencia_administrativa']) !!}
+            {!! Form::text('diligencia_administrativa', '', array_merge(['class' => 'form-control', 'id' => 'diligencia_administrativa'])) !!}
         </div>
-</div>
-
-{!! Form::label('Seleccione los documentos a solictar:', 'Seleccione los documentos a solictar:', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
-<div class="row">
-    <div class="form-check col-md-6">
-        <input class="form-check-input" type="checkbox" value="copia_simple" id="copia_simple" onClick= "Select_Cod(this,'1','new_cadena')">
-        <label class="lb_copia_simple" for="copia_simple">Copia Simple</label>
     </div>
-    <div class="form-check col-md-6">
-        <input class="form-check-input" type="checkbox" value="copia_legalizada" id="copia_legalizada" onClick= "Select_Cod(this,'2','new_cadena')">
-        <label class="lb_copia_legalizada" for="copia_legalizada">Copia Simple Legalizada</label>
+    <div class="row">
+        <div class="col-md-6 ">
+            {!! Form::label('Opositor', 'Opositor', ['class' => 'control-label requerido', 'id' => 'lb_opositor']) !!}
+            {!! Form::text('opositor', '', array_merge(['class' => 'form-control', 'id' => 'opositor'])) !!}
+        </div>
+        <div class="col-md-6 ">
+            {!! Form::label('Terreno Denominado', 'Terreno Denominado', ['class' => 'control-label requerido', 'id' => 'lb_terreno_denominado']) !!}
+            {!! Form::text('terreno_denominado', '', array_merge(['class' => 'form-control', 'id' => 'terreno_denominado'])) !!}
+        </div>
     </div>
-    {{-- <div class="col-md-6" >
-            {!! Form::label('Copia simple', 'Copia simple', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
-            {{ Form::checkbox(null,null,null, ['id' => 'copia_simple'], array('onClick'=>"Select_Cod(this,'1','new_cadena');")) }}
-    </div> --}}
-    {{-- <div class="col-md-6" >
-            {!! Form::label('Copia simple legalizada', 'Copia simple legalizada', ['class' => 'control-label']) !!}
-            {{ Form::checkbox(null,null,null, array('onClick'=>"Select_Cod(this,'2','new_cadena');")) }}
-    </div> --}}
-</div>
-<div class="row">
-    <div class="col-md-6" >
-            {!! Form::label('Testimonio', 'Testimonio', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
-            {{ Form::checkbox(null,null,null, array('onClick'=>"Select_Cod(this,'3','new_cadena');")) }}
+    <div class="row">
+        <div class="col-md-6 ">
+            {!! Form::label('Jurisdiccion', 'Jurisdiccion', ['class' => 'control-label requerido', 'id' => 'lb_jurisdiccion']) !!}
+            {!! Form::text('jurisdiccion', '', array_merge(['class' => 'form-control', 'id' => 'jurisdiccion'])) !!}
+        </div>
+        <div class="col-md-6 ">
+            {!! Form::label('Departamento', 'Departamento', ['class' => 'control-label requerido', 'id' => 'lb_departamento']) !!}
+            {!! Form::text('departamento', '', array_merge(['class' => 'form-control', 'id' => 'departamento'])) !!}
+        </div>
     </div>
-    <div class="col-md-6" >
-            {!! Form::label('Testimonio con duplicado', 'Testimonio con duplicado', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
-            {{ Form::checkbox(null,null,null, array('onClick'=>"Select_Cod(this,'4','new_cadena');")) }}
-    </div>
-    <input type="hidden" name="new_cadena"  id="new_cadena">
-</div>
+    <br>
 
 </div>
 
 <hr>
 <h3><strong>Datos de Cita</strong></h3>
 
-<center>
-    <a class="btn btn-primary opAgengarCitaProtocolo" href="#"><i class="fa fa-calendar "></i>&nbsp;Agendar cita</a>
-</center>
-INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
+
+    <center>
+            <a class="btn btn-primary opAgengarCitaProtocolo" href="#"><i class="fa fa-calendar "></i>Agendar cita</a>
+    </center>
 <div class="row">
     <div class="col-md-6" >
-        {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-        {!! Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
-    </div>
+            {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
+            {!! Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
+
+        </div>
     <div class="col-md-6 ">
-        {!! Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
-        {!! Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])) !!}
+            {!! Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
+            {!! Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])) !!}
     </div>
 </div>
 <br>
 <div class="row">
     <center>
-    <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-file-pdf-o"></i>&nbsp;Generar solicitud</a>
+    <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-file-pdf-o"></i>Generar solicitud</a>
     </center>
 </div>
 
@@ -114,6 +104,7 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
                 <h4 class="modal-title" id="myModalLabel">Agendar | <small id="modalSubtitle">Cita</small></h4>
             </div>
             <div class="modal-body">
+
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <label >Fecha</label>
@@ -122,7 +113,7 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
-                </div>
+                    </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <label >Hora</label>
@@ -161,20 +152,40 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
                                 <td class="gray tb-td text-center" colspan="2"><strong>DATOS DEL SERVICIO SOLICITADO</strong></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Fecha</td>
-                                <td class="col-7 tb-td" id="tbl_fecha"></td>
+                                <td class="gray col-5 tb-td" >Expediente No.</td>
+                                <td class="col-7 tb-td" id="tbl_expediente"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Numero</td>
-                                <td class="col-7 tb-td" id="tbl_numero"></td>
+                                <td class="gray col-5 tb-td" >Ingeniero Medidor</td>
+                                <td class="col-7 tb-td" id="tbl_ingeniero_medidor"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Escribano de Cámara y de Gobierno</td>
-                                <td class="col-7 tb-td" id="tbl_escribano"></td>
+                                <td class="gray col-5 tb-td" >Ingeniero Revisor</td>
+                                <td class="col-7 tb-td" id="tbl_ingeniero_revisor"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Objeto del contrato</td>
-                                <td class="col-7 tb-td" id="tbl_objeto_contrato"></td>
+                                <td class="gray col-5 tb-td" >Finca Numero</td>
+                                <td class="col-7 tb-td" id="tbl_finca_numero"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Diligencia Administrativa</td>
+                                <td class="col-7 tb-td" id="tbl_diligencia_administrativa"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Opositor</td>
+                                <td class="col-7 tb-td" id="tbl_opositor"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Terreno Denominado</td>
+                                <td class="col-7 tb-td" id="tbl_terreno_denominado"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Jurisdiccion</td>
+                                <td class="col-7 tb-td" id="tbl_jurisdiccion"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Departamento</td>
+                                <td class="col-7 tb-td" id="tbl_departamento"></td>
                             </tr>
                         </table>
                         <br>
@@ -201,28 +212,6 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
                             <tr>
                                 <td class="gray col-5 tb-td" >Correo Electrónico</td>
                                 <td class="col-7 tb-td" id="tbl_correo_electronico"></td>
-                            </tr>
-                        </table>
-                        <br>
-                        <table  width="80%" class="tabla">
-                            <tr>
-                                <td class="gray col-12 tb-td text-center" colspan="2"><strong>DOCUMENTOS SOLICITADOS</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="gray col-5 tb-td" >Copia Simple</td>
-                                <td class="col-7 tb-td" id="tbl_copia"></td>
-                            </tr>
-                            <tr>
-                                <td class="gray col-5 tb-td" >Copia simple legalizada</td>
-                                <td class="col-7 tb-td" id="tbl_copia_legalizada"></td>
-                            </tr>
-                            <tr>
-                                <td class="gray col-5 tb-td" >Testimonio</td>
-                                <td class="col-7 tb-td" id="tbl_testimonio"></td>
-                            </tr>
-                            <tr>
-                                <td class="gray col-5 tb-td" >Testimonio con Duplicado</td>
-                                <td class="col-7 tb-td" id="tbl_testimonio_duplicado"></td>
                             </tr>
                         </table>
                         <br>
@@ -261,9 +250,7 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
     <input type="hidden" name="id" id="id">
 </form>
 
-
 <script>
-    //Parametros para omitir fin de semana
     $('#fecha_modal').datepicker({
         format: "dd/mm/yyyy",
         language: "es",
@@ -272,70 +259,48 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
         daysOfWeekHighlighted: [1,2,3,4,5]
     });
 
-    //Fecha inicial día corriente
     $('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
 
-    //Guarda la solicitud
     $("#btnGenerarSolicitud").click(function(e){
         e.preventDefault();
 
-        //Se asignan los valores al modal
-        $('#tbl_numero').text($('#numero').val());
-        $('#tbl_fecha').text($('#fecha_solicitud').val());
-        $('#tbl_escribano').text($('#escribana_camara').val());
-        $('#tbl_objeto_contrato').text($('#objeto_contrato').val());
+        //Se asignan los valores de la solicitud al modal
+        $('#tbl_expediente').text($('#expediente').val());
+        $('#tbl_ingeniero_medidor').text($('#ing_medidor').val());
+        $('#tbl_ingeniero_revisor').text($('#ing_revisor').val());
+        $('#tbl_finca_numero').text($('#finca_numero').val());
+        $('#tbl_diligencia_administrativa').text($('#diligencia_administrativa').val());
+        $('#tbl_opositor').text($('#opositor').val());
+        $('#tbl_terreno_denominado').text($('#terreno_denominado').val());
+        $('#tbl_jurisdiccion').text($('#jurisdiccion').val());
+        $('#tbl_departamento').text($('#departamento').val());
 
+        //Datos del solicitante
         $('#tbl_nombre_completo').text($('#nombres').val()+" "+$('#apellidos').val());
         $('#tbl_telefono').text($('#telefono').val());
         $('#tbl_direccion_notificacion').text($('#lugar_notificacion').val());
         $('#tbl_correo_electronico').text($('#email').val());
         $('#tbl_cui').text($('#cui').val());
 
+        //Datos de cita
         $('#tbl_fecha_cita').text($('#fecha_v').val());
         $('#tbl_hora_cita').text($('#hora_v').val());
-
-        //Documentos Solicitados
-        if(($("#new_cadena").val()).includes('1')){
-            $('#tbl_copia').text('Sí');
-        }else{$('#tbl_copia').text('No');}
-        if(($("#new_cadena").val()).includes('2')){
-            $('#tbl_copia_legalizada').text('Sí');
-        }else{$('#tbl_copia_legalizada').text('No');}
-        if(($("#new_cadena").val()).includes('3')){
-            $('#tbl_testimonio').text('Sí');
-        }else{$('#tbl_testimonio').text('No');}
-        if(($("#new_cadena").val()).includes('4')){
-            $('#tbl_testimonio_duplicado').text('Sí');
-        }else{$('#tbl_testimonio_duplicado').text('No');}
 
         var URL = "{{route('generarSolicitud')}}";
         var TOKEN = '{{ csrf_token() }}';
         var DATA = $('#form_consulta').serialize();
         callAjaxBlock(URL, TOKEN, DATA, function(response){
             $.unblockUI();
-            if (response.status != 200)
-            {
+            if (response.status != 200) {
                 toastr.error(response.mensaje);
                 return false;
             }
             $('#modalCitaCreada').modal('show');
-            $('#id').val(response.data.id);
             $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
             $('#form_view_imp_boleta').submit();
         })
     });
 
-    //Boton del modal de Cita
-    $("#btnAgregar").click(function(e)
-    {
-        e.preventDefault();
-        $("#fecha_v").val($("#fecha_modal").val());
-        var combo = document.getElementById("id_horario_cita");
-        var selected = combo.options[combo.selectedIndex].text;
-        $("#hora_v").val(selected);
-        $('#modalCitaProtocolo').modal('hide');
-        //alert($("#new_cadena").val());
-    });
 
     //Boton del modal de confirmacion
     $("#btnConfirmar").click(function(e)
@@ -345,13 +310,22 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
         window.location = "/solicitud"
     });
 
-    //Modal de Fecha y Horario de la Cita
-    $(".opAgengarCitaProtocolo").click(function(e){
-        e.preventDefault();
-        $('#modalCitaProtocolo').modal('show');
+    $("#btnAgregar").click(function(e){
+            e.preventDefault();
+            $("#fecha_v").val($("#fecha_modal").val());
+            var combo = document.getElementById("id_horario_cita");
+            var selected = combo.options[combo.selectedIndex].text;
+            $("#hora_v").val(selected);
+            $('#modalCitaProtocolo').modal('hide');
     });
 
-    //Funcion para verificar documentos solicitados
+    $(".opAgengarCitaProtocolo").click(function(e){
+            e.preventDefault();
+
+            $('#modalCitaProtocolo').modal('show');
+    });
+
+
     function Select_Cod(campo,cod_credito,seleccionadas){
         if(document.getElementById(seleccionadas)!= null){
             valor_ant = document.getElementById(seleccionadas).value;
@@ -374,10 +348,8 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
                 document.getElementById(seleccionadas).value = cod_credito;
 
             }
-        }
-        else
-        {
-            alert('No Existe');
+        }else{
+        alert('No Existe');
         }
     }
 </script>

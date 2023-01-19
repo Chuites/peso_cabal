@@ -6,20 +6,20 @@
         content: " *"; color: red;
     }
     #listadoTabla th {
-          background-color: #229954;
-          color: #fff;
-   
-         font-weight: bold;
-     }
+        background-color: #229954;
+        color: #fff;
+
+        font-weight: bold;
+    }
     .listadoTabla th {
-         background-color: #229954;
-         color: #fff;
-     }
-     
+        background-color: #229954;
+        color: #fff;
+    }
+
     .listadoTabla thead {
-         background-color: #229954;
-         color: #fff;
-     }
+        background-color: #229954;
+        color: #fff;
+    }
 </style>
 
 
@@ -32,48 +32,46 @@
                     <h3><strong>DATOS SOLICITANTE</strong></h3>
                     <br>
                     <form id="form_consulta">
-                         <div class="row">
-                              <div class="col-md-6" >
-                                        {!! Form::label('Nombres', 'Nombres', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                                        {!! Form::text('nombres', '', array_merge(['class' => 'form-control', 'id' => 'nombres'])) !!}
-                              </div>
-                              <div class="col-md-6 ">
-                                        {!! Form::label('Apellidos', 'Apellidos', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
-                                        {!! Form::text('apellidos', '', array_merge(['class' => 'form-control', 'id' => 'apellidos'])) !!}
-                              </div>
-                         </div>
-                         <div class="row">
-                              <div class="col-md-6" >
-                                        {!! Form::label('dpi', 'DPI', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                                        {!! Form::text('cui', '', array_merge(['class' => 'form-control', 'id' => 'cui'])) !!}
-                              </div>
-                              <div class="col-md-6 ">
-                                        {!! Form::label('Telefono', 'Telefono', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
-                                        {!! Form::text('telefono', '', array_merge(['class' => 'form-control', 'id' => 'telefono'])) !!}
-                              </div>
-                         </div>
-                         <div class="row">
-                              <div class="col-md-6" >
-                                        {!! Form::label('email', 'Correo Electronio', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                                        {!! Form::text('email', '', array_merge(['class' => 'form-control', 'id' => 'email'])) !!}
-                              </div>
-                              <div class="col-md-6 ">
-                                        {!! Form::label('lugar_notificacion', 'Lugar para recibir notificacion', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
-                                        {!! Form::text('lugar_notificacion', '', array_merge(['class' => 'form-control', 'id' => 'lugar_notificacion'])) !!}
-                              </div>
-                         </div>
-                         <div class="row">
-                              <div class="col-md-6" >
-                                        {!! Form::label('id_ci_tipo_solicitud', 'Tipo de Solicitud', ['class' => 'control-label requerido', 'id' => 'lb_tipo_solicitud']) !!}
-                                        {!! Form::select('id_ci_tipo_solicitud', @$id_ci_tipo_solicitud, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_solicitud'])) !!} 
-                              </div>
-                              <div class="col-md-6 ">
-                                        
-                              </div>
-                         </div>
-                         <br>
-                         <div id="dynamicDiv" >
-                         </div>
+                            <div class="row">
+                                <div class="col-md-6" >
+                                    {!! Form::label('Nombres', 'Nombres', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
+                                    {!! Form::text('nombres', '', array_merge(['class' => 'form-control', 'id' => 'nombres'])) !!}
+                                </div>
+                                <div class="col-md-6 ">
+                                    {!! Form::label('Apellidos', 'Apellidos', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
+                                    {!! Form::text('apellidos', '', array_merge(['class' => 'form-control', 'id' => 'apellidos'])) !!}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" >
+                                    {!! Form::label('dpi', 'DPI', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
+                                    {!! Form::text('cui', '', array_merge(['class' => 'form-control', 'id' => 'cui'])) !!}
+                                </div>
+                                <div class="col-md-6 ">
+                                    {!! Form::label('Telefono', 'Telefono', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
+                                    {!! Form::text('telefono', '', array_merge(['class' => 'form-control', 'id' => 'telefono'])) !!}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" >
+                                    {!! Form::label('email', 'Correo Electronio', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
+                                    {!! Form::text('email', '', array_merge(['class' => 'form-control', 'id' => 'email'])) !!}
+                                </div>
+                                <div class="col-md-6 ">
+                                    {!! Form::label('lugar_notificacion', 'Lugar para recibir notificacion', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
+                                    {!! Form::text('lugar_notificacion', '', array_merge(['class' => 'form-control', 'id' => 'lugar_notificacion'])) !!}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" >
+                                    {!! Form::label('id_ci_tipo_solicitud', 'Tipo de Solicitud', ['class' => 'control-label requerido', 'id' => 'lb_tipo_solicitud']) !!}
+                                    {!! Form::select('id_ci_tipo_solicitud', @$id_ci_tipo_solicitud, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_solicitud'])) !!}
+                                </div>
+
+                            </div>
+                            <br>
+                            <div id="dynamicDiv" >
+                            </div>
                         <br>
                     </form>
                 </div>
@@ -117,31 +115,31 @@
         $(".resultados").hide();
 
         $("#btnCita").click(function(){
-          window.location="{{route('solicitudIndex')}}";
+            window.location="{{route('solicitudIndex')}}";
         });
 
         $("#id_ci_tipo_solicitud").change(function () {
-                    var URL ="{{route('getForm')}}";
-                    var token = '{{ csrf_token() }}';
-                    var data = {id_ci_tipo_solicitud:$(this).val()}//$('#form_ingreso').serialize();
-                    callAjaxBlock(URL,token, data, function (response) {
-                              $.unblockUI();
-                              if (response.status != 200) {
-                              //toastr.error(response.mensaje);  
-                              return false;
-                              }
-                              if (response.status === 200) {
-                                        $("#dynamicDiv").html(response.data.body);
-                              //toastr.success(response.mensaje);  
-
-                              }
-                    });
+            if ($('#id_ci_tipo_solicitud').val() == -1) {
+                toastr.info('Seleccione un tipo de solicitud');
+            }
+            else
+            {
+                var URL ="{{route('getForm')}}";
+                var token = '{{ csrf_token() }}';
+                var data = {id_ci_tipo_solicitud:$(this).val()}//$('#form_ingreso').serialize();
+                callAjaxBlock(URL,token, data, function (response) {
+                    $.unblockUI();
+                    if (response.status != 200) {
+                        //toastr.error(response.mensaje);
+                        return false;
+                    }
+                    if (response.status === 200) {
+                        $("#dynamicDiv").html(response.data.body);
+                        //toastr.success(response.mensaje);
+                    }
+                });
+            }
         });
-
-
-        
-
-        
 
     </script>
 @endsection

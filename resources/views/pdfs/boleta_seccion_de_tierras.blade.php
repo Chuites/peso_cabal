@@ -11,7 +11,7 @@
             <tr>
                 <td>
                     MINISTERIO DE GOBERNACION<br>
-                    ESCRIBANIA CAMARA DE GOBIERNO
+                    SECCION DE TIERRAS
                 </td>
                 <td></td>
                 <td align="right">
@@ -37,7 +37,7 @@
     </center>
 </footer>
 <div id="content">
-    <center><strong>SOLICITUD DE INSTRUMENTO PÚBLICO AUTORIZADO ANTE LA <br>ESCRIBANÍA DE CÁMARA DE GOBIERNO</strong></center>
+    <center><strong>MINISTERIO DE GOBERNACION <br>SECCION DE TIERRAS</strong></center>
 
 <style>
 .tabla {
@@ -68,30 +68,7 @@
 
 
 </style>
-<br>
-<table  width="100%" class="tabla">
-    <tr>
-        <td class="gray tb-td text-center" colspan="2">DATOS DEL SERVICIO SOLICITADO</td>
-    </tr>
-    <tr>
-        <td class="gray tb-td" colspan="2">&nbsp;GUATEMALA {{@$dia}}     DE      {{@$mes}}     DEL   {{@$anio}}   </td>
-    </tr>
-    <tr>
-        <td class="gray col-5 tb-td" >Datos del Instrumento Público</td>
-        <td class="col-7 tb-td">&nbsp;Fecha:&nbsp;   {{@$escritura_publica->fecha}}        Número:&nbsp; {{@$escritura_publica->numero}}</td>
-    </tr>
-    <tr>
-        <td class="gray col-5 tb-td" >Escribano de Cámara y de Gobierno</td>
-        <td class="col-7 tb-td">&nbsp;{{@$escritura_publica->escribano}}</td>
-    </tr>
-    <tr>
-        <td class="gray col-5 tb-td" >Objeto del contrato</td>
-        <td class="col-7 tb-td">&nbsp;{{@$escritura_publica->objeto_contrato}}</td>
-    </tr>
-</table>
 
-
-<br>
 <table  width="100%" class="tabla">
     <tr>
         <td class="gray tb-td text-center" colspan="2">DATOS DEL SOLICITANTE</td>
@@ -121,42 +98,45 @@
 <br>
 <table  width="100%" class="tabla">
     <tr>
-        <td class="gray col-12 tb-td text-center" colspan="2">DOCUMENTOS SOLICITADOS</td>
+        <td class="gray tb-td text-center" colspan="2">DATOS DEL SERVICIO SOLICITADO</td>
     </tr>
     <tr>
-        <td class="gray col-10 tb-td" >Descripción</td>
-        <td class="gray col-2 tb-td">Firma</td>
+        <td class="gray col-5 tb-td" >Expediente No.</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->expediente}}</td>
     </tr>
     <tr>
-        <td class="col-10 tb-td"  style="min-height: 300px;">
-        <ul>
-            @if (str_contains($escritura_publica->documentos, "1"))
-                <li>Copia simple</li>
-            @endif
-            @if (str_contains($escritura_publica->documentos, "2"))
-                <li>Copia simple legalizada</li>
-            @endif
-            @if (str_contains($escritura_publica->documentos, "3"))
-                <li>Testimonio</li>
-            @endif
-            @if (str_contains($escritura_publica->documentos, "4"))
-                <li>Testimonio con duplicado</li>
-            @endif
-        </ul>
-        </td>
-        <td class="col-2 tb-td"></td>
+        <td class="gray col-5 tb-td" >Ingeniero Medidor</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->ingeniero_medidor}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Ingeniero Revisor</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->ingeniero_revisor}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Finca Numero</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->finca_numero}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Diligencia Administrativa</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->diligencia_administrativa}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Opositor</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->opositor}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Terreno Denominado</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->terreno_denominado}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Jurisdiccion</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->jurisdiccion}}</td>
+    </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Departamento</td>
+        <td class="col-7 tb-td">&nbsp;{{@$seccion_de_tierras->departamento}}</td>
     </tr>
 </table>
-
-{{-- <br>
-<table  width="100%" class="tabla">
-    <tr>
-        <td class="gray tb-td text-left" colspan="2">Observaciones</td>
-    </tr>
-    <tr>
-        <td class="gry col-8 " colspan="2">{{@$data->observaciones}}</td>
-    </tr>
-</table> --}}
 
 <br>
 <table  width="100%" class="tabla">
@@ -177,22 +157,6 @@
     </tr>
 </table>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<table  width="100%" >
-    <tr>
-        <td class="col-1 " ></td>
-        <td class="col-4 text-center" style="border-top:1px solid  black;">Firma solicitud</td>
-        <td class="col-1 "></td>
-        <td class="col-1 "></td>
-        <td class="col-4 text-center" style="border-top:1px solid  black;">Firma Responsable de Búsqueda</td>
-        <td class="col-1 "></td>
-    </tr>
-</table>
 
 </div>
 

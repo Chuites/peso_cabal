@@ -6,20 +6,20 @@
         content: " *"; color: red;
     }
     #listadoTabla th {
-          background-color: #229954;
-          color: #fff;
-   
-         font-weight: bold;
-     }
+        background-color: #229954;
+        color: #fff;
+
+        font-weight: bold;
+    }
     .listadoTabla th {
-         background-color: #229954;
-         color: #fff;
-     }
-     
+        background-color: #229954;
+        color: #fff;
+    }
+
     .listadoTabla thead {
-         background-color: #229954;
-         color: #fff;
-     }
+        background-color: #229954;
+        color: #fff;
+    }
 </style>
 
 <div class="container">
@@ -63,7 +63,7 @@
         $(".resultados").hide();
 
         $("#btnCita").click(function(){
-          window.location="{{route('solicitudIndex')}}";
+            window.location="{{route('solicitudIndex')}}";
         });
 
     </script>
