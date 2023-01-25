@@ -17,9 +17,14 @@
     .col-1 {width: 8.33%; }
 </style>
 <div style="background: #793e3e34; padding: 5px;">
-
     <hr>
     <h3><strong>Datos de Consulta de Archivo Historico</strong></h3>
+    <div class="row">
+        <div class="col-md-6">
+            {!! Form::label('id_ci_tipo_consulta', 'Tipo de Consulta', ['class' => 'control-label requerido', 'id' => 'lb_tipo_consulta']) !!}
+            {!! Form::select('id_ci_tipo_consulta', @$id_ci_tipo_consulta, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_consulta'])) !!}
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6" >
             {!! Form::label('Institucion', 'Institucion', ['class' => 'control-label requerido', 'id' => 'lb_institucion']) !!}
@@ -30,7 +35,6 @@
             {!! Form::text('descripcion', '', array_merge(['class' => 'form-control', 'id' => 'descripcion'])) !!}
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-6" >
             {!! Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']) !!}
@@ -41,14 +45,12 @@
             {!! Form::text('signatura', '', array_merge(['class' => 'form-control', 'id' => 'signatura'])) !!}
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12" >
             {!! Form::label('Observaciones', 'Observaciones', ['class' => 'control-label requerido', 'id' => 'lb_observaciones']) !!}
             {!! Form::textarea('observaciones', '', array_merge(['class' => 'form-control', 'id' => 'observaciones', 'rows'=>'3'])) !!}
         </div>
     </div>
-
 </div>
 
     <hr>
@@ -128,6 +130,10 @@
                         <table  width="80%" class="tabla">
                             <tr>
                                 <td class="gray tb-td text-center" colspan="2"><strong>DATOS DEL SERVICIO SOLICITADO</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Tipo de Consulta</td>
+                                <td class="col-7 tb-td" id="tbl_tipo_consulta"></td>
                             </tr>
                             <tr>
                                 <td class="gray col-5 tb-td" >Institucion</td>
@@ -218,7 +224,8 @@
         language: "es",
         autoclose: true,
         daysOfWeekDisabled: [0,6],
-        daysOfWeekHighlighted: [1,2,3,4,5]
+        daysOfWeekHighlighted: [1,2,3,4,5],
+        datesDisabled: @json($disabledDates)
     });
     $('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
 
@@ -239,6 +246,10 @@
         e.preventDefault();
 
         //Se asignan los valores al modal
+        var consulta = document.getElementById("id_ci_tipo_consulta");
+        var opcion = consulta.options[consulta.selectedIndex].text;
+        $('#tbl_tipo_consulta').text(opcion);
+
         $('#tbl_institucion').text($('#institucion').val());
         $('#tbl_descripcion').text($('#descripcion').val());
         $('#tbl_anio').text($('#anio').val());
@@ -270,6 +281,21 @@
             $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
             $('#form_view_imp_boleta').submit();
         })
+    });
+
+    $('#fecha_modal').change(function(){
+        $.get("{{ route('horariosDisponibles')}}",
+        {
+            fecha: $('#fecha_modal').val(),
+            id_tipo_solicitud: $('#id_ci_tipo_solicitud').val()
+        },
+        function(data) {
+            $('#id_horario_cita').empty();
+            $('#id_horario_cita').append("<option value='' selected='selected'>Seleccionar..</option>")
+            $.each(data, function(key, element) {
+                $('#id_horario_cita').append("<option value='" + key +"'>" + element + "</option>");
+            });
+        });
     });
 
     //Boton del modal de confirmacion

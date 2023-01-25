@@ -21,6 +21,7 @@ Route::post('solicitud/getform', 'CitaEscribania\SolicitudController@getForm')->
 Route::post('solicitud/generarSolicitud', 'CitaEscribania\SolicitudController@generarSolicitud')->name('generarSolicitud');
 Route::post('solicitud/viewBoletaPDFSolicitud', 'CitaEscribania\SolicitudController@viewBoletaPDFSolicitud')->name('viewBoletaPDFSolicitud');
 
+Route::get('solicitud/horariosDisponibles', 'CitaEscribania\SolicitudController@horariosDisponibles')->name('horariosDisponibles');
 
 
 Route::post('consulta','ConsultaEntidadesController@viewEntidades')->name('viewEntidades');

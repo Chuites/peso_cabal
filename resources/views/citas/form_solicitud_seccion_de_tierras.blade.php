@@ -256,7 +256,8 @@
         language: "es",
         autoclose: true,
         daysOfWeekDisabled: [0,6],
-        daysOfWeekHighlighted: [1,2,3,4,5]
+        daysOfWeekHighlighted: [1,2,3,4,5],
+        datesDisabled: @json($disabledDates)
     });
 
     $('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
@@ -301,6 +302,21 @@
         })
     });
 
+
+    $('#fecha_modal').change(function(){
+        $.get("{{ route('horariosDisponibles')}}",
+        {
+            fecha: $('#fecha_modal').val(),
+            id_tipo_solicitud: $('#id_ci_tipo_solicitud').val()
+        },
+        function(data) {
+            $('#id_horario_cita').empty();
+            $('#id_horario_cita').append("<option value='' selected='selected'>Seleccionar..</option>")
+            $.each(data, function(key, element) {
+                $('#id_horario_cita').append("<option value='" + key +"'>" + element + "</option>");
+            });
+        });
+    });
 
     //Boton del modal de confirmacion
     $("#btnConfirmar").click(function(e)

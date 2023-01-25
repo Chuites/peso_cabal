@@ -137,34 +137,33 @@
 </form>
 
 <script>
-$('#fecha_modal').datepicker({
-    format: "dd/mm/yyyy",
-    language: "es",
-    autoclose: true,
-    daysOfWeekDisabled: [0,6],
-    daysOfWeekHighlighted: [1,2,3,4,5]
-});
-
-$('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
-
-$(document).ready(function(){
-    $('#hora_modal').datetimepicker({
-        format: 'HH:mm',
-        disabledTimeIntervals: [
-                                    [moment({ h: 00 }), moment({ h: 8 })],
-                                    [moment({ h: 12, m:59 }), moment({ h: 14 })],
-                                    [moment({ h: 18 }), moment({ h: 24 })]
-                                ],
-        ignoreReadonly: true,
-        showClose: true,
+    $('#fecha_modal').datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        autoclose: true,
+        daysOfWeekDisabled: [0,6],
+        daysOfWeekHighlighted: [1,2,3,4,5],
+        datesDisabled: @json($disabledDates)
     });
-});
 
+    $('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
 
-$("#btnGenerarSolicitud").click(function(e){
-    e.preventDefault();
+    $(document).ready(function(){
+        $('#hora_modal').datetimepicker({
+            format: 'HH:mm',
+            disabledTimeIntervals: [
+                [moment({ h: 00 }), moment({ h: 8 })],
+                [moment({ h: 12, m:59 }), moment({ h: 14 })],
+                [moment({ h: 18 }), moment({ h: 24 })]
+            ],
+            ignoreReadonly: true,
+            showClose: true,
+        });
+    });
 
-    $('#tbl_nombre_completo').text($('#nombres').val()+" "+$('#apellidos').val());
+    $("#btnGenerarSolicitud").click(function(e){
+        e.preventDefault();
+        $('#tbl_nombre_completo').text($('#nombres').val()+" "+$('#apellidos').val());
         $('#tbl_telefono').text($('#telefono').val());
         $('#tbl_direccion_notificacion').text($('#lugar_notificacion').val());
         $('#tbl_correo_electronico').text($('#email').val());
@@ -173,73 +172,85 @@ $("#btnGenerarSolicitud").click(function(e){
         $('#tbl_fecha_cita').text($('#fecha_v').val());
         $('#tbl_hora_cita').text($('#hora_v').val());
 
-    var URL = "{{route('generarSolicitud')}}";
-    var TOKEN = '{{ csrf_token() }}';
-    var DATA = $('#form_consulta').serialize();
-    callAjaxBlock(URL, TOKEN, DATA, function(response){
-        $.unblockUI();
-        if (response.status != 200) {
-            toastr.error(response.mensaje);
-            return false;
+        var URL = "{{route('generarSolicitud')}}";
+        var TOKEN = '{{ csrf_token() }}';
+        var DATA = $('#form_consulta').serialize();
+        callAjaxBlock(URL, TOKEN, DATA, function(response){
+            $.unblockUI();
+            if (response.status != 200) {
+                toastr.error(response.mensaje);
+                return false;
+            }
+            $('#modalCitaCreada').modal('show');
+            $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
+            $('#form_view_imp_boleta').submit();
+        })
+    });
+
+    $('#fecha_modal').change(function(){
+        $.get("{{ route('horariosDisponibles')}}",
+        {
+            fecha: $('#fecha_modal').val(),
+            id_tipo_solicitud: $('#id_ci_tipo_solicitud').val()
+        },
+        function(data) {
+            $('#id_horario_cita').empty();
+            $('#id_horario_cita').append("<option value='' selected='selected'>Seleccionar..</option>")
+            $.each(data, function(key, element) {
+                $('#id_horario_cita').append("<option value='" + key +"'>" + element + "</option>");
+            });
+        });
+    });
+
+    //Boton del modal de confirmacion
+    $("#btnConfirmar").click(function(e)
+    {
+        e.preventDefault();
+        $('#modalCitaCreada').modal('hide');
+        window.location = "/solicitud"
+    });
+
+    $("#btnAgregar").click(function(e){
+            e.preventDefault();
+            $("#fecha_v").val($("#fecha_modal").val());
+            var combo = document.getElementById("id_horario_cita");
+            var selected = combo.options[combo.selectedIndex].text;
+            $("#hora_v").val(selected);
+            $('#modalCitaProtocolo').modal('hide');
+    });
+
+    $(".opAgengarCitaProtocolo").click(function(e){
+            e.preventDefault();
+            $('#modalCitaProtocolo').modal('show');
+            document.getElementById("id_horario_cita").readOnly = true;
+    });
+
+        function Select_Cod(campo,cod_credito,seleccionadas){
+        if(document.getElementById(seleccionadas)!= null){
+            valor_ant = document.getElementById(seleccionadas).value;
+            if(valor_ant != ''){
+                if(campo.checked == true){
+                    document.getElementById(seleccionadas).value = document.getElementById(seleccionadas).value+","+cod_credito+"";
+                }else{
+                    var valor_ant = document.getElementById(seleccionadas).value;
+                    document.getElementById(seleccionadas).value=document.getElementById(seleccionadas).value.replace(","+cod_credito,"");
+                    var valor_post = document.getElementById(seleccionadas).value;
+                    if(valor_ant==valor_post){
+                        document.getElementById(seleccionadas).value=document.getElementById(seleccionadas).value.replace(cod_credito+",","");
+                        valor_post = document.getElementById(seleccionadas).value;
+                        if(valor_ant==valor_post){
+                            document.getElementById(seleccionadas).value=document.getElementById(seleccionadas).value.replace(cod_credito,"");
+                        }
+                    }
+                }
+            }else{
+                document.getElementById(seleccionadas).value = cod_credito;
+            }
+        }else{
+        alert('No Existe');
         }
-        $('#modalCitaCreada').modal('show');
-        $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
-        $('#form_view_imp_boleta').submit();
-    })
-});
-
-//Boton del modal de confirmacion
-$("#btnConfirmar").click(function(e)
-{
-    e.preventDefault();
-    $('#modalCitaCreada').modal('hide');
-    window.location = "/solicitud"
-});
-
-$("#btnAgregar").click(function(e){
-        e.preventDefault();
-        $("#fecha_v").val($("#fecha_modal").val());
-        var combo = document.getElementById("id_horario_cita");
-        var selected = combo.options[combo.selectedIndex].text;
-        //alert(selected);
-        $("#hora_v").val(selected);
-        $('#modalCitaProtocolo').modal('hide');
-});
-
-$(".opAgengarCitaProtocolo").click(function(e){
-        e.preventDefault();
-        $('#modalCitaProtocolo').modal('show');
-});
-
-
-    function Select_Cod(campo,cod_credito,seleccionadas){
-	if(document.getElementById(seleccionadas)!= null){
-		valor_ant = document.getElementById(seleccionadas).value;
-		if(valor_ant != ''){
-			if(campo.checked == true){
-				document.getElementById(seleccionadas).value = document.getElementById(seleccionadas).value+","+cod_credito+"";
-			}else{
-				var valor_ant = document.getElementById(seleccionadas).value;
-				document.getElementById(seleccionadas).value=document.getElementById(seleccionadas).value.replace(","+cod_credito,"");
-				var valor_post = document.getElementById(seleccionadas).value;
-				if(valor_ant==valor_post){
-					document.getElementById(seleccionadas).value=document.getElementById(seleccionadas).value.replace(cod_credito+",","");
-					valor_post = document.getElementById(seleccionadas).value;
-					if(valor_ant==valor_post){
-						document.getElementById(seleccionadas).value=document.getElementById(seleccionadas).value.replace(cod_credito,"");
-					}
-				}
-			}
-		}else{
-			document.getElementById(seleccionadas).value = cod_credito;
-
-		}
-	}else{
-	alert('No Existe');
-	}
-}
-
-    </script>
+    }
+</script>
 
 
 

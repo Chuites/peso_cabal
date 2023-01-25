@@ -50,22 +50,22 @@
 
 {!! Form::label('Seleccione los documentos a solictar:', 'Seleccione los documentos a solictar:', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
 <div class="row">
-    <div class="form-check col-md-6">
+    {{-- <div class="form-check col-md-6">
         <input class="form-check-input" type="checkbox" value="copia_simple" id="copia_simple" onClick= "Select_Cod(this,'1','new_cadena')">
         <label class="lb_copia_simple" for="copia_simple">Copia Simple</label>
     </div>
     <div class="form-check col-md-6">
         <input class="form-check-input" type="checkbox" value="copia_legalizada" id="copia_legalizada" onClick= "Select_Cod(this,'2','new_cadena')">
         <label class="lb_copia_legalizada" for="copia_legalizada">Copia Simple Legalizada</label>
-    </div>
-    {{-- <div class="col-md-6" >
-            {!! Form::label('Copia simple', 'Copia simple', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
-            {{ Form::checkbox(null,null,null, ['id' => 'copia_simple'], array('onClick'=>"Select_Cod(this,'1','new_cadena');")) }}
     </div> --}}
-    {{-- <div class="col-md-6" >
+    <div class="col-md-6" >
+            {!! Form::label('Copia simple', 'Copia simple', ['class' => 'control-label ', 'id' => 'lb_objeto_contrato']) !!}
+            {{ Form::checkbox(null,null,null, array('onClick'=>"Select_Cod(this,'1','new_cadena');")) }}
+    </div>
+    <div class="col-md-6" >
             {!! Form::label('Copia simple legalizada', 'Copia simple legalizada', ['class' => 'control-label']) !!}
             {{ Form::checkbox(null,null,null, array('onClick'=>"Select_Cod(this,'2','new_cadena');")) }}
-    </div> --}}
+    </div>
 </div>
 <div class="row">
     <div class="col-md-6" >
@@ -87,7 +87,7 @@
 <center>
     <a class="btn btn-primary opAgengarCitaProtocolo" href="#"><i class="fa fa-calendar "></i>&nbsp;Agendar cita</a>
 </center>
-INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
+
 <div class="row">
     <div class="col-md-6" >
         {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
@@ -269,7 +269,8 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
         language: "es",
         autoclose: true,
         daysOfWeekDisabled: [0,6],
-        daysOfWeekHighlighted: [1,2,3,4,5]
+        daysOfWeekHighlighted: [1,2,3,4,5],
+        datesDisabled: @json($disabledDates)
     });
 
     //Fecha inicial día corriente
@@ -323,6 +324,21 @@ INPUT BLOQUEADOS QUE MUESTRAN INFORMACION DE
             $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
             $('#form_view_imp_boleta').submit();
         })
+    });
+
+    $('#fecha_modal').change(function(){
+        $.get("{{ route('horariosDisponibles')}}",
+        {
+            fecha: $('#fecha_modal').val(),
+            id_tipo_solicitud: $('#id_ci_tipo_solicitud').val()
+        },
+        function(data) {
+            $('#id_horario_cita').empty();
+            $('#id_horario_cita').append("<option value='' selected='selected'>Seleccionar..</option>")
+            $.each(data, function(key, element) {
+                $('#id_horario_cita').append("<option value='" + key +"'>" + element + "</option>");
+            });
+        });
     });
 
     //Boton del modal de Cita

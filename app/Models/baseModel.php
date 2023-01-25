@@ -11,7 +11,7 @@ use Validator;
 
 class baseModel extends Model
 {
-    
+
     /**
      * [usuarioModifica coloca el usuario que ha modificado o insertado en la BD]
      * @autor rgiron 14-06-2016
@@ -37,7 +37,7 @@ class baseModel extends Model
      * @param  array   $errors  [data if was error]
      * @return [type]           [response]
      * @autor Carlos Corzantes [carlos.corzantes@gmail.com]
-     */    
+     */
 	static function sysResponse($status = 400, $message = '', $data = [], $errors = [])
     {
         if ($status === false || $status == '') {
@@ -45,7 +45,7 @@ class baseModel extends Model
         } else if ($status === true) {
             $status = 200;
         }
-        
+
         $message = ($message === false || $message == '')? '' : $message;
         $data = ($data === false || $data == '')? [] : $data;
         $errors = ($errors === false || $errors == '')? [] : $errors;
@@ -54,7 +54,7 @@ class baseModel extends Model
         $sysResponse->status = $status;
         $sysResponse->mensaje = $message;
         $sysResponse->data = $data;
-        $sysResponse->responseJSON = $errors;        
+        $sysResponse->responseJSON = $errors;
         return $sysResponse;
     }
     /**
@@ -62,7 +62,7 @@ class baseModel extends Model
  * @param  [string] $s [Texto enviado]
  * @return [string] $s [Texto sin tildes en las vocales]
  */
-    static function quitarTildes($string) {      
+    static function quitarTildes($string) {
         //Reemplazamos caracteres especiales latinos
         $find = array('á','é','í','ó','ú','â','ê','î','ô','û','ã','õ','ç');
         $repl = array('a','e','i','o','u','a','e','i','o','u','a','o','c');
@@ -70,16 +70,16 @@ class baseModel extends Model
         //Reemplazamos tildes
         $find = array('á','é','í','ó','ú', 'Á','É','Í','Ó','Ú');
         $repl = array('a','e','i','o','u', 'A','E','I','O','U');
-        $string = str_replace($find, $repl, $string); 
-        return $string;        
+        $string = str_replace($find, $repl, $string);
+        return $string;
     }
 
-    static function getLetrasyNumeros($texto = '') 
+    static function getLetrasyNumeros($texto = '')
     {
         $instancia = new static;
 
         if ($texto == '') {
-            return $texto;        
+            return $texto;
         }
 
         //quito tildes
@@ -89,8 +89,8 @@ class baseModel extends Model
         return $newText;
     }
 
-    static function dbDate($fecha = '', $formatoIngles = true, $simbolo = '-') 
-    {        
+    static function dbDate($fecha = '', $formatoIngles = true, $simbolo = '-')
+    {
         if ($fecha == '') {
             return null;
         }
@@ -99,11 +99,11 @@ class baseModel extends Model
 
         $v = Validator::make(['fecha' => $fecha], ['fecha' => 'date']);
 
-        if ($v->fails()) {            
+        if ($v->fails()) {
             return null;
         } else {
             if ($formatoIngles) {
-                $fecha = date_format(date_create($fecha),'Y-m-d'); 
+                $fecha = date_format(date_create($fecha),'Y-m-d');
             } else {
                 $fecha = date_format(date_create($fecha),'d-m-Y');
             }
@@ -132,13 +132,13 @@ class baseModel extends Model
 
     /**
      * getFormatoDPI
-     * convierte string de documento de identifiacion a su formato ingresado 
+     * convierte string de documento de identifiacion a su formato ingresado
      *
      * @param [type] $documentoIdentidicacion
      * @return void
      */
     static function getFormatoDocumentoIdentificacion($documentoIdentidicacion, $cantidadDigitos, $formato)
-    {   
+    {
         if ($documentoIdentidicacion == '') {
             return $documentoIdentidicacion;
         }
@@ -148,16 +148,16 @@ class baseModel extends Model
         if (count($arrTexto) != $cantidadDigitos) {
             return $documentoIdentidicacion;
         }
-        
+
         $texto    = '';
         $iInicio  = 0;
         $iFin     = 0;
         $arrFormato  = explode(',', $formato);
         foreach ($arrFormato as $item) {
             $iFin += $item;
-            for ($i=$iInicio; $i < $iFin; $i++) { 
+            for ($i=$iInicio; $i < $iFin; $i++) {
                 $texto .= $arrTexto[$i];
-            } 
+            }
             $texto .= ' ';
             $iInicio = $iFin;
         }

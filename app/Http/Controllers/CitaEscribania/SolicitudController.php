@@ -53,12 +53,71 @@ class SolicitudController extends Controller
         $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 10 days"));
 
         if ($request->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA')) {
+            $numero = 10;
+            $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
+            $fechasDeshabilitadas = [];
+
+            for ($i=0; $i <= 30; $i++) {
+                //numero a sumar a la fecha
+                $numero = $numero + 1;
+                //Suma de días a la fecha a evaular
+                $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ " . $numero . " days"));
+                //Se formatea la fecha a evaluar
+                $fecha_inicial = date_format(date_create($fecha_inicial), 'd/m/Y');
+
+                //Consulta los horarios que ya han sido utilizados en fecha $fecha_inicial
+                $consulta_horarios = Cita::select('id_horario')
+                    ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+                    ->whereDate('fecha', $fecha_inicial)
+                    ->where('id_tipo_solicitud', config('constantes.ID_CI_ESCRITURA_PUBLICA'))
+                    ->pluck('id_horario')
+                    ->toArray();
+                $consulta_horarios;
+
+                $count = count($consulta_horarios);
+                //Todos los horarios han sido utilizados
+                if($count >= 7){
+                    //fecha se agrega a arreglo de bloqueadas
+                    array_push($fechasDeshabilitadas, $fecha_inicial);
+                }
+            }
+
+            $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_solicitud_protocolo', $this->pageData);
             return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
         }
 
         elseif ($request->id_ci_tipo_solicitud == config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
         {
+            $numero = 10;
+            $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
+            $fechasDeshabilitadas = [];
+
+            for ($i=0; $i <= 30; $i++) {
+                //numero a sumar a la fecha
+                $numero = $numero + 1;
+                //Suma de días a la fecha a evaular
+                $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ " . $numero . " days"));
+                //Se formatea la fecha a evaluar
+                $fecha_inicial = date_format(date_create($fecha_inicial), 'd/m/Y');
+
+                //Consulta los horarios que ya han sido utilizados en fecha $fecha_inicial
+                $consulta_horarios = Cita::select('id_horario')
+                    ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+                    ->whereDate('fecha', $fecha_inicial)
+                    ->where('id_tipo_solicitud', config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
+                    ->pluck('id_horario')
+                    ->toArray();
+                $consulta_horarios;
+
+                $count = count($consulta_horarios);
+
+                if($count >= 7){
+                    array_push($fechasDeshabilitadas, $fecha_inicial);
+                }
+            }
+
+            $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_consulta_protocolo', $this->pageData);
             return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
 
@@ -66,16 +125,129 @@ class SolicitudController extends Controller
 
         elseif ($request->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))
         {
+            $numero = 10;
+            $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
+            $fechasDeshabilitadas = [];
+
+            for ($i=0; $i <= 30; $i++) {
+                //numero a sumar a la fecha
+                $numero = $numero + 1;
+                //Suma de días a la fecha a evaular
+                $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ " . $numero . " days"));
+                //Se formatea la fecha a evaluar
+                $fecha_inicial = date_format(date_create($fecha_inicial), 'd/m/Y');
+
+                //Consulta los horarios que ya han sido utilizados en fecha $fecha_inicial
+                $consulta_horarios = Cita::select('id_horario')
+                    ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+                    ->whereDate('fecha', $fecha_inicial)
+                    ->where('id_tipo_solicitud', config('constantes.ID_CI_SECCION_DE_TIERRAS'))
+                    ->pluck('id_horario')
+                    ->toArray();
+                $consulta_horarios;
+
+                $count = count($consulta_horarios);
+
+                if($count >= 7){
+                    array_push($fechasDeshabilitadas, $fecha_inicial);
+                }
+            }
+
+            $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_solicitud_seccion_de_tierras', $this->pageData);
             return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
         }
 
         elseif ($request->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))
         {
+            $numero = 10;
+            $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
+            $fechasDeshabilitadas = [];
+
+            for ($i=0; $i <= 30; $i++) {
+                //numero a sumar a la fecha
+                $numero = $numero + 1;
+                //Suma de días a la fecha a evaular
+                $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ " . $numero . " days"));
+                //Se formatea la fecha a evaluar
+                $fecha_inicial = date_format(date_create($fecha_inicial), 'd/m/Y');
+
+                //Consulta los horarios que ya han sido utilizados en fecha $fecha_inicial
+                $consulta_horarios = Cita::select('id_horario')
+                    ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+                    ->whereDate('fecha', $fecha_inicial)
+                    ->where('id_tipo_solicitud', config('constantes.ID_CI_ARCHIVO_HISTORICO'))
+                    ->pluck('id_horario')
+                    ->toArray();
+                $consulta_horarios;
+
+                $count = count($consulta_horarios);
+
+                if($count >= 7){
+                    array_push($fechasDeshabilitadas, $fecha_inicial);
+                }
+            }
+            $this->pageData['disabledDates'] = $fechasDeshabilitadas;
+            //Se consulta los tipos de solicitud desde el catalogo
+            $consulta =  CatalogoItem::where('id_catalogo', config('constantes.ID_C_TIPO_CONSULTA'))->where('esta_activo', true)->pluck('catalogo_item', 'id_catalogo_item')->prepend('Seleccionar opción', '-1');
+            $this->pageData['id_ci_tipo_consulta'] = $consulta;
+
             $html = View::make('citas.form_solicitud_archivo_historico', $this->pageData);
             return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
         }
     }
+
+    public function horariosDisponibles(request $request)
+    {
+        $fecha = $request->input('fecha');
+        $id_tipo_solicitud = $request->input('id_tipo_solicitud');
+
+        //$fecha = base64_decode($fecha);
+
+        //Verifica tipo de solicitud y acorde a esto valida disponibilidad de horarios para mostrar al usuario
+        if($id_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))
+        {
+            $horarios_utlizados = Cita::select('id_horario')
+            ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+            ->whereDate('fecha', $fecha)
+            ->where('id_tipo_solicitud', config('constantes.ID_CI_ESCRITURA_PUBLICA'))
+            ->pluck('id_horario')
+            ->toArray();
+        }elseif($id_tipo_solicitud == config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
+        {
+            $horarios_utlizados = Cita::select('id_horario')
+            ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+            ->whereDate('fecha', $fecha)
+            ->where('id_tipo_solicitud', config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
+            ->pluck('id_horario')
+            ->toArray();
+        }elseif($id_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))
+        {
+            $horarios_utlizados = Cita::select('id_horario')
+            ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+            ->whereDate('fecha', $fecha)
+            ->where('id_tipo_solicitud', config('constantes.ID_CI_SECCION_DE_TIERRAS'))
+            ->pluck('id_horario')
+            ->toArray();
+        }elseif($id_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))
+        {
+            $horarios_utlizados = Cita::select('id_horario')
+            ->join('cita_escribania.solicitud', 'solicitud.id_cita', '=', 'cita.id_cita')
+            ->whereDate('fecha', $fecha)
+            ->where('id_tipo_solicitud', config('constantes.ID_CI_ARCHIVO_HISTORICO'))
+            ->pluck('id_horario')
+            ->toArray();
+        }
+
+        $horarios_disponibles = CatalogoItem::select()
+            ->where('id_catalogo', config('constantes.ID_HORARIO_CITAS'))
+            ->whereNotIn('id_catalogo_item', $horarios_utlizados)
+            ->pluck('catalogo_item', 'id_catalogo_item');
+
+        $data = $horarios_disponibles;
+        return Response::json($data);
+    }
+
 
     public function generarSolicitud(request $req)
     {
@@ -123,6 +295,7 @@ class SolicitudController extends Controller
         try {
             baseModel::usuarioModifica();
             baseModel::ipUsuario();
+
             $obj_plfi = new Solicitante();
             $obj_plfi = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $obj_plfi->find($req->id_solicitud) : $obj_plfi;
             $obj_plfi->cui = $req->cui;
@@ -130,6 +303,7 @@ class SolicitudController extends Controller
             $obj_plfi->telefono = $req->telefono;
             $obj_plfi->direccion_notificacion = $req->lugar_notificacion;
             $obj_plfi->correo_electronico = $req->email;
+            $obj_plfi->usuario_ingreso = $req->cui;
 
             if ($obj_plfi->save()) {
                 DB::commit();
@@ -151,16 +325,17 @@ class SolicitudController extends Controller
         {
             DB::beginTransaction();
             try {
-                //baseModel::usuarioModifica();
-                //baseModel::ipUsuario();
+                baseModel::usuarioModifica();
+                baseModel::ipUsuario();
                 $archivo_historico = new ArchivoHistorico();
                 //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
-                $archivo_historico->tipo_solicitud = $req->tipo_solicitud;
+                $archivo_historico->id_tipo_consulta = $req->id_ci_tipo_consulta;
                 $archivo_historico->institucion = $req->institucion;
                 $archivo_historico->descripcion = $req->descripcion;
                 $archivo_historico->anio = $req->anio;
                 $archivo_historico->signatura = $req->signatura;
                 $archivo_historico->observaciones = $req->observaciones;
+                $archivo_historico->usuario_ingreso = $req->cui;
 
                 if ($archivo_historico->save()) {
                     $this->crearCita($req);
@@ -180,8 +355,8 @@ class SolicitudController extends Controller
         {
             DB::beginTransaction();
             try {
-                //baseModel::usuarioModifica();
-                //baseModel::ipUsuario();
+                baseModel::usuarioModifica();
+                baseModel::ipUsuario();
                 $seccion_de_tierras = new SeccionDeTierras();
                 //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
                 $seccion_de_tierras->expediente = $req->expediente;
@@ -193,6 +368,7 @@ class SolicitudController extends Controller
                 $seccion_de_tierras->terreno_denominado = $req->terreno_denominado;
                 $seccion_de_tierras->jurisdiccion = $req->jurisdiccion;
                 $seccion_de_tierras->departamento = $req->departamento;
+                $seccion_de_tierras->usuario_ingreso = $req->cui;
 
                 if ($seccion_de_tierras->save()) {
                     $this->crearCita($req);
@@ -225,8 +401,8 @@ class SolicitudController extends Controller
         {
             DB::beginTransaction();
             try {
-                //baseModel::usuarioModifica();
-                //baseModel::ipUsuario();
+                baseModel::usuarioModifica();
+                baseModel::ipUsuario();
                 $escritura_publica = new EscrituraPublica();
                 //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
                 $escritura_publica->fecha = $req->fecha_solicitud;
@@ -234,6 +410,7 @@ class SolicitudController extends Controller
                 $escritura_publica->escribano = $req->escribana_camara;
                 $escritura_publica->objeto_contrato = $req->objeto_contrato;
                 $escritura_publica->documentos = $req->new_cadena;
+                $escritura_publica->usuario_ingreso = $req->cui;
 
                 if ($escritura_publica->save()) {
                     DB::commit();
@@ -255,8 +432,8 @@ class SolicitudController extends Controller
     {
         DB::beginTransaction();
         try {
-            //baseModel::usuarioModifica();
-            //baseModel::ipUsuario();
+            baseModel::usuarioModifica();
+            baseModel::ipUsuario();
             $cita = new Cita();
 
             //Obtengo el ultimo id_solicitante
@@ -264,6 +441,7 @@ class SolicitudController extends Controller
             $cita->id_horario = $req->id_horario_cita;
             $cita->id_solicitante = intval($last_id_solicitante[0]->max);
             $cita->fecha = date($req->fecha_v);
+            $cita->usuario_ingreso = $req->cui;
 
             //logger($req->fecha_v . ' ' . gettype($req->fecha_v) . ' ' . date($req->fecha_v));
 
@@ -283,13 +461,14 @@ class SolicitudController extends Controller
     {
         DB::beginTransaction();
         try {
-            //baseModel::usuarioModifica();
-            //baseModel::ipUsuario();
+            baseModel::usuarioModifica();
+            baseModel::ipUsuario();
             $solicitud = new Solicitud();
             //Obtengo el ultimo id_cita
             $last_id_cita = Cita::selectRaw('MAX(id_cita)')->get();
             $solicitud->id_cita = intval($last_id_cita[0]->max);
             $solicitud->fecha_recepcion = date("Y-m-d");
+            $solicitud->usuario_ingreso = $req->cui;
 
             //Escritura Publica
             if ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))
