@@ -45,11 +45,11 @@
                             <div class="row">
                                 <div class="col-md-6" >
                                     {!! Form::label('dpi', 'DPI', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-                                    {!! Form::text('cui', '', array_merge(['class' => 'form-control', 'id' => 'cui'])) !!}
+                                    {!! Form::number('cui', '', array_merge(['class' => 'form-control', 'id' => 'cui'])) !!}
                                 </div>
                                 <div class="col-md-6 ">
                                     {!! Form::label('Telefono', 'Telefono', ['class' => 'control-label requerido', 'id' => 'lb_apellidos']) !!}
-                                    {!! Form::text('telefono', '', array_merge(['class' => 'form-control', 'id' => 'telefono'])) !!}
+                                    {!! Form::number('telefono', '', array_merge(['class' => 'form-control', 'id' => 'telefono'])) !!}
                                 </div>
                             </div>
                             <div class="row">
@@ -104,13 +104,31 @@
 {{ Html::style('sources/datetimepicker/css/bootstrap-datetimepicker.min.css') }}
 {{ Html::script('sources/datetimepicker/js/moment.js') }}
 {{ Html::script('sources/datetimepicker/js/bootstrap-datetimepicker.min.js') }}
-
+{!!Html::style('sources/font-awesome-4.6.3/css/font-awesome.min.css')!!}
 {{ Html::style('sources/datepicker/css/bootstrap-datepicker.min.css') }}
 {{ Html::script('sources/datepicker/js/bootstrap-datepicker.min.js') }}
 {{ Html::script('sources/datepicker/locales/bootstrap-datepicker.es.min.js') }}
 
 
     <script type="text/javascript">
+        document.getElementById('cui').addEventListener('keyup', function(e) {
+            var value = $('#cui').val().length;
+            if (value > 13)
+            {
+                document.getElementById('cui').value = " ";
+                toastr.error("DPI no puede ser mayor de 13 digitos");
+            }
+        });
+
+        document.getElementById('telefono').addEventListener('keyup', function(e) {
+            var value = $('#telefono').val().length;
+            if (value > 8)
+            {
+                document.getElementById('telefono').value = " ";
+                toastr.error("Telefono no puede ser mayor de 8 digitos");
+            }
+        });
+
         $(".resultados").hide();
 
         $("#btnCita").click(function(){

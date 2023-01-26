@@ -101,7 +101,7 @@
 <br>
 <div class="row">
     <center>
-    <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-file-pdf-o"></i>&nbsp;Generar solicitud</a>
+    <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-save"></i>&nbsp;Generar solicitud</a>
     </center>
 </div>
 
@@ -137,8 +137,11 @@
 
             </div>
             <div class="modal-footer centrado_vertical">
-                {{ Form::boton('false', 'cancelar', false, false, false, 'data-dismiss="modal"') }}
-                {{ Form::boton('btnAgregar', 'guardar', 'link', false, false, false) }}
+                <div class="pull-right">
+                    <a id="btnCerrar" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Cancelar</a>
+                    &nbsp;
+                    <a href="#" id="btnAgregar" class="btn btn-success"><i class="fa fa-floppy-o"></i>&nbsp;Guardar</a>
+                </div>
             </div>
         </div>
     </div>
@@ -359,6 +362,12 @@
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
         window.location = "/solicitud"
+    });
+
+    $("#btnCerrar").click(function(e)
+    {
+        e.preventDefault();
+        $('#modalCitaProtocolo').modal('hide');
     });
 
     //Modal de Fecha y Horario de la Cita

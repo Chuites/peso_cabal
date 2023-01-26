@@ -49,8 +49,6 @@ class SolicitudController extends Controller
     {
         $catalogo_horario = CatalogoItem::where('id_catalogo', config('constantes.ID_HORARIO_CITAS'))->where('esta_activo', true)->pluck('catalogo_item', 'id_catalogo_item')->prepend('Seleccionar opción', '-1');
         $this->pageData['id_horario_cita'] = $catalogo_horario;
-        $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
-        $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 10 days"));
 
         if ($request->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA')) {
             $numero = 10;
@@ -81,6 +79,9 @@ class SolicitudController extends Controller
                     array_push($fechasDeshabilitadas, $fecha_inicial);
                 }
             }
+            //Fecha minima para crear la cita
+            $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
+            $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 10 days"));
 
             $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_solicitud_protocolo', $this->pageData);
@@ -117,6 +118,10 @@ class SolicitudController extends Controller
                 }
             }
 
+            //Fecha minima la del día corriente
+            $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
+            $this->pageData['hoy'] = date("d-m-Y");
+
             $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_consulta_protocolo', $this->pageData);
             return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
@@ -152,6 +157,10 @@ class SolicitudController extends Controller
                     array_push($fechasDeshabilitadas, $fecha_inicial);
                 }
             }
+
+            //Fecha minima para crear la cita
+            $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
+            $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 30 days"));
 
             $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_solicitud_seccion_de_tierras', $this->pageData);
@@ -191,6 +200,10 @@ class SolicitudController extends Controller
             //Se consulta los tipos de solicitud desde el catalogo
             $consulta =  CatalogoItem::where('id_catalogo', config('constantes.ID_C_TIPO_CONSULTA'))->where('esta_activo', true)->pluck('catalogo_item', 'id_catalogo_item')->prepend('Seleccionar opción', '-1');
             $this->pageData['id_ci_tipo_consulta'] = $consulta;
+
+            //Fecha minima para crear la cita
+            $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
+            $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 30 days"));
 
             $html = View::make('citas.form_solicitud_archivo_historico', $this->pageData);
             return Response::json(baseModel::sysResponse(200,false,['body' => $html->render()]));
@@ -260,7 +273,7 @@ class SolicitudController extends Controller
             'email' => 'required',
             'lugar_notificacion' => 'required',
             'fecha_v' => 'required',
-            'hora_v' => 'required',
+            'id_horario_cita' => 'required',
             /*'fecha_solicitud' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
             'numero' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
             'escribana_camara' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
