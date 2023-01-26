@@ -35,22 +35,6 @@
             </div>
     </div>
 </div>
-
-<div class="container resultados" style="hide">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading" style= " background: #00AAE4; color: #fff;}}) #E5E5E5 ; color: #fff;">
-                    <!--Ingresar al portal-->
-                    <strong>Resultados</strong>
-                </div>
-                <div class="panel-body">
-                    <div class="resultadosTable"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('javascript')
@@ -60,8 +44,6 @@
 {{ Html::script('js/toastr.js') }}
 {{ Html::style('css/toastr.css') }}
     <script type="text/javascript">
-        $(".resultados").hide();
-
         $("#btnCita").click(function(){
             window.location="{{route('solicitudIndex')}}";
         });

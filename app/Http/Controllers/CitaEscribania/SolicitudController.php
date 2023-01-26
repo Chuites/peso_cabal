@@ -274,12 +274,32 @@ class SolicitudController extends Controller
             'lugar_notificacion' => 'required',
             'fecha_v' => 'required',
             'id_horario_cita' => 'required',
-            /*'fecha_solicitud' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
-            'numero' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
-            'escribana_camara' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
-            'objeto_contrato' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
-            'new_cadena' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'',
-            'observaciones' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SOLICITUD_PROTOCOLO'))? 'required':'', */
+
+            //Campos a validar si es SOLICITUD DE PROTOCOLO
+            'fecha_solicitud' => ($req->id_ci_tipo_solicitud ==config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
+            'numero' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
+            'escribana_camara' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
+            'objeto_contrato' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
+            'new_cadena' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
+
+            //Campos a validar si es ARCHIVO HISTORICO
+            'id_ci_tipo_consulta' => ($req->id_ci_tipo_solicitud ==config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+            'institucion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+            'descripcion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+            'anio' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+            'signatura' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+            'observaciones' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+
+            //Campos a validar si es SECCION DE TIERRAS
+            'expediente' => ($req->id_ci_tipo_solicitud ==config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'ing_medidor' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'ing_revisor' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'finca_numero' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'diligencia_administrativa' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'opositor' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'terreno_denominado' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'jurisdiccion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
+            'departamento' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
         ],
         [
             'nombres.required' => 'Es requerido el campo nombres',
@@ -287,15 +307,35 @@ class SolicitudController extends Controller
             'cui.required' => 'Es requerido el campo DPI',
             'telefono.required' => 'Es requerido el campo telefono',
             'email.required' => 'Es requerido el campo Correo Electronico',
-            'lugar_notificacion.required' => 'Es requerido el campo Correo Electronico',
+            'lugar_notificacion.required' => 'Es requerido el campo direccion de notificación',
             'fecha_v.required' => 'Es requerido el campo fecha de cita',
-            'hora_v.required' => 'Es requerido el campo hora de cita',
-            /*'fecha_solicitud.required' => 'Es requerido el campo fecha_solicitud',
+            'id_horario_cita.required' => 'Es requerido el campo hora de cita',
+
+            //Mensajes a mostrar si es SOLICITUD DE PROTOCOLO
+            'fecha_solicitud.required' => 'Es requerido el campo fecha_solicitud',
             'numero.required' => 'Es requerido el campo numero',
             'escribana_camara.required' => 'Es requerido el campo Escribano o Camara de Gobierno',
             'objeto_contrato.required' => 'Es requerido el campo Obeto del contrato',
             'new_cadena.required' => 'Es requerido seleccionar minimo un documento a solicitar',
-            'observaciones.required' => 'Es requerido seleccionar campo Observaciones', */
+
+            //Mensajes a mostrar si es ARCHIVO HISTORICO
+            'id_ci_tipo_consulta.required' => 'Es requerido el campo tipo de consulta',
+            'institucion.required' => 'Es requerido el campo institucion',
+            'descripcion.required' => 'Es requerido el campo descripcion',
+            'anio.required' => 'Es requerido el campo año',
+            'signatura.required' => 'Es requerido el campo signatura',
+            'observaciones.required' => 'Es requerido el campo observaciones',
+
+            //Mensajes a mostrar si es SECCION DE TIERRAS
+            'expediente.required' => 'Es requerido el campo expediente',
+            'ing_medidor.required' => 'Es requerido el campo Ingeniero Medidor',
+            'ing_revisor.required' => 'Es requerido el campo Ingeniero Revisor',
+            'finca_numero.required' => 'Es requerido el campo Numero de finca',
+            'diligencia_administrativa.required' => 'Es requerido el campo Diligencia Administrativa',
+            'opositor.required' => 'Es requerido el campo Opositor',
+            'terreno_denominado.required' => 'Es requerido el campo Terreno Denominado',
+            'jurisdiccion.required' => 'Es requerido el campo Jurisdiccion',
+            'departamento.required' => 'Es requerido el campo Departamento',
         ]);
         //Si algo no esta correcto se da un aviso al usuario
         if ($validator->fails()) {
