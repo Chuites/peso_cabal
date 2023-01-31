@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        //Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -176,7 +176,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
         Yajra\DataTables\DatatablesServiceProvider::class,
+        App\Providers\FormServiceProvider::class,
+        //Barryvdh\DomPDF\ServiceProvider::class,
+        //'Barryvdh\Debugbar\ServiceProvider',
+        //Barryvdh\DomPDF\Facade::class,
+        
 
     ],
 
@@ -227,7 +233,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        //'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'Debugbar' => 'Barryvdh\Debugbar\Facade',
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'PDF' => 'Barryvdh\DomPDF\Facade'
 
     ],
 

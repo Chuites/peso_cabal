@@ -11,7 +11,7 @@ use Validator;
 
 class citasController extends Controller
 {
-    private $pageData = array(); 
+    private $pageData = array();
     private $ajaxResponse = array('status' => 400,'mensaje' => '', 'data' => array() );
 
     public function index()
@@ -19,7 +19,7 @@ class citasController extends Controller
         return view('citas.inicio');
     }
 
-    
+
     public function solicitud()
     {
         return view('citas.form_solicitud');
