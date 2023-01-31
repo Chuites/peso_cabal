@@ -14,7 +14,9 @@
         "laravel/tinker": "^1.0",
         "yajra/laravel-datatables-oracle": "^8.0",
         "laravelcollective/html": "5.7.*",
-        "anhskohbo/no-captcha": "2.*"
+        
+        "barryvdh/laravel-dompdf": "^0.8.2",
+        "barryvdh/laravel-debugbar": "3.2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

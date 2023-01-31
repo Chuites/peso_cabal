@@ -3,10 +3,10 @@
 <head>
     <link rel="shortcut icon" href="http://logos.mingob.gob.gt/icono_mingob.png" type="image/x-icon"/>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>REPEJU</title>
+    <title>CITAS ESCRIBANIA</title>
 
     <!-- Fonts -->
     <!-- Font Awesome -->
@@ -28,8 +28,8 @@
         .fa-btn {
             margin-right: 6px;
         }
-        
-       
+
+
 
     </style>
 </head>
@@ -38,7 +38,7 @@
         <div class="container">
             <div class="navbar-header" style="height: 80px; width: 100%;">
 
-                
+
 
                 <!-- Branding Image -->
                 <a class="navbar-brand float-left" href="{{ url('/') }}">
@@ -48,14 +48,14 @@
                          <a class="navbar-brand" href="{{ url('/') }}">
                             <img src="{{ asset('img/logo_sistema.png') }}" width="100" height="60">
                         </a>
-                        
+
 
                         <a class="navbar-brand pull-right" href="{{ url('/') }}">
                             <i class="fa fa-university" aria-hidden="true"></i>
                             <strong>ESCRIBANÍA</strong>
                         </a>
                 </div>
-               
+
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -65,7 +65,7 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                
+
             </div>
         </div>
     </nav>
@@ -74,7 +74,7 @@
 
     <!-- jQuery -->
         {!! Html::script('js/jquery-1.12.4.min.js') !!}
-    
+
     <!-- Bootstrap -->
         {!!Html::script('sources/bootstrap-3.3.6/js/bootstrap.min.js')!!}
         <!-- BlockUI-->
