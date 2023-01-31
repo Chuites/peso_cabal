@@ -266,6 +266,7 @@ class SolicitudController extends Controller
     {
         //Valido que la informacion del solicitante este correcta
         $validator = Validator::make($req->all(), [
+            //Campos del Solicitante
             'nombres' => 'required',
             'apellidos' => 'required',
             'cui' => 'required',
@@ -302,6 +303,7 @@ class SolicitudController extends Controller
             'departamento' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))? 'required':'',
         ],
         [
+            //Mensajes a mostrar del SOLICITANTE
             'nombres.required' => 'Es requerido el campo nombres',
             'apellidos.required' => 'Es requerido el campo apellidos',
             'cui.required' => 'Es requerido el campo DPI',
