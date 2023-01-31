@@ -1,6 +1,5 @@
 /node_modules
 /public/hot
-/public/storage
 
 /vendor
 .env
@@ -11,4 +10,4 @@ npm-debug.log
 yarn-error.log
 
 composer.lock
-/storage
+
