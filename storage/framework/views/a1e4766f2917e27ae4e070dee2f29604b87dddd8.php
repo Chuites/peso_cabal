@@ -227,8 +227,8 @@
                 </center>
             </div>
             <div class="modal-footer centrado_vertical">
-                <?php echo e(Form::boton('btnConfirmar', 'guardar', 'link', 'Confirmar', false, false)); ?>
-
+                &nbsp;
+                <a href="#" id="btnConfirmar" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</a>
             </div>
         </div>
     </div>
@@ -324,7 +324,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "/solicitud"
+        window.location = "<?php echo e(route('solicitudIndex')); ?>"
     });
 
     $("#btnCerrar").click(function(e)

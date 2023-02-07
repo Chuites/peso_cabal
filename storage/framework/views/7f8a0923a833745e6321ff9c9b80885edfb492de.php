@@ -1,21 +1,21 @@
 <?php $__env->startSection('content'); ?>
 <style type="text/css">
     .requerido:after {
-        content: " *"; color: red;
+        content: " *"; color: #337ab7;
     }
     #listadoTabla th {
-        background-color: #229954;
+        background-color: #337ab7;
         color: #fff;
 
         font-weight: bold;
     }
     .listadoTabla th {
-        background-color: #229954;
+        background-color: #337ab7;
         color: #fff;
     }
 
     .listadoTabla thead {
-        background-color: #229954;
+        background-color: #337ab7;
         color: #fff;
     }
 </style>
@@ -25,6 +25,10 @@
     <div class="row">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <div class="pull-right">
+                        <a href="#" id="btn_bsolicitud" class="btn btn-info"><i class="fa fa-search"></i>&nbsp;Buscar Solicitud</a>
+                    </div>
+
                     <h3>Agendar Cita</h3>
                     <br>
                     <h3><strong>DATOS SOLICITANTE</strong></h3>
@@ -89,6 +93,53 @@
             </div>
     </div>
 </div>
+
+
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="modal_bsolicitud" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+            
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Busqueda | <small id="modalSubtitle">Solicitud</small></h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <form id="">
+                        <div class="row">
+                            <label for="cui_busqueda">Ingere su numero de DPI</label>
+                            <input type="number" name="cui_busqueda" id="cui_busqueda">
+                        </div>
+                    </form>
+
+                <div id="contenedor">
+                    <input type="hidden" id="token" name="_token" value="<?php echo e(csrf_token()); ?>">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <table class="table table-bordered table-striped" id="listadoTabla">
+                                    <thead>
+                                        <th class="dt-head-center">Gestion</th>
+                                        <th class="dt-head-center">DPI</th>
+                                        <th class="dt-head-center">Tipo de Solicitud</th>
+                                        <th class="dt-head-center">Fecha Solicitud</th>
+                                        <th class="dt-head-center">Horario</th>
+                                        <th class="dt-head-center" width="105">Acciones</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer centrado_vertical">
+                &nbsp;
+                <a href="#" id="btn_buscarsolicitud" class="btn btn-success"><i class="fa fa-search"></i>&nbsp;Buscar</a>
+            </div>
+        </div>
+    </div>
+</div>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('javascript'); ?>
@@ -141,6 +192,10 @@
             window.location="<?php echo e(route('solicitudIndex')); ?>";
         });
 
+        $("#btn_bsolicitud").click(function(){
+            $("#modal_bsolicitud").modal('show');
+        });
+
         $("#id_ci_tipo_solicitud").change(function () {
             if ($('#id_ci_tipo_solicitud').val() == -1) {
                 toastr.info('Seleccione un tipo de solicitud');
@@ -163,6 +218,49 @@
                 });
             }
         });
+
+
+        $('#btn_buscarsolicitud').click(function(){
+            if ($("#cui_busqueda").val() != "") {
+                $("#listadoTabla").dataTable().fnDestroy();
+                ruta = "<?php echo e(route('buscarSolicitud')); ?>" + '/' + $("#cui_busqueda").val();
+                // CARGA DE DATOS EN LA LISTA
+                $('#listadoTabla').DataTable({
+                    columnDefs: [
+                        { className: "dt-body-center", targets: [ 1 ]}
+                    ],
+                    language: {
+                        url: "<?php echo asset('sources/DataTables-1.10.12/languages/Spanish.json'); ?>"
+                    },
+                    order: [1,'asc'],
+                    bFilter : false, //oculta filtros
+                    paging: false,
+                    lengthMenu: <?php echo e(config('constantes.datatableListRows')); ?>,
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: ruta,
+                        type: 'POST',
+                        data : function (d) {
+                            d._token = $("#token").val();
+                            d.criterio = $("#criterio").val();
+                        }
+                    },
+                });
+            }else{
+                toastr.error('Ingrese su numero de DPI')
+            }
+
+        });
+
+        let identificadorTiempoDeEspera;
+
+        function temporizadorDeRetraso() {
+            identificadorTiempoDeEspera = setTimeout(imprimir, 2000);
+        };
+        function imprimir() {
+            toastr.success('Boleta desacargada correctamente')
+        };
 
     </script>
 <?php $__env->stopSection(); ?>

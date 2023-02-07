@@ -346,141 +346,189 @@ class SolicitudController extends Controller
 
         $fecha_entrega = $req->fecha_v . ' '. $req->hora_v;
         //Si todos los datos estan completos, se procede a guardar los datos del solicitante
-        DB::beginTransaction();
-        try {
-            baseModel::usuarioModifica();
-            baseModel::ipUsuario();
 
-            $obj_plfi = new Solicitante();
-            $obj_plfi = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $obj_plfi->find($req->id_solicitud) : $obj_plfi;
-            $obj_plfi->cui = $req->cui;
-            $obj_plfi->nombre_completo = $req->nombres . " " . $req->apellidos;
-            $obj_plfi->telefono = $req->telefono;
-            $obj_plfi->direccion_notificacion = $req->lugar_notificacion;
-            $obj_plfi->correo_electronico = $req->email;
-            $obj_plfi->usuario_ingreso = $req->cui;
+        //Se procede a validar que el cui no haya sido utilizado para todos los tipos de solicitud durante el día
+        $cui_solliciante = $req->cui;
 
-            if ($obj_plfi->save()) {
-                DB::commit();
-                //return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.',['id'=>$obj_plfi->id_solicitud]));
-            }else{
-                return baseModel::sysResponse(false, 'No es posible realizar la transacción, vuelva a intentarlo');
-            }
-        } catch (Exception $e) {
-            DB::rollBack();
-            return baseModel::sysResponse(false, 'Error al guardar los datos del solicitante, comuniquese a soporte');
-        }
+        $fecha_hoy = date('Y-m-d');
+        $bandera1 = Solicitud::where('fecha_recepcion', $fecha_hoy)
+        ->where('usuario_ingreso', $cui_solliciante )
+        ->where('id_tipo_solicitud', config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
+        ->get()
+        ->count();
+        $bandera2 = Solicitud::where('fecha_recepcion', $fecha_hoy)
+        ->where('usuario_ingreso', $cui_solliciante )
+        ->where('id_tipo_solicitud', config('constantes.ID_CI_ESCRITURA_PUBLICA'))
+        ->get()
+        ->count();
+        $bandera3 = Solicitud::where('fecha_recepcion', $fecha_hoy)
+        ->where('usuario_ingreso', $cui_solliciante )
+        ->where('id_tipo_solicitud', config('constantes.ID_CI_SECCION_DE_TIERRAS'))
+        ->get()
+        ->count();
+        $bandera4 = Solicitud::where('fecha_recepcion', $fecha_hoy)
+        ->where('usuario_ingreso', $cui_solliciante )
+        ->where('id_tipo_solicitud', config('constantes.ID_CI_ARCHIVO_HISTORICO'))
+        ->get()
+        ->count();
 
-        /////////////////////////////////////////////////////////////////////////////
-        //Se realiza la validacion para saber que tipo de solicitud debe de guardar//
-        /////////////////////////////////////////////////////////////////////////////
-
-        //Transaccion para realizar el insert en la tabla archivo_historico
-        if ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))
-        {
+        if (($bandera1+$bandera2+$bandera3+$bandera4) < 5) {
             DB::beginTransaction();
             try {
                 baseModel::usuarioModifica();
                 baseModel::ipUsuario();
-                $archivo_historico = new ArchivoHistorico();
-                //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
-                $archivo_historico->id_tipo_consulta = $req->id_ci_tipo_consulta;
-                $archivo_historico->institucion = $req->institucion;
-                $archivo_historico->descripcion = $req->descripcion;
-                $archivo_historico->anio = $req->anio;
-                $archivo_historico->signatura = $req->signatura;
-                $archivo_historico->observaciones = $req->observaciones;
-                $archivo_historico->usuario_ingreso = $req->cui;
 
-                if ($archivo_historico->save()) {
-                    $this->crearCita($req);
-                    $this->crearSolicitud($req);
+                $obj_plfi = new Solicitante();
+                $obj_plfi = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $obj_plfi->find($req->id_solicitud) : $obj_plfi;
+                $obj_plfi->cui = $req->cui;
+                $obj_plfi->nombre_completo = $req->nombres . " " . $req->apellidos;
+                $obj_plfi->telefono = $req->telefono;
+                $obj_plfi->direccion_notificacion = $req->lugar_notificacion;
+                $obj_plfi->correo_electronico = $req->email;
+                $obj_plfi->usuario_ingreso = $req->cui;
+
+                if ($obj_plfi->save()) {
                     DB::commit();
-                    return Response::json(baseModel::sysResponse(true,'Se ha generado la solicitud correctamente.',['id'=>$archivo_historico->id_archivo_historico]));
+                    //return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.',['id'=>$obj_plfi->id_solicitud]));
                 }else{
-                    return baseModel::sysResponse(false, 'No es posible guardar los datos de Archivo Historico, vuelva a intentarlo');
+                    return baseModel::sysResponse(false, 'No es posible realizar la transacción, vuelva a intentarlo');
                 }
             } catch (Exception $e) {
                 DB::rollBack();
-                return baseModel::sysResponse(false, 'Error al guardar los datos de Archivo Historico, comuniquese a soporte');
+                return baseModel::sysResponse(false, 'Error al guardar los datos del solicitante, comuniquese a soporte');
             }
-        }
-        //Transaccion para realizar el insert en la tabla seccion_de_tierras
-        elseif ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))
-        {
-            DB::beginTransaction();
-            try {
-                baseModel::usuarioModifica();
-                baseModel::ipUsuario();
-                $seccion_de_tierras = new SeccionDeTierras();
-                //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
-                $seccion_de_tierras->expediente = $req->expediente;
-                $seccion_de_tierras->ingeniero_medidor = $req->ing_medidor;
-                $seccion_de_tierras->ingeniero_revisor = $req->ing_revisor;
-                $seccion_de_tierras->finca_numero = $req->finca_numero;
-                $seccion_de_tierras->diligencia_administrativa = $req->diligencia_administrativa;
-                $seccion_de_tierras->opositor = $req->opositor;
-                $seccion_de_tierras->terreno_denominado = $req->terreno_denominado;
-                $seccion_de_tierras->jurisdiccion = $req->jurisdiccion;
-                $seccion_de_tierras->departamento = $req->departamento;
-                $seccion_de_tierras->usuario_ingreso = $req->cui;
 
-                if ($seccion_de_tierras->save()) {
-                    $this->crearCita($req);
-                    $this->crearSolicitud($req);
-                    DB::commit();
-                    return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.'));
+            /////////////////////////////////////////////////////////////////////////////
+            //Se realiza la validacion para saber que tipo de solicitud debe de guardar//
+            /////////////////////////////////////////////////////////////////////////////
+
+            //Transaccion para realizar el insert en la tabla archivo_historico
+            if ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO')) {
+                if($bandera4 < 1){
+                    DB::beginTransaction();
+                    try {
+                        baseModel::usuarioModifica();
+                        baseModel::ipUsuario();
+                        $archivo_historico = new ArchivoHistorico();
+                        //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
+                        $archivo_historico->id_tipo_consulta = $req->id_ci_tipo_consulta;
+                        $archivo_historico->institucion = $req->institucion;
+                        $archivo_historico->descripcion = $req->descripcion;
+                        $archivo_historico->anio = $req->anio;
+                        $archivo_historico->signatura = $req->signatura;
+                        $archivo_historico->observaciones = $req->observaciones;
+                        $archivo_historico->usuario_ingreso = $req->cui;
+
+                        if ($archivo_historico->save()) {
+                            $this->crearCita($req);
+                            $this->crearSolicitud($req);
+                            DB::commit();
+                            return Response::json(baseModel::sysResponse(true,'Se ha generado la solicitud correctamente.',['id'=>$archivo_historico->id_archivo_historico]));
+                        }else{
+                            return baseModel::sysResponse(false, 'No es posible guardar los datos de Archivo Historico, vuelva a intentarlo');
+                        }
+                    } catch (Exception $e) {
+                        DB::rollBack();
+                        return baseModel::sysResponse(false, 'Error al guardar los datos de Archivo Historico, comuniquese a soporte');
+                    }
                 }else{
-                    return baseModel::sysResponse(false, 'No es posible guardar los datos de Seccion de Tierras, vuelva a intentarlo');
+                    return Response::json(baseModel::sysResponse(false,'Ha superado el limite de solicitudes de Archivo Historico, intente el día de mañana'));
                 }
-            } catch (Exception $e) {
-                DB::rollBack();
-                return baseModel::sysResponse(false, 'Error al guardar los datos de Seccion de Tierras, comuniquese a soporte');
-            }
-        }
-
-        //Transaccion para crear la cita con la solicitud
-        elseif ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
-        {
-            try {
-                $this->crearCita($req);
-                $this->crearSolicitud($req);
-                return Response::json(baseModel::sysResponse(true,'Se ha generado la solicitud correctamente.'));
-            } catch (Exception $e) {
-                return baseModel::sysResponse(false, 'Error al guardar los datos de Consulta de Escritura Publica, comuniquese a soporte');
             }
 
-        }
+            if ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))
+            {
+                if($bandera3 < 1){
+                    //Transaccion para realizar el insert en la tabla seccion_de_tierras
+                    DB::beginTransaction();
+                    try {
+                        baseModel::usuarioModifica();
+                        baseModel::ipUsuario();
+                        $seccion_de_tierras = new SeccionDeTierras();
+                        //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
+                        $seccion_de_tierras->expediente = $req->expediente;
+                        $seccion_de_tierras->ingeniero_medidor = $req->ing_medidor;
+                        $seccion_de_tierras->ingeniero_revisor = $req->ing_revisor;
+                        $seccion_de_tierras->finca_numero = $req->finca_numero;
+                        $seccion_de_tierras->diligencia_administrativa = $req->diligencia_administrativa;
+                        $seccion_de_tierras->opositor = $req->opositor;
+                        $seccion_de_tierras->terreno_denominado = $req->terreno_denominado;
+                        $seccion_de_tierras->jurisdiccion = $req->jurisdiccion;
+                        $seccion_de_tierras->departamento = $req->departamento;
+                        $seccion_de_tierras->usuario_ingreso = $req->cui;
 
-        elseif ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))
-        {
-            DB::beginTransaction();
-            try {
-                baseModel::usuarioModifica();
-                baseModel::ipUsuario();
-                $escritura_publica = new EscrituraPublica();
-                //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
-                $escritura_publica->fecha = $req->fecha_solicitud;
-                $escritura_publica->numero = $req->numero;
-                $escritura_publica->escribano = $req->escribana_camara;
-                $escritura_publica->objeto_contrato = $req->objeto_contrato;
-                $escritura_publica->documentos = $req->new_cadena;
-                $escritura_publica->usuario_ingreso = $req->cui;
-
-                if ($escritura_publica->save()) {
-                    DB::commit();
-                    //Se crea la cita
-                    $this->crearCita($req);
-                    $this->crearSolicitud($req);
-                    return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.',['id'=>$escritura_publica->id_escritura_publica]));
+                        if ($seccion_de_tierras->save()) {
+                            $this->crearCita($req);
+                            $this->crearSolicitud($req);
+                            DB::commit();
+                            return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.'));
+                        }else{
+                            return baseModel::sysResponse(false, 'No es posible guardar los datos de Seccion de Tierras, vuelva a intentarlo');
+                        }
+                    } catch (Exception $e) {
+                        DB::rollBack();
+                        return baseModel::sysResponse(false, 'Error al guardar los datos de Seccion de Tierras, comuniquese a soporte');
+                    }
                 }else{
-                    return baseModel::sysResponse(false, 'No es posible guardar los datos de Archivo Historico, vuelva a intentarlo');
+                    return Response::json(baseModel::sysResponse(false,'Ha superado el limite de solicitudes de Seccion de Tierras, intente el día de mañana'));
                 }
-            } catch (Exception $e) {
-                DB::rollBack();
-                return baseModel::sysResponse(false, 'Error al guardar los datos de Archivo Historico, comuniquese a soporte');
             }
+
+            if ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
+            {
+                if($bandera1 < 1){
+                    //Transaccion para crear la cita con la solicitud
+                    try {
+                        $this->crearCita($req);
+                        $this->crearSolicitud($req);
+                        return Response::json(baseModel::sysResponse(true,'Se ha generado la solicitud correctamente.'));
+                    } catch (Exception $e) {
+                        return baseModel::sysResponse(false, 'Error al guardar los datos de Consulta de Escritura Publica, comuniquese a soporte');
+                    }
+                }else{
+                    return Response::json(baseModel::sysResponse(false,'Ha superado el limite de solicitudes de Consulta Protocolo, intente el día de mañana'));
+                }
+            }
+
+
+            if ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))
+            {
+                if($bandera2 < 1){
+                    DB::beginTransaction();
+                    try {
+                        baseModel::usuarioModifica();
+                        baseModel::ipUsuario();
+                        $escritura_publica = new EscrituraPublica();
+                        //$escritura_publica = ($req->id_solicitud != '' || $req->id_solicitud != null) ? $escritura_publica->find($req->id_solicitud) : $escritura_publica;
+                        $escritura_publica->fecha = $req->fecha_solicitud;
+                        $escritura_publica->numero = $req->numero;
+                        $escritura_publica->escribano = $req->escribana_camara;
+                        $escritura_publica->objeto_contrato = $req->objeto_contrato;
+                        $escritura_publica->documentos = $req->new_cadena;
+                        $escritura_publica->usuario_ingreso = $req->cui;
+
+                        if ($escritura_publica->save()) {
+                            DB::commit();
+                            //Se crea la cita
+                            $this->crearCita($req);
+                            $this->crearSolicitud($req);
+                            return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.',['id'=>$escritura_publica->id_escritura_publica]));
+                        }else{
+                            return baseModel::sysResponse(false, 'No es posible guardar los datos de Archivo Historico, vuelva a intentarlo');
+                        }
+                    } catch (Exception $e) {
+                        DB::rollBack();
+                        return baseModel::sysResponse(false, 'Error al guardar los datos de Archivo Historico, comuniquese a soporte');
+                    }
+                }else{
+                    return Response::json(baseModel::sysResponse(false,'Ha superado el limite de solicitudes de Escritura Publica, intente el día de mañana'));
+                }
+            }
+        }else{
+            return Response::json(baseModel::sysResponse(false,'Ya ha realizado el maximo de solicitudes permitidas, intente el dia de mañana.'));
         }
+
+
     }
 
     public function crearCita($req)
@@ -497,8 +545,6 @@ class SolicitudController extends Controller
             $cita->id_solicitante = intval($last_id_solicitante[0]->max);
             $cita->fecha = date($req->fecha_v);
             $cita->usuario_ingreso = $req->cui;
-
-            //logger($req->fecha_v . ' ' . gettype($req->fecha_v) . ' ' . date($req->fecha_v));
 
             if ($cita->save()) {
                 DB::commit();
@@ -558,9 +604,6 @@ class SolicitudController extends Controller
             $ultima_gestion = Solicitud::selectRaw('MAX(gestion)')->get();
             $solicitud->gestion = ( intval($ultima_gestion[0]->max) + 1 );
 
-            //logger($intval($ultima_gestion[0]->max));
-            //logger($req->fecha_v . ' ' . gettype($req->fecha_v) . ' ' . date($req->fecha_v));
-
             if ($solicitud->save()) {
                 DB::commit();
                 return Response::json(baseModel::sysResponse(true,'Transacción realizada con éxito.'));
@@ -595,8 +638,6 @@ class SolicitudController extends Controller
 
         $test1 = $solicitud->id_escritura_publica;
         $test2 = $solicitud->id_archivo_historico;
-
-        logger($test1 . ' ' . $test2);
 
         //Envio los datos de la cita
         $last_id_cita = Cita::selectRaw('MAX(id_cita)')->get();
@@ -655,5 +696,210 @@ class SolicitudController extends Controller
         }
 
     }
+
+    protected function buscarSolicitud(request $request, $cui_busqueda)
+    {
+        //DataTable contador de renderizacion
+        $dataTablesResponse['draw'] = intval($request->draw);
+
+        //obtengo datos de paginacion
+        $limit  = ($request->length != '') ? $request->length : false;
+        $offset = $request->start;
+        $order  = $request->order;
+
+        //limit
+        if (!$limit) {
+            $limit = config('constantes.datatableDefaultRows');
+        }
+
+        //offset
+        if (!$offset) {
+            $offset = 0;
+        }
+
+        //=====================
+        // DEFINO LAS COLUMNAS QUE FORMARN EL LISTADO
+        //=====================
+        $columns = ['Gestion','DPI','Tipo de Solicitud','Fecha Solicitud','Horario'];
+
+        //=====================
+        // LECTURA DE LOS REGISTROS DE LA TABLA AL MODELO (INCLUYENDO SUS RELACIONES)
+        //=====================
+        $registros = Solicitud::select()
+        ->with(['tipo_solicitud'])
+        ->with(['cita']);
+
+        //=====================
+        // APLICACION DE FILTROS
+        //=====================
+        if (isset($request->criterio) && $request->criterio != '') {
+            $filter = str_replace(' ', '%', trim($request->criterio));
+            $registros = $registros->where('gestion','ilike','%'.$filter.'%');
+            $registros = $registros->orwhere('fecha_recepcion','ilike','%'.$filter.'%');
+            $registros = $registros->orWhereHas('cita',function($subquery) use($filter){
+                $subquery->where('id_cita','ilike','%'.$filter.'%');
+            });
+            if ($request->criterio == 'Activo' || $request->criterio == 'activo' || $request->criterio == 'ACTIVO')
+            {
+                $registros = $registros->orwhere('esta_activo','=',true);
+            }
+            if ($request->criterio == 'Inactivo' || $request->criterio == 'inactivo' || $request->criterio == 'INACTIVO')
+            {
+                $registros = $registros->orwhere('esta_activo','=',false);
+            }
+        }
+
+        // ===========================
+        // OBTENGO EL TOTAL DE REGISTROS INCLUIDOS EN LA LISTA
+        // ===========================
+        $total = $registros->count();
+
+        // ===========================
+        // ORDENAMIENTO DE LA LISTA
+        // ===========================
+        if ($order) {
+            if (is_array($order) && array_key_exists($order[0]['column'], $columns)) {
+                $registros = $registros->orderBy('id_solicitud','asc');
+            }
+            $registros =  $registros->skip($offset)->take($limit);
+        } else {
+            $registros = $registros->orderBy('id_solicitud','asc');
+        }
+
+        // ===========================
+        // OBTENGO LOS REGISTROS INCLUIDOS EN LA LISTA
+        // ===========================
+        //$registros = Solicitud::whereRelation('cita', 'draft')->get();
+
+        /* $registros = $registros->whereHas('cita', function ($query){
+            $query->where('id_solicitante', 5);
+        })->get();
+        logger($registros); */
+
+        $registros = Solicitud::select()
+                ->join('cita_escribania.cita', 'solicitud.id_cita', '=', 'cita.id_cita')
+                ->join('cita_escribania.solicitante', 'cita.id_solicitante', '=', 'solicitante.id_solicitante')
+                ->where('solicitante.cui', $cui_busqueda)
+                ->where('solicitud.esta_activo', true)
+                ->get();
+
+        // ===========================
+        // CONSTRUYO LA LISTA EN FORMATO HTML
+        // ===========================
+        $results  = [];
+
+        if($offset != 0) $fila = $offset+1;
+
+        foreach ($registros as $registro => $item) {
+            $ruta = route('imprimirSolicitud', encrypt($item->id_solicitud));
+            $linkPRT = '<a
+                title="Imprimir"
+                data-toggle="tooltip"
+                data-original-title="Imprimir Boleta"
+                class="btnUPD"
+                href='.$ruta.'
+                onclick="temporizadorDeRetraso()"
+                > <i class="fa fa-print listaIcon"></i></a>';
+
+            if($item->esta_activo == 'true')
+            {
+                $item->esta_activo = "Activo";
+            }
+            else
+            {
+                $item->esta_activo = "Inactivo";
+            }
+            $results[] = [
+                '<div style="text-align:center;"  >' . $item->gestion      .'</div>',
+                '<div style="text-align:center;"  >' . $item->cita->solicitante->cui .'</div>',
+                '<div style="text-align:center;"  >' . $item->tipo_solicitud->catalogo_item .'</div>',
+                '<div style="text-align:center;"  >' . $item->fecha_recepcion .'</div>',
+                '<div style="text-align:center;"  >' . $item->cita->horario->catalogo_item .'</div>',
+                '<div style="text-align:center; width:100%;">' . $linkPRT .'</div>'
+            ];
+        }
+
+        $response = [
+            'data'            => $results,
+            'recordsTotal'    => $total,
+            'recordsFiltered' => $total,
+        ];
+
+        return response()->json($response);
+    }
+
+    protected function imprimirSolicitud(request $req, $id_solicitud)
+    {
+        $id_solicitud = decrypt($id_solicitud);
+
+        $solicitud = Solicitud::find($id_solicitud);
+        $id_cita = $solicitud->id_cita;
+        $cita = Cita::find($id_cita);
+        $id_solicitante = $cita->id_solicitante;
+        $solicitante = Solicitante::find($id_solicitante);
+
+        //Envio los datos del solicitante
+        $this->pageData['solicitante'] = $solicitante;
+
+        //Envio los datos de fecha del encabezado
+        $this->pageData['dia'] = date('d',(strtotime($solicitud->fecha_recepcion)));
+        $this->pageData['mes'] = date('m',(strtotime($solicitud->fecha_recepcion)));
+        $this->pageData['anio'] = date('Y',(strtotime($solicitud->fecha_recepcion)));
+
+        //Envio los datos de la solicitud
+        $solicitud->fecha_recepcion = date('d-m-Y',(strtotime($solicitud->fecha_recepcion)));
+        $this->pageData['solicitud'] = $solicitud;
+
+        //Envio los datos de la cita
+        $cita->fecha = date('d-m-Y',(strtotime($cita->fecha)));
+        $this->pageData['cita'] = $cita;
+
+        logger($solicitud);
+
+        if($solicitud->id_escritura_publica != null)
+        {
+            //Envio los datos de Escritura Publica
+            $escritura_publica = EscrituraPublica::find($solicitud->id_escritura_publica);
+            $this->pageData['escritura_publica'] = $escritura_publica;
+
+            $view =  \View::make('pdfs.boleta_solicitud',$this->pageData)->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->download('Boleta Escritura Publica.pdf');
+        }
+        elseif ($solicitud->id_archivo_historico != null)
+        {
+            //Envio los datos de Archivo Historico
+            $archivo_historico = ArchivoHistorico::find($solicitud->id_archivo_historico);
+            $this->pageData['archivo_historico'] = $archivo_historico;
+
+            $view =  \View::make('pdfs.boleta_archivo_historico',$this->pageData)->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->download('Boleta Archivo Historico.pdf');
+        }
+        elseif ($solicitud->id_tipo_solicitud == config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
+        {
+            //Se envian los datos al PDF de Consulta Escritura Publica
+            $view =  \View::make('pdfs.boleta_consulta_escritura_publica',$this->pageData)->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            $pdf->setPaper(array(0,0,419.53,595.28), 'landscape');
+            return $pdf->download('Boleta Cita Escritura Publica.pdf');
+        }
+        elseif ($solicitud->id_seccion_de_tierra != null)
+        {
+            //Envio los datos de Seccion de Tierras
+            $seccion_de_tierras = SeccionDeTierras::find($solicitud->id_seccion_de_tierra);
+            $this->pageData['seccion_de_tierras'] = $seccion_de_tierras;
+
+            $view =  \View::make('pdfs.boleta_seccion_de_tierras',$this->pageData)->render();
+            $pdf = \App::make('dompdf.wrapper');
+            $pdf->loadHTML($view);
+            return $pdf->download('Boleta Seccion de Tierras.pdf');
+        }
+
+    }
+
 
 }

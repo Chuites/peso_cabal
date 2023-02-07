@@ -17,7 +17,7 @@
                         <?php
                         $image_path = '/img/min_gob.png';
                         ?>
-                        <img src="{{ public_path() . $image_path }}" width="250" height="80">
+                        <img src="<?php echo e(public_path() . $image_path); ?>" width="250" height="80">
                     </td>
                 </tr>
         </table>
@@ -58,23 +58,23 @@
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Nombre completo:</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitante->nombre_completo}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitante->nombre_completo); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Número de DPI</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitante->cui}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitante->cui); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Lugar para recibir notificación</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitante->direccion_notificacion}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitante->direccion_notificacion); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Teléfono</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitante->telefono}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitante->telefono); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Correo Electrónico</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitante->correo_electronico}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitante->correo_electronico); ?></td>
     </tr>
 </table>
 
@@ -85,19 +85,19 @@
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Número</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitud->gestion}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitud->gestion); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Fecha de Recepción</td>
-        <td class="col-7 tb-td">&nbsp;{{@$solicitud->fecha_recepcion}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$solicitud->fecha_recepcion); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Fecha de Cita</td>
-        <td class="col-7 tb-td">&nbsp;{{@$cita->fecha}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$cita->fecha); ?></td>
     </tr>
     <tr>
         <td class="gray col-5 tb-td" >Horario de Cita</td>
-        <td class="col-7 tb-td">&nbsp;{{@$cita->horario->catalogo_item}}</td>
+        <td class="col-7 tb-td">&nbsp;<?php echo e(@$cita->horario->catalogo_item); ?></td>
     </tr>
 </table>
 
@@ -123,7 +123,7 @@
     body{
         font-family: sans-serif;
     }
-    @page {
+    @page  {
         margin: 0px 30px;
     }
     header { position: fixed;

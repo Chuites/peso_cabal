@@ -97,6 +97,10 @@
                 <td width="20%" align="right"><strong>Fecha de entrega</strong></td>
                 <td align="left">&nbsp;{{@$cita->fecha}}</td>
             </tr>
+            <tr>
+                <td class="gray col-5 tb-td" >Horario de Cita</td>
+                <td class="col-7 tb-td">&nbsp;{{@$cita->horario->catalogo_item}}</td>
+            </tr>
 
         </table>
     </div>
