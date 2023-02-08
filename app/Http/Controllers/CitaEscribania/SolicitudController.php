@@ -120,7 +120,7 @@ class SolicitudController extends Controller
 
             //Fecha minima la del día corriente
             $this->pageData['min'] = date_format(date_create('1-'.date("m").'-'.date("Y")), 'd/m/Y');
-            $this->pageData['hoy'] = date("d-m-Y");
+            $this->pageData['hoy'] = date("d-m-Y",strtotime(date("d-m-Y")."+ 1 days"));
 
             $this->pageData['disabledDates'] = $fechasDeshabilitadas;
             $html = View::make('citas.form_consulta_protocolo', $this->pageData);
@@ -277,7 +277,7 @@ class SolicitudController extends Controller
             'id_horario_cita' => 'required',
 
             //Campos a validar si es SOLICITUD DE PROTOCOLO
-            'fecha_solicitud' => ($req->id_ci_tipo_solicitud ==config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
+            'fecha_solicitud' => ($req->id_ci_tipo_solicitud ==config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required|before:'.date('d-m-Y'):'',
             'numero' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
             'escribana_camara' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
             'objeto_contrato' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))? 'required':'',
@@ -287,7 +287,7 @@ class SolicitudController extends Controller
             'id_ci_tipo_consulta' => ($req->id_ci_tipo_solicitud ==config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
             'institucion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
             'descripcion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
-            'anio' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
+            'anio' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required|numeric|max:'. date('Y'):'',
             'signatura' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
             'observaciones' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
 
@@ -315,6 +315,7 @@ class SolicitudController extends Controller
 
             //Mensajes a mostrar si es SOLICITUD DE PROTOCOLO
             'fecha_solicitud.required' => 'Es requerido el campo fecha_solicitud',
+            'fecha_solicitud.before' => 'El campo fecha debe ser menor al dia de hoy',
             'numero.required' => 'Es requerido el campo numero',
             'escribana_camara.required' => 'Es requerido el campo Escribano o Camara de Gobierno',
             'objeto_contrato.required' => 'Es requerido el campo Obeto del contrato',
@@ -325,6 +326,8 @@ class SolicitudController extends Controller
             'institucion.required' => 'Es requerido el campo institucion',
             'descripcion.required' => 'Es requerido el campo descripcion',
             'anio.required' => 'Es requerido el campo año',
+            'anio.numeric' => 'El campo año debe contener numeros',
+            'anio.max' => 'El año no puede ser mayor a ' . date('Y'),
             'signatura.required' => 'Es requerido el campo signatura',
             'observaciones.required' => 'Es requerido el campo observaciones',
 
