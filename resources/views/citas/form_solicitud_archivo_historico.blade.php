@@ -24,6 +24,10 @@
             {!! Form::label('id_ci_tipo_consulta', 'Tipo de Consulta', ['class' => 'control-label requerido', 'id' => 'lb_tipo_consulta']) !!}
             {!! Form::select('id_ci_tipo_consulta', @$id_ci_tipo_consulta, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_consulta'])) !!}
         </div>
+        <div class="col-md-6" >
+            {!! Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']) !!}
+            {!! Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])) !!}
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6" >
@@ -33,16 +37,6 @@
         <div class="col-md-6 ">
             {!! Form::label('Descripcion', 'Descripcion', ['class' => 'control-label requerido', 'id' => 'lb_descripcion']) !!}
             {!! Form::text('descripcion', '', array_merge(['class' => 'form-control', 'id' => 'descripcion'])) !!}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6" >
-            {!! Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']) !!}
-            {!! Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])) !!}
-        </div>
-        <div class="col-md-6 ">
-            {!! Form::label('Signatura', 'Signatura', ['class' => 'control-label requerido', 'id' => 'lb_signatura']) !!}
-            {!! Form::text('signatura', '', array_merge(['class' => 'form-control', 'id' => 'signatura'])) !!}
         </div>
     </div>
     <div class="row">
@@ -151,10 +145,6 @@
                                 <td class="col-7 tb-td" id="tbl_anio"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Signatura</td>
-                                <td class="col-7 tb-td" id="tbl_signatura"></td>
-                            </tr>
-                            <tr>
                                 <td class="gray col-5 tb-td" >Observaciones</td>
                                 <td class="col-7 tb-td" id="tbl_observaciones"></td>
                             </tr>
@@ -257,7 +247,6 @@
         $('#tbl_institucion').text($('#institucion').val());
         $('#tbl_descripcion').text($('#descripcion').val());
         $('#tbl_anio').text($('#anio').val());
-        $('#tbl_signatura').text($('#signatura').val());
         $('#tbl_observaciones').text($('#observaciones').val());
 
         //Datos del solicitante

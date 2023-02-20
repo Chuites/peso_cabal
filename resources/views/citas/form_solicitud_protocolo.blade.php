@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-6 ">
                 {!! Form::label('Número', 'Número', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
-                {!! Form::text('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])) !!}
+                {!! Form::number('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])) !!}
         </div>
 </div>
 <div class="row">

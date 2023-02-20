@@ -147,20 +147,17 @@
     <div style="page-break-inside: avoid; width:100%">
         <table border="1" width="100%" cellspacing=0>
             <tr align="center">
-                <td colspan="3"><b>DOCUMENTOS SOLICITADOS</b></td>
+                <td colspan="2"><b>DOCUMENTOS SOLICITADOS</b></td>
             </tr>
 
             <tr >
                 <th>Descripción</th>
                 <th align="center">Año</th>
-                <th align="center">Signatura</th>
             </tr>
-
 
             <tr>
                 <td width="70%" align="left">&nbsp;{{ @$archivo_historico->descripcion }}</td>
-                <td width="10%" align="center">&nbsp;{{ @$archivo_historico->anio }}</td>
-                <td width="20%" align="center">&nbsp;{{ @$archivo_historico->signatura }}</td>
+                <td width="30%" align="center">&nbsp;{{ @$archivo_historico->anio }}</td>
             </tr>
 
         </table>

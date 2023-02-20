@@ -17,6 +17,7 @@ use App\Models\CitaEscribania\Solicitante;
 use App\Models\CitaEscribania\ArchivoHistorico;
 use App\Models\CitaEscribania\EscrituraPublica;
 use App\Models\CitaEscribania\SeccionDeTierras;
+use App\Models\CitaEscribania\DiaHorarioHabil;
 use App\Models\CitaEscribania\Cita;
 use App\Models\CitaEscribania\CatalogoItem;
 
@@ -53,7 +54,8 @@ class SolicitudController extends Controller
         if ($request->id_ci_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA')) {
             $numero = 10;
             $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
-            $fechasDeshabilitadas = [];
+            $no_habil = DiaHorarioHabil::where('es_habil', false)->pluck('fecha')->toArray();
+            $fechasDeshabilitadas = $no_habil;
 
             for ($i=0; $i <= 30; $i++) {
                 //numero a sumar a la fecha
@@ -92,7 +94,8 @@ class SolicitudController extends Controller
         {
             $numero = 10;
             $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
-            $fechasDeshabilitadas = [];
+            $no_habil = DiaHorarioHabil::where('es_habil', false)->pluck('fecha')->toArray();
+            $fechasDeshabilitadas = $no_habil;
 
             for ($i=0; $i <= 30; $i++) {
                 //numero a sumar a la fecha
@@ -132,7 +135,8 @@ class SolicitudController extends Controller
         {
             $numero = 10;
             $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
-            $fechasDeshabilitadas = [];
+            $no_habil = DiaHorarioHabil::where('es_habil', false)->pluck('fecha')->toArray();
+            $fechasDeshabilitadas = $no_habil;
 
             for ($i=0; $i <= 30; $i++) {
                 //numero a sumar a la fecha
@@ -171,7 +175,8 @@ class SolicitudController extends Controller
         {
             $numero = 10;
             $fecha_inicial = date("d-m-Y",strtotime(date("Y-m-d")."+ 10 days"));
-            $fechasDeshabilitadas = [];
+            $no_habil = DiaHorarioHabil::where('es_habil', false)->pluck('fecha')->toArray();
+            $fechasDeshabilitadas = $no_habil;
 
             for ($i=0; $i <= 30; $i++) {
                 //numero a sumar a la fecha
@@ -215,8 +220,6 @@ class SolicitudController extends Controller
         $fecha = $request->input('fecha');
         $id_tipo_solicitud = $request->input('id_tipo_solicitud');
 
-        //$fecha = base64_decode($fecha);
-
         //Verifica tipo de solicitud y acorde a esto valida disponibilidad de horarios para mostrar al usuario
         if($id_tipo_solicitud == config('constantes.ID_CI_ESCRITURA_PUBLICA'))
         {
@@ -226,6 +229,9 @@ class SolicitudController extends Controller
             ->where('id_tipo_solicitud', config('constantes.ID_CI_ESCRITURA_PUBLICA'))
             ->pluck('id_horario')
             ->toArray();
+            $horarios_nohabiles = DiaHorarioHabil::where('fecha', $fecha)->pluck('id_horarios');
+            $no_horarios = $horarios_nohabiles[0];
+            $horarios_bloqueados = explode(',', $no_horarios);
         }elseif($id_tipo_solicitud == config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
         {
             $horarios_utlizados = Cita::select('id_horario')
@@ -234,6 +240,9 @@ class SolicitudController extends Controller
             ->where('id_tipo_solicitud', config('constantes.ID_CI_CONSULTA_PROTOCOLO'))
             ->pluck('id_horario')
             ->toArray();
+            $horarios_nohabiles = DiaHorarioHabil::where('fecha', $fecha)->pluck('id_horarios');
+            $no_horarios = $horarios_nohabiles[0];
+            $horarios_bloqueados = explode(',', $no_horarios);
         }elseif($id_tipo_solicitud == config('constantes.ID_CI_SECCION_DE_TIERRAS'))
         {
             $horarios_utlizados = Cita::select('id_horario')
@@ -242,6 +251,9 @@ class SolicitudController extends Controller
             ->where('id_tipo_solicitud', config('constantes.ID_CI_SECCION_DE_TIERRAS'))
             ->pluck('id_horario')
             ->toArray();
+            $horarios_nohabiles = DiaHorarioHabil::where('fecha', $fecha)->pluck('id_horarios');
+            $no_horarios = $horarios_nohabiles[0];
+            $horarios_bloqueados = explode(',', $no_horarios);
         }elseif($id_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))
         {
             $horarios_utlizados = Cita::select('id_horario')
@@ -250,17 +262,27 @@ class SolicitudController extends Controller
             ->where('id_tipo_solicitud', config('constantes.ID_CI_ARCHIVO_HISTORICO'))
             ->pluck('id_horario')
             ->toArray();
+            $horarios_nohabiles = DiaHorarioHabil::where('fecha', $fecha)->pluck('id_horarios');
+            $no_horarios = $horarios_nohabiles[0];
+            $horarios_bloqueados = explode(',', $no_horarios);
         }
 
-        $horarios_disponibles = CatalogoItem::select()
+        if($horarios_bloqueados[0] !== ""){
+            $horarios_disponibles = CatalogoItem::select()
+            ->where('id_catalogo', config('constantes.ID_HORARIO_CITAS'))
+            ->whereNotIn('id_catalogo_item', $horarios_utlizados)
+            ->whereNotIn('id_catalogo_item', $horarios_bloqueados)
+            ->pluck('catalogo_item', 'id_catalogo_item');
+        }else{
+            $horarios_disponibles = CatalogoItem::select()
             ->where('id_catalogo', config('constantes.ID_HORARIO_CITAS'))
             ->whereNotIn('id_catalogo_item', $horarios_utlizados)
             ->pluck('catalogo_item', 'id_catalogo_item');
+        }
 
         $data = $horarios_disponibles;
         return Response::json($data);
     }
-
 
     public function generarSolicitud(request $req)
     {
@@ -288,7 +310,6 @@ class SolicitudController extends Controller
             'institucion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
             'descripcion' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
             'anio' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required|numeric|max:'. date('Y'):'',
-            'signatura' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
             'observaciones' => ($req->id_ci_tipo_solicitud == config('constantes.ID_CI_ARCHIVO_HISTORICO'))? 'required':'',
 
             //Campos a validar si es SECCION DE TIERRAS
@@ -328,7 +349,6 @@ class SolicitudController extends Controller
             'anio.required' => 'Es requerido el campo año',
             'anio.numeric' => 'El campo año debe contener numeros',
             'anio.max' => 'El año no puede ser mayor a ' . date('Y'),
-            'signatura.required' => 'Es requerido el campo signatura',
             'observaciones.required' => 'Es requerido el campo observaciones',
 
             //Mensajes a mostrar si es SECCION DE TIERRAS
@@ -418,7 +438,6 @@ class SolicitudController extends Controller
                         $archivo_historico->institucion = $req->institucion;
                         $archivo_historico->descripcion = $req->descripcion;
                         $archivo_historico->anio = $req->anio;
-                        $archivo_historico->signatura = $req->signatura;
                         $archivo_historico->observaciones = $req->observaciones;
                         $archivo_historico->usuario_ingreso = $req->cui;
 
@@ -903,6 +922,5 @@ class SolicitudController extends Controller
         }
 
     }
-
 
 }
