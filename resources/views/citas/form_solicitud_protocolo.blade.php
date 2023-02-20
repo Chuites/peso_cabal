@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-6 ">
                 {!! Form::label('Número', 'Número', ['class' => 'control-label requerido', 'id' => 'lb_numero']) !!}
-                {!! Form::text('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])) !!}
+                {!! Form::number('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])) !!}
         </div>
 </div>
 <div class="row">
@@ -253,7 +253,8 @@
                 </center>
             </div>
             <div class="modal-footer centrado_vertical">
-                {{ Form::boton('btnConfirmar', 'guardar', 'link', 'Confirmar', false, false) }}
+                &nbsp;
+                <a href="#" id="btnConfirmar" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</a>
             </div>
         </div>
     </div>
@@ -361,7 +362,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "/solicitud"
+        window.location = "{{route('solicitudIndex')}}"
     });
 
     $("#btnCerrar").click(function(e)

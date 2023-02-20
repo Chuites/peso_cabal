@@ -12,5 +12,6 @@ return array
     'ID_CI_ARCHIVO_HISTORICO' => env('ID_CI_ARCHIVO_HISTORICO'),
 
     'ID_CI_SOLICITUD_PROTOCOLO' => env('ID_CI_SOLICITUD_PROTOCOLO'),
+    'datatableListRows' => "[[5,10, 20, 50, 100],[5, 10, 20, 50, 100]]",
 );
 

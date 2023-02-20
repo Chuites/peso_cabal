@@ -18,4 +18,14 @@ class Cita extends Model
         $instance = new static;
         return $instance->table;
     }
+
+    public function horario()
+    {
+        return $this->belongsto('App\Models\CitaEscribania\CatalogoItem','id_horario','id_catalogo_item');
+    }
+
+    public function solicitante()
+    {
+        return $this->belongsTo('App\Models\CitaEscribania\Solicitante', 'id_solicitante', 'id_solicitante');
+    }
 }

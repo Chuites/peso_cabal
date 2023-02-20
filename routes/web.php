@@ -20,7 +20,8 @@ Route::get('solicitud', 'CitaEscribania\SolicitudController@solicitudIndex')->na
 Route::post('solicitud/getform', 'CitaEscribania\SolicitudController@getForm')->name('getForm');
 Route::post('solicitud/generarSolicitud', 'CitaEscribania\SolicitudController@generarSolicitud')->name('generarSolicitud');
 Route::post('solicitud/viewBoletaPDFSolicitud', 'CitaEscribania\SolicitudController@viewBoletaPDFSolicitud')->name('viewBoletaPDFSolicitud');
-
+Route::post('solicitud/buscarSolicitud/{cui_busqueda?}', 'CitaEscribania\SolicitudController@buscarSolicitud')->name('buscarSolicitud');
+Route::get('solicitud/imprimirSolicitud/{id_solicitud?}', 'CitaEscribania\SolicitudController@imprimirSolicitud')->name('imprimirSolicitud');
 Route::get('solicitud/horariosDisponibles', 'CitaEscribania\SolicitudController@horariosDisponibles')->name('horariosDisponibles');
 
 
