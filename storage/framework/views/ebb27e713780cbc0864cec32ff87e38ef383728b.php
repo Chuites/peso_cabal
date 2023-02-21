@@ -1,6 +1,4 @@
-@extends('layouts.app2')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style type="text/css">
     .requerido:after {
         content: " *"; color: red;
@@ -90,7 +88,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row " align="center" style="padding: 10px;">
-                        <img src="{{ asset('img/min_gob.png') }}" width="500" height="200"><br><br>
+                        <img src="<?php echo e(asset('img/min_gob.png')); ?>" width="500" height="200"><br><br>
                         <h1>Citas en Línea</h><br><br>
                         <button class="btn btn-success" id="btnCita" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Agendar cita</button>
                         <br>
@@ -101,12 +99,12 @@
     </div>
 </div>
 
-{{-- MODAL DE BUSQUEDA DE SOLICITUD --}}
+
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modal_bsolicitud" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
-            {{-- Se omite el boton de cerrar del modal --}}
+            
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Busqueda | <small id="modalSubtitle">Solicitud</small></h4>
             </div>
@@ -120,7 +118,7 @@
                     </form>
 
                 <div id="contenedor">
-                    <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" id="token" name="_token" value="<?php echo e(csrf_token()); ?>">
                     <div class="row">
                         <div class="table-responsive">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -147,15 +145,21 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
-{{ Html::style('sources/DataTables-1.10.12/css/jquery.dataTables.css') }}
-{{ Html::script('sources/DataTables-1.10.12/js/jquery.dataTables.js') }}
-{{ Html::script('sources/DataTables-1.10.12/js/dataTables.bootstrap.min.js') }}
-{{ Html::script('https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js') }}
-{{ Html::script('js/toastr.js') }}
-{{ Html::style('css/toastr.css') }}
+<?php $__env->startSection('javascript'); ?>
+<?php echo e(Html::style('sources/DataTables-1.10.12/css/jquery.dataTables.css')); ?>
+
+<?php echo e(Html::script('sources/DataTables-1.10.12/js/jquery.dataTables.js')); ?>
+
+<?php echo e(Html::script('sources/DataTables-1.10.12/js/dataTables.bootstrap.min.js')); ?>
+
+<?php echo e(Html::script('https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js')); ?>
+
+<?php echo e(Html::script('js/toastr.js')); ?>
+
+<?php echo e(Html::style('css/toastr.css')); ?>
+
     <script type="text/javascript">
         $("#cui_busqueda").on("keydown",function search(e) {
             if(e.keyCode == 13) {
@@ -164,7 +168,7 @@
         });
 
         $("#btnCita").click(function(){
-            window.location="{{route('solicitudIndex')}}";
+            window.location="<?php echo e(route('solicitudIndex')); ?>";
         });
 
         $("#btn_bsolicitud").click(function(){
@@ -174,19 +178,19 @@
         $('#btn_buscarsolicitud').click(function(){
             if ($("#cui_busqueda").val() != "") {
                 $("#listadoTabla").dataTable().fnDestroy();
-                ruta = "{{route('buscarSolicitud')}}" + '/' + $("#cui_busqueda").val();
+                ruta = "<?php echo e(route('buscarSolicitud')); ?>" + '/' + $("#cui_busqueda").val();
                 // CARGA DE DATOS EN LA LISTA
                 $('#listadoTabla').DataTable({
                     columnDefs: [
                         { className: "dt-body-center", targets: [ 1 ]}
                     ],
                     language: {
-                        url: "{!! asset('sources/DataTables-1.10.12/languages/Spanish.json') !!}"
+                        url: "<?php echo asset('sources/DataTables-1.10.12/languages/Spanish.json'); ?>"
                     },
                     order: [1,'asc'],
                     bFilter : false, //oculta filtros
                     paging: false,
-                    lengthMenu: {{ config('constantes.datatableListRows') }},
+                    lengthMenu: <?php echo e(config('constantes.datatableListRows')); ?>,
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -345,4 +349,6 @@
         };
         requestAnimationFrame(update);
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app2', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
