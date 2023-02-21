@@ -21,7 +21,7 @@
     .col-2 {width: 16.66%; }
     .col-1 {width: 8.33%; }
 </style>
-<div style="background: #5a6f9c9c; padding: 5px;">
+<div style="background: linear-gradient(to bottom right, #91c9fa, #10375a6c); padding: 5px;">
 
 <hr>
 <h3><strong>Datos de Instrumento Público</strong></h3>

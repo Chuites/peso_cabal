@@ -82,6 +82,7 @@
     border-radius: 0 0 3px 3px;
     }
 </style>
+
 <div class="container" style="padding-top: 10%;">
 
     <div class="row">
