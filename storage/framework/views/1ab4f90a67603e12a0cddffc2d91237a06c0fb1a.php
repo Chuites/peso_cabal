@@ -37,41 +37,8 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top" style="background: linear-gradient(to bottom right, #91c9fa, #659dc9);">
-        <div class="container">
-            <div class="navbar-header" style="height: 80px; width: 100%;">
 
-
-
-                <!-- Branding Image -->
-                <a class="navbar-brand float-left" href="<?php echo e(url('/')); ?>">
-                    <img src="<?php echo e(asset('img/min_gob.png')); ?>" width="170" height="60">
-                </a>
-                <div class="pull-right" >
-                        <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
-                            <img src="<?php echo e(asset('img/logo_sistema.png')); ?>" width="100" height="60">
-                        </a>
-
-                        <a class="navbar-brand pull-right" href="<?php echo e(url('/')); ?>" style="color: #013759; padding-top: 12%;">
-                            <i class="fa fa-university" aria-hidden="true"></i>
-                            <strong>ESCRIBANÍA</strong>
-                        </a>
-                </div>
-
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <!--<li><a href="<?php echo e(url('/home')); ?>">Inicio</a></li>-->
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-
-            </div>
-        </div>
-    </nav>
-
+    <div id="particles-js"></div>
     <?php echo $__env->yieldContent('content'); ?>
 
     <!-- jQuery -->

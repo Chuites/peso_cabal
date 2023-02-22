@@ -16,7 +16,7 @@
     .col-2 {width: 16.66%; }
     .col-1 {width: 8.33%; }
 </style>
-<div style="background: #aaaaaa; padding: 5px;">
+<div style="background: linear-gradient(to bottom right, #91c9fa, #10375a6c); padding: 5px;">
 
     <hr>
     <h3><strong>Datos de Consulta de Seccion de Tierras</strong></h3>
@@ -242,7 +242,8 @@
                 </center>
             </div>
             <div class="modal-footer centrado_vertical">
-                {{ Form::boton('btnConfirmar', 'guardar', 'link', 'Confirmar', false, false) }}
+                &nbsp;
+                <a href="#" id="btnConfirmar" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</a>
             </div>
         </div>
     </div>
@@ -326,7 +327,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "/solicitud"
+        window.location = "{{route('solicitudIndex')}}"
     });
 
     $("#btnCerrar").click(function(e)

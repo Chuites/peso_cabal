@@ -26,7 +26,7 @@
     .col-2 {width: 16.66%; }
     .col-1 {width: 8.33%; }
 </style>
-<div style="background: #5a6f9c9c; padding: 5px;">
+<div style="background: linear-gradient(to bottom right, #91c9fa, #10375a6c); padding: 5px;">
 
 <hr>
 <h3><strong>Datos de Instrumento Público</strong></h3>
@@ -40,7 +40,7 @@
         <div class="col-md-6 ">
                 <?php echo Form::label('Número', 'Número', ['class' => 'control-label requerido', 'id' => 'lb_numero']); ?>
 
-                <?php echo Form::text('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])); ?>
+                <?php echo Form::number('numero', '', array_merge(['class' => 'form-control', 'id' => 'numero'])); ?>
 
         </div>
 </div>
@@ -273,8 +273,8 @@
                 </center>
             </div>
             <div class="modal-footer centrado_vertical">
-                <?php echo e(Form::boton('btnConfirmar', 'guardar', 'link', 'Confirmar', false, false)); ?>
-
+                &nbsp;
+                <a href="#" id="btnConfirmar" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</a>
             </div>
         </div>
     </div>
@@ -382,7 +382,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "/solicitud"
+        window.location = "<?php echo e(route('solicitudIndex')); ?>"
     });
 
     $("#btnCerrar").click(function(e)

@@ -34,7 +34,7 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top" >
+    <nav class="navbar navbar-default navbar-static-top" style="background: linear-gradient(to bottom right, #91c9fa, #659dc9);">
         <div class="container">
             <div class="navbar-header" style="height: 80px; width: 100%;">
 
@@ -45,12 +45,11 @@
                     <img src="{{ asset('img/min_gob.png') }}" width="170" height="60">
                 </a>
                 <div class="pull-right" >
-                         <a class="navbar-brand" href="{{ url('/') }}">
+                        <a class="navbar-brand" href="{{ url('/') }}">
                             <img src="{{ asset('img/logo_sistema.png') }}" width="100" height="60">
                         </a>
 
-
-                        <a class="navbar-brand pull-right" href="{{ url('/') }}">
+                        <a class="navbar-brand pull-right" href="{{ url('/') }}" style="color: #013759; padding-top: 12%;">
                             <i class="fa fa-university" aria-hidden="true"></i>
                             <strong>ESCRIBANÍA</strong>
                         </a>

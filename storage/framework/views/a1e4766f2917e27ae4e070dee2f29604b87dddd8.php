@@ -16,7 +16,7 @@
     .col-2 {width: 16.66%; }
     .col-1 {width: 8.33%; }
 </style>
-<div style="background: #793e3e34; padding: 5px;">
+<div style="background: linear-gradient(to bottom right, #91c9fa, #10375a6c); padding: 5px;">
     <hr>
     <h3><strong>Datos de Consulta de Archivo Historico</strong></h3>
     <div class="row">
@@ -24,6 +24,12 @@
             <?php echo Form::label('id_ci_tipo_consulta', 'Tipo de Consulta', ['class' => 'control-label requerido', 'id' => 'lb_tipo_consulta']); ?>
 
             <?php echo Form::select('id_ci_tipo_consulta', @$id_ci_tipo_consulta, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_consulta'])); ?>
+
+        </div>
+        <div class="col-md-6" >
+            <?php echo Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']); ?>
+
+            <?php echo Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])); ?>
 
         </div>
     </div>
@@ -38,20 +44,6 @@
             <?php echo Form::label('Descripcion', 'Descripcion', ['class' => 'control-label requerido', 'id' => 'lb_descripcion']); ?>
 
             <?php echo Form::text('descripcion', '', array_merge(['class' => 'form-control', 'id' => 'descripcion'])); ?>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6" >
-            <?php echo Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']); ?>
-
-            <?php echo Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])); ?>
-
-        </div>
-        <div class="col-md-6 ">
-            <?php echo Form::label('Signatura', 'Signatura', ['class' => 'control-label requerido', 'id' => 'lb_signatura']); ?>
-
-            <?php echo Form::text('signatura', '', array_merge(['class' => 'form-control', 'id' => 'signatura'])); ?>
 
         </div>
     </div>
@@ -168,10 +160,6 @@
                                 <td class="col-7 tb-td" id="tbl_anio"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Signatura</td>
-                                <td class="col-7 tb-td" id="tbl_signatura"></td>
-                            </tr>
-                            <tr>
                                 <td class="gray col-5 tb-td" >Observaciones</td>
                                 <td class="col-7 tb-td" id="tbl_observaciones"></td>
                             </tr>
@@ -227,8 +215,8 @@
                 </center>
             </div>
             <div class="modal-footer centrado_vertical">
-                <?php echo e(Form::boton('btnConfirmar', 'guardar', 'link', 'Confirmar', false, false)); ?>
-
+                &nbsp;
+                <a href="#" id="btnConfirmar" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Aceptar</a>
             </div>
         </div>
     </div>
@@ -274,7 +262,6 @@
         $('#tbl_institucion').text($('#institucion').val());
         $('#tbl_descripcion').text($('#descripcion').val());
         $('#tbl_anio').text($('#anio').val());
-        $('#tbl_signatura').text($('#signatura').val());
         $('#tbl_observaciones').text($('#observaciones').val());
 
         //Datos del solicitante
@@ -324,7 +311,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "/solicitud"
+        window.location = "<?php echo e(route('solicitudIndex')); ?>"
     });
 
     $("#btnCerrar").click(function(e)

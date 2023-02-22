@@ -1,21 +1,21 @@
 <?php $__env->startSection('content'); ?>
 <style type="text/css">
     .requerido:after {
-        content: " *"; color: red;
+        content: " *"; color: #337ab7;
     }
     #listadoTabla th {
-        background-color: #229954;
+        background-color: #337ab7;
         color: #fff;
 
         font-weight: bold;
     }
     .listadoTabla th {
-        background-color: #229954;
+        background-color: #337ab7;
         color: #fff;
     }
 
     .listadoTabla thead {
-        background-color: #229954;
+        background-color: #337ab7;
         color: #fff;
     }
 </style>
@@ -163,7 +163,6 @@
                 });
             }
         });
-
     </script>
 <?php $__env->stopSection(); ?>
 

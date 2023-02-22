@@ -95,6 +95,10 @@
         <td class="gray col-5 tb-td" >Fecha de Cita</td>
         <td class="col-7 tb-td">&nbsp;{{@$cita->fecha}}</td>
     </tr>
+    <tr>
+        <td class="gray col-5 tb-td" >Horario de Cita</td>
+        <td class="col-7 tb-td">&nbsp;{{@$cita->horario->catalogo_item}}</td>
+    </tr>
 </table>
 
 <br>
