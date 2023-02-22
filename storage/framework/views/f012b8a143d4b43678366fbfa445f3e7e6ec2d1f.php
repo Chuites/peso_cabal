@@ -17,61 +17,107 @@
     .col-1 {width: 8.33%; }
 </style>
 <div style="background: linear-gradient(to bottom right, #91c9fa, #10375a6c); padding: 5px;">
-    <hr>
-    <h3><strong>Datos de Consulta de Archivo Historico</strong></h3>
-    <div class="row">
-        <div class="col-md-6">
-            {!! Form::label('id_ci_tipo_consulta', 'Tipo de Consulta', ['class' => 'control-label requerido', 'id' => 'lb_tipo_consulta']) !!}
-            {!! Form::select('id_ci_tipo_consulta', @$id_ci_tipo_consulta, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_consulta'])) !!}
-        </div>
-        <div class="col-md-6" >
-            {!! Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']) !!}
-            {!! Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])) !!}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6" >
-            {!! Form::label('Institucion', 'Institucion', ['class' => 'control-label requerido', 'id' => 'lb_institucion']) !!}
-            {!! Form::text('institucion', '', array_merge(['class' => 'form-control', 'id' => 'institucion'])) !!}
-        </div>
-        <div class="col-md-6 ">
-            {!! Form::label('Descripcion', 'Descripcion', ['class' => 'control-label requerido', 'id' => 'lb_descripcion']) !!}
-            {!! Form::text('descripcion', '', array_merge(['class' => 'form-control', 'id' => 'descripcion'])) !!}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12" >
-            {!! Form::label('Observaciones', 'Observaciones', ['class' => 'control-label requerido', 'id' => 'lb_observaciones']) !!}
-            {!! Form::textarea('observaciones', '', array_merge(['class' => 'form-control', 'id' => 'observaciones', 'rows'=>'3'])) !!}
-        </div>
-    </div>
-</div>
 
     <hr>
-    <h3><strong>Datos de Cita</strong></h3>
-
-        <center>
-            <a class="btn btn-primary opAgengarCitaProtocolo" href="#"><i class="fa fa-calendar "></i>&nbsp;Agendar cita</a>
-        </center>
+    <h3><strong>Datos de Consulta de Seccion de Tierras</strong></h3>
     <div class="row">
-        <div class="col-md-6" >
-            {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-            {!! Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
+            <div class="col-md-12 ">
+                    <?php echo Form::label('Expediente', 'Expediente', ['class' => 'control-label requerido', 'id' => 'lb_expediente']); ?>
+
+                    <?php echo Form::text('expediente', '', array_merge(['class' => 'form-control', 'id' => 'expediente'])); ?>
 
             </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 ">
-            {!! Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_hora']) !!}
-            {!! Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])) !!}
+            <?php echo Form::label('Ingeniero Medidor', 'Ingeniero Medidor', ['class' => 'control-label requerido', 'id' => 'lb_ing_medidor']); ?>
+
+            <?php echo Form::text('ing_medidor', '', array_merge(['class' => 'form-control', 'id' => 'ing_medidor'])); ?>
+
+        </div>
+        <div class="col-md-6 ">
+            <?php echo Form::label('Ingeniero Revisor', 'Ingeniero Revisor', ['class' => 'control-label requerido', 'id' => 'lb_ing_revisor']); ?>
+
+            <?php echo Form::text('ing_revisor', '', array_merge(['class' => 'form-control', 'id' => 'ing_revisor'])); ?>
+
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            <?php echo Form::label('Finca Numero', 'Finca Numero', ['class' => 'control-label requerido', 'id' => 'lb_finca_numero']); ?>
+
+            <?php echo Form::text('finca_numero', '', array_merge(['class' => 'form-control', 'id' => 'finca_numero'])); ?>
+
+        </div>
+        <div class="col-md-6 ">
+            <?php echo Form::label('Diligencia Administrativa', 'Diligencia Administrativa', ['class' => 'control-label requerido', 'id' => 'lb_diligencia_administrativa']); ?>
+
+            <?php echo Form::text('diligencia_administrativa', '', array_merge(['class' => 'form-control', 'id' => 'diligencia_administrativa'])); ?>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            <?php echo Form::label('Opositor', 'Opositor', ['class' => 'control-label requerido', 'id' => 'lb_opositor']); ?>
+
+            <?php echo Form::text('opositor', '', array_merge(['class' => 'form-control', 'id' => 'opositor'])); ?>
+
+        </div>
+        <div class="col-md-6 ">
+            <?php echo Form::label('Terreno Denominado', 'Terreno Denominado', ['class' => 'control-label requerido', 'id' => 'lb_terreno_denominado']); ?>
+
+            <?php echo Form::text('terreno_denominado', '', array_merge(['class' => 'form-control', 'id' => 'terreno_denominado'])); ?>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 ">
+            <?php echo Form::label('Jurisdiccion', 'Jurisdiccion', ['class' => 'control-label requerido', 'id' => 'lb_jurisdiccion']); ?>
+
+            <?php echo Form::text('jurisdiccion', '', array_merge(['class' => 'form-control', 'id' => 'jurisdiccion'])); ?>
+
+        </div>
+        <div class="col-md-6 ">
+            <?php echo Form::label('Departamento', 'Departamento', ['class' => 'control-label requerido', 'id' => 'lb_departamento']); ?>
+
+            <?php echo Form::text('departamento', '', array_merge(['class' => 'form-control', 'id' => 'departamento'])); ?>
+
+        </div>
+    </div>
+    <br>
+
+</div>
+
+<hr>
+<h3><strong>Datos de Cita</strong></h3>
+
+
+    <center>
+            <a class="btn btn-primary opAgengarCitaProtocolo" href="#"><i class="fa fa-calendar "></i>Agendar cita</a>
+    </center>
+<div class="row">
+    <div class="col-md-6" >
+            <?php echo Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']); ?>
+
+            <?php echo Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])); ?>
+
+
+        </div>
+    <div class="col-md-6 ">
+            <?php echo Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_numero']); ?>
+
+            <?php echo Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])); ?>
+
+    </div>
+</div>
 <br>
 <div class="row">
     <center>
-        <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-file-pdf-o"></i>&nbsp;Generar solicitud</a>
+    <a class="btn btn-success btnGenerarSolicitud" id="btnGenerarSolicitud" href="#"><i class="fa fa-file-pdf-o"></i>Generar solicitud</a>
     </center>
 </div>
 
-{{-- MODAL DE CITA --}}
+
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalCitaProtocolo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -80,26 +126,29 @@
                 <h4 class="modal-title" id="myModalLabel">Agendar | <small id="modalSubtitle">Cita</small></h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <label >Fecha</label>
-                        <div class="input-group date" data-align="top" >
-                            <input type="text" class="form-control"  id="fecha_modal"  readonly>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <label >Hora</label>
-                        <div class="input-group date" data-align="top" >
-                            {!! Form::select('id_horario_cita', @$id_horario_cita, '', array_merge(['class' => 'form-control', 'id' => 'id_horario_cita'])) !!}
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <label >Fecha</label>
+                    <div class="input-group date" data-align="top" >
+                        <input type="text" class="form-control"  id="fecha_modal"  readonly>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <label >Hora</label>
+                    <div class="input-group date" data-align="top" >
+                        <?php echo Form::select('id_horario_cita', @$id_horario_cita, '', array_merge(['class' => 'form-control', 'id' => 'id_horario_cita'])); ?>
+
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             </div>
             <div class="modal-footer centrado_vertical">
                 <div class="pull-right">
@@ -112,13 +161,13 @@
     </div>
 </div>
 
-{{-- MODAL DE CONFIRMACION --}}
+
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalCitaCreada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
-            {{-- Se omite el boton de cerrar del modal --}}
-            {{--  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+            
+            
                 <h4 class="modal-title" id="myModalLabel">Cita Creada | <small id="modalSubtitle">Datos</small></h4>
             </div>
             <div class="modal-body">
@@ -129,24 +178,40 @@
                                 <td class="gray tb-td text-center" colspan="2"><strong>DATOS DEL SERVICIO SOLICITADO</strong></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Tipo de Consulta</td>
-                                <td class="col-7 tb-td" id="tbl_tipo_consulta"></td>
+                                <td class="gray col-5 tb-td" >Expediente No.</td>
+                                <td class="col-7 tb-td" id="tbl_expediente"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Institucion</td>
-                                <td class="col-7 tb-td" id="tbl_institucion"></td>
+                                <td class="gray col-5 tb-td" >Ingeniero Medidor</td>
+                                <td class="col-7 tb-td" id="tbl_ingeniero_medidor"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Descripcion</td>
-                                <td class="col-7 tb-td" id="tbl_descripcion"></td>
+                                <td class="gray col-5 tb-td" >Ingeniero Revisor</td>
+                                <td class="col-7 tb-td" id="tbl_ingeniero_revisor"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Año</td>
-                                <td class="col-7 tb-td" id="tbl_anio"></td>
+                                <td class="gray col-5 tb-td" >Finca Numero</td>
+                                <td class="col-7 tb-td" id="tbl_finca_numero"></td>
                             </tr>
                             <tr>
-                                <td class="gray col-5 tb-td" >Observaciones</td>
-                                <td class="col-7 tb-td" id="tbl_observaciones"></td>
+                                <td class="gray col-5 tb-td" >Diligencia Administrativa</td>
+                                <td class="col-7 tb-td" id="tbl_diligencia_administrativa"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Opositor</td>
+                                <td class="col-7 tb-td" id="tbl_opositor"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Terreno Denominado</td>
+                                <td class="col-7 tb-td" id="tbl_terreno_denominado"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Jurisdiccion</td>
+                                <td class="col-7 tb-td" id="tbl_jurisdiccion"></td>
+                            </tr>
+                            <tr>
+                                <td class="gray col-5 tb-td" >Departamento</td>
+                                <td class="col-7 tb-td" id="tbl_departamento"></td>
                             </tr>
                         </table>
                         <br>
@@ -208,7 +273,7 @@
 </div>
 
 <form id="form_view_imp_boleta" method="post" action="" target='_blank'>
-    <input type="hidden" name="_token" value="{{ csrf_token() }}" id='token'>
+    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" id='token'>
     <input type="hidden" name="id" id="id">
 </form>
 
@@ -219,35 +284,24 @@
         autoclose: true,
         daysOfWeekDisabled: [0,6],
         daysOfWeekHighlighted: [1,2,3,4,5],
-        datesDisabled: @json($disabledDates)
+        datesDisabled: <?php echo json_encode($disabledDates, 15, 512) ?>
     });
-    $('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
 
-    $(document).ready(function(){
-        $('#hora_modal').datetimepicker({
-            format: "HH:mm",
-            disabledTimeIntervals: [
-                [moment({ h: 00 , m: 01}), moment({ h: 8, m: 00 })],
-                [moment({ h: 12, m:59 }), moment({ h: 14 })],
-                [moment({ h: 18 }), moment({ h: 24 })]
-            ],
-            ignoreReadonly: true,
-            showClose: true,
-        });
-    });
+    $('#fecha_modal').datepicker('setStartDate','<?php echo e($hoy); ?>');
 
     $("#btnGenerarSolicitud").click(function(e){
         e.preventDefault();
 
-        //Se asignan los valores al modal
-        var consulta = document.getElementById("id_ci_tipo_consulta");
-        var opcion = consulta.options[consulta.selectedIndex].text;
-        $('#tbl_tipo_consulta').text(opcion);
-
-        $('#tbl_institucion').text($('#institucion').val());
-        $('#tbl_descripcion').text($('#descripcion').val());
-        $('#tbl_anio').text($('#anio').val());
-        $('#tbl_observaciones').text($('#observaciones').val());
+        //Se asignan los valores de la solicitud al modal
+        $('#tbl_expediente').text($('#expediente').val());
+        $('#tbl_ingeniero_medidor').text($('#ing_medidor').val());
+        $('#tbl_ingeniero_revisor').text($('#ing_revisor').val());
+        $('#tbl_finca_numero').text($('#finca_numero').val());
+        $('#tbl_diligencia_administrativa').text($('#diligencia_administrativa').val());
+        $('#tbl_opositor').text($('#opositor').val());
+        $('#tbl_terreno_denominado').text($('#terreno_denominado').val());
+        $('#tbl_jurisdiccion').text($('#jurisdiccion').val());
+        $('#tbl_departamento').text($('#departamento').val());
 
         //Datos del solicitante
         $('#tbl_nombre_completo').text($('#nombres').val()+" "+$('#apellidos').val());
@@ -256,14 +310,13 @@
         $('#tbl_correo_electronico').text($('#email').val());
         $('#tbl_cui').text($('#cui').val());
 
-        //Datos de la cita
+        //Datos de cita
         $('#tbl_fecha_cita').text($('#fecha_v').val());
         $('#tbl_hora_cita').text($('#hora_v').val());
 
-        var URL = "{{route('generarSolicitud')}}";
-        var TOKEN = '{{ csrf_token() }}';
+        var URL = "<?php echo e(route('generarSolicitud')); ?>";
+        var TOKEN = '<?php echo e(csrf_token()); ?>';
         var DATA = $('#form_consulta').serialize();
-        //alert (DATA);
         callAjaxBlock(URL, TOKEN, DATA, function(response){
             $.unblockUI();
             if (response.status != 200) {
@@ -271,13 +324,14 @@
                 return false;
             }
             $('#modalCitaCreada').modal('show');
-            $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
+            $('#form_view_imp_boleta').attr('action', '<?php echo e(route("viewBoletaPDFSolicitud")); ?>');
             $('#form_view_imp_boleta').submit();
         })
     });
 
+
     $('#fecha_modal').change(function(){
-        $.get("{{ route('horariosDisponibles')}}",
+        $.get("<?php echo e(route('horariosDisponibles')); ?>",
         {
             fecha: $('#fecha_modal').val(),
             id_tipo_solicitud: $('#id_ci_tipo_solicitud').val()
@@ -296,7 +350,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "{{route('solicitudIndex')}}"
+        window.location = "<?php echo e(route('solicitudIndex')); ?>"
     });
 
     $("#btnCerrar").click(function(e)
@@ -306,19 +360,20 @@
     });
 
     $("#btnAgregar").click(function(e){
-        e.preventDefault();
-        $("#fecha_v").val($("#fecha_modal").val());
-        var combo = document.getElementById("id_horario_cita");
-        var selected = combo.options[combo.selectedIndex].text;
-        //alert(selected);
-        $("#hora_v").val(selected);
-        $('#modalCitaProtocolo').modal('hide');
+            e.preventDefault();
+            $("#fecha_v").val($("#fecha_modal").val());
+            var combo = document.getElementById("id_horario_cita");
+            var selected = combo.options[combo.selectedIndex].text;
+            $("#hora_v").val(selected);
+            $('#modalCitaProtocolo').modal('hide');
     });
 
     $(".opAgengarCitaProtocolo").click(function(e){
-        e.preventDefault();
-        $('#modalCitaProtocolo').modal('show');
+            e.preventDefault();
+
+            $('#modalCitaProtocolo').modal('show');
     });
+
 
     function Select_Cod(campo,cod_credito,seleccionadas){
         if(document.getElementById(seleccionadas)!= null){
@@ -338,8 +393,13 @@
                         }
                     }
                 }
-            }else{ document.getElementById(seleccionadas).value = cod_credito; }
-        } else{ alert('No Existe');}
+            }else{
+                document.getElementById(seleccionadas).value = cod_credito;
+
+            }
+        }else{
+        alert('No Existe');
+        }
     }
 </script>
 

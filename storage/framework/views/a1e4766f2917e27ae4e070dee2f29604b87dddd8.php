@@ -21,28 +21,38 @@
     <h3><strong>Datos de Consulta de Archivo Historico</strong></h3>
     <div class="row">
         <div class="col-md-6">
-            {!! Form::label('id_ci_tipo_consulta', 'Tipo de Consulta', ['class' => 'control-label requerido', 'id' => 'lb_tipo_consulta']) !!}
-            {!! Form::select('id_ci_tipo_consulta', @$id_ci_tipo_consulta, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_consulta'])) !!}
+            <?php echo Form::label('id_ci_tipo_consulta', 'Tipo de Consulta', ['class' => 'control-label requerido', 'id' => 'lb_tipo_consulta']); ?>
+
+            <?php echo Form::select('id_ci_tipo_consulta', @$id_ci_tipo_consulta, '', array_merge(['class' => 'form-control', 'id' => 'id_ci_tipo_consulta'])); ?>
+
         </div>
         <div class="col-md-6" >
-            {!! Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']) !!}
-            {!! Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])) !!}
+            <?php echo Form::label('Año', 'Año', ['class' => 'control-label requerido', 'id' => 'lb_anio']); ?>
+
+            <?php echo Form::text('anio', '', array_merge(['class' => 'form-control', 'id' => 'anio'])); ?>
+
         </div>
     </div>
     <div class="row">
         <div class="col-md-6" >
-            {!! Form::label('Institucion', 'Institucion', ['class' => 'control-label requerido', 'id' => 'lb_institucion']) !!}
-            {!! Form::text('institucion', '', array_merge(['class' => 'form-control', 'id' => 'institucion'])) !!}
+            <?php echo Form::label('Institucion', 'Institucion', ['class' => 'control-label requerido', 'id' => 'lb_institucion']); ?>
+
+            <?php echo Form::text('institucion', '', array_merge(['class' => 'form-control', 'id' => 'institucion'])); ?>
+
         </div>
         <div class="col-md-6 ">
-            {!! Form::label('Descripcion', 'Descripcion', ['class' => 'control-label requerido', 'id' => 'lb_descripcion']) !!}
-            {!! Form::text('descripcion', '', array_merge(['class' => 'form-control', 'id' => 'descripcion'])) !!}
+            <?php echo Form::label('Descripcion', 'Descripcion', ['class' => 'control-label requerido', 'id' => 'lb_descripcion']); ?>
+
+            <?php echo Form::text('descripcion', '', array_merge(['class' => 'form-control', 'id' => 'descripcion'])); ?>
+
         </div>
     </div>
     <div class="row">
         <div class="col-md-12" >
-            {!! Form::label('Observaciones', 'Observaciones', ['class' => 'control-label requerido', 'id' => 'lb_observaciones']) !!}
-            {!! Form::textarea('observaciones', '', array_merge(['class' => 'form-control', 'id' => 'observaciones', 'rows'=>'3'])) !!}
+            <?php echo Form::label('Observaciones', 'Observaciones', ['class' => 'control-label requerido', 'id' => 'lb_observaciones']); ?>
+
+            <?php echo Form::textarea('observaciones', '', array_merge(['class' => 'form-control', 'id' => 'observaciones', 'rows'=>'3'])); ?>
+
         </div>
     </div>
 </div>
@@ -55,13 +65,17 @@
         </center>
     <div class="row">
         <div class="col-md-6" >
-            {!! Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']) !!}
-            {!! Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])) !!}
+            <?php echo Form::label('Fecha', 'Fecha', ['class' => 'control-label requerido', 'id' => 'lb_nombres']); ?>
+
+            <?php echo Form::text('fecha_v', '', array_merge(['class' => 'form-control', 'id' => 'fecha_v','readonly'])); ?>
+
 
             </div>
         <div class="col-md-6 ">
-            {!! Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_hora']) !!}
-            {!! Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])) !!}
+            <?php echo Form::label('Hora', 'Hora', ['class' => 'control-label requerido', 'id' => 'lb_hora']); ?>
+
+            <?php echo Form::text('hora_v', '', array_merge(['class' => 'form-control', 'id' => 'hora_v','readonly'])); ?>
+
         </div>
     </div>
 <br>
@@ -71,7 +85,7 @@
     </center>
 </div>
 
-{{-- MODAL DE CITA --}}
+
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalCitaProtocolo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -93,7 +107,8 @@
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <label >Hora</label>
                         <div class="input-group date" data-align="top" >
-                            {!! Form::select('id_horario_cita', @$id_horario_cita, '', array_merge(['class' => 'form-control', 'id' => 'id_horario_cita'])) !!}
+                            <?php echo Form::select('id_horario_cita', @$id_horario_cita, '', array_merge(['class' => 'form-control', 'id' => 'id_horario_cita'])); ?>
+
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -112,13 +127,13 @@
     </div>
 </div>
 
-{{-- MODAL DE CONFIRMACION --}}
+
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalCitaCreada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
-            {{-- Se omite el boton de cerrar del modal --}}
-            {{--  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+            
+            
                 <h4 class="modal-title" id="myModalLabel">Cita Creada | <small id="modalSubtitle">Datos</small></h4>
             </div>
             <div class="modal-body">
@@ -208,7 +223,7 @@
 </div>
 
 <form id="form_view_imp_boleta" method="post" action="" target='_blank'>
-    <input type="hidden" name="_token" value="{{ csrf_token() }}" id='token'>
+    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" id='token'>
     <input type="hidden" name="id" id="id">
 </form>
 
@@ -219,9 +234,9 @@
         autoclose: true,
         daysOfWeekDisabled: [0,6],
         daysOfWeekHighlighted: [1,2,3,4,5],
-        datesDisabled: @json($disabledDates)
+        datesDisabled: <?php echo json_encode($disabledDates, 15, 512) ?>
     });
-    $('#fecha_modal').datepicker('setStartDate','{{$hoy}}');
+    $('#fecha_modal').datepicker('setStartDate','<?php echo e($hoy); ?>');
 
     $(document).ready(function(){
         $('#hora_modal').datetimepicker({
@@ -260,8 +275,8 @@
         $('#tbl_fecha_cita').text($('#fecha_v').val());
         $('#tbl_hora_cita').text($('#hora_v').val());
 
-        var URL = "{{route('generarSolicitud')}}";
-        var TOKEN = '{{ csrf_token() }}';
+        var URL = "<?php echo e(route('generarSolicitud')); ?>";
+        var TOKEN = '<?php echo e(csrf_token()); ?>';
         var DATA = $('#form_consulta').serialize();
         //alert (DATA);
         callAjaxBlock(URL, TOKEN, DATA, function(response){
@@ -271,13 +286,13 @@
                 return false;
             }
             $('#modalCitaCreada').modal('show');
-            $('#form_view_imp_boleta').attr('action', '{{ route("viewBoletaPDFSolicitud") }}');
+            $('#form_view_imp_boleta').attr('action', '<?php echo e(route("viewBoletaPDFSolicitud")); ?>');
             $('#form_view_imp_boleta').submit();
         })
     });
 
     $('#fecha_modal').change(function(){
-        $.get("{{ route('horariosDisponibles')}}",
+        $.get("<?php echo e(route('horariosDisponibles')); ?>",
         {
             fecha: $('#fecha_modal').val(),
             id_tipo_solicitud: $('#id_ci_tipo_solicitud').val()
@@ -296,7 +311,7 @@
     {
         e.preventDefault();
         $('#modalCitaCreada').modal('hide');
-        window.location = "{{route('solicitudIndex')}}"
+        window.location = "<?php echo e(route('solicitudIndex')); ?>"
     });
 
     $("#btnCerrar").click(function(e)

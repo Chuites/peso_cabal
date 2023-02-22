@@ -10,18 +10,21 @@
 
     <!-- Fonts -->
     <!-- Font Awesome -->
-        {!!Html::style('sources/font-awesome-4.6.3/css/font-awesome.min.css')!!}
+        <?php echo Html::style('sources/font-awesome-4.6.3/css/font-awesome.min.css'); ?>
+
 
 
     <!-- Styles -->
     <!-- Bootstrap -->
-        {!!Html::style('sources/bootstrap-3.3.6/css/bootstrap.min.css')!!}
-        {!!Html::script('js/mingobapp.js')!!}
+        <?php echo Html::style('sources/bootstrap-3.3.6/css/bootstrap.min.css'); ?>
+
+        <?php echo Html::script('js/mingobapp.js'); ?>
+
 
     <style>
         body {
             font-family: 'Lato';
-            background: url( {{ asset('img/background_migracion.png') }}) #E5E5E5 ;
+            background: url( <?php echo e(asset('img/background_migracion.png')); ?>) #E5E5E5 ;
 
         }
 
@@ -41,15 +44,15 @@
 
 
                 <!-- Branding Image -->
-                <a class="navbar-brand float-left" href="{{ url('/') }}">
-                    <img src="{{ asset('img/min_gob.png') }}" width="170" height="60">
+                <a class="navbar-brand float-left" href="<?php echo e(url('/')); ?>">
+                    <img src="<?php echo e(asset('img/min_gob.png')); ?>" width="170" height="60">
                 </a>
                 <div class="pull-right" >
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            <img src="{{ asset('img/logo_sistema.png') }}" width="100" height="60">
+                        <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
+                            <img src="<?php echo e(asset('img/logo_sistema.png')); ?>" width="100" height="60">
                         </a>
 
-                        <a class="navbar-brand pull-right" href="{{ url('/') }}" style="color: #013759; padding-top: 12%;">
+                        <a class="navbar-brand pull-right" href="<?php echo e(url('/')); ?>" style="color: #013759; padding-top: 12%;">
                             <i class="fa fa-university" aria-hidden="true"></i>
                             <strong>ESCRIBANÍA</strong>
                         </a>
@@ -60,7 +63,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <!--<li><a href="{{ url('/home') }}">Inicio</a></li>-->
+                    <!--<li><a href="<?php echo e(url('/home')); ?>">Inicio</a></li>-->
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -69,19 +72,23 @@
         </div>
     </nav>
 
-    @yield('content')
+    <?php echo $__env->yieldContent('content'); ?>
 
     <!-- jQuery -->
-        {!! Html::script('js/jquery-1.12.4.min.js') !!}
+        <?php echo Html::script('js/jquery-1.12.4.min.js'); ?>
+
 
     <!-- Bootstrap -->
-        {!!Html::script('sources/bootstrap-3.3.6/js/bootstrap.min.js')!!}
-        <!-- BlockUI-->
-        {{ Html::script('js/jquery.blockUI.js') }}
-         <!-- bootbox-->
-        {!!Html::script('js/bootbox.min.js')!!}
+        <?php echo Html::script('sources/bootstrap-3.3.6/js/bootstrap.min.js'); ?>
 
-    @yield('javascript')
+        <!-- BlockUI-->
+        <?php echo e(Html::script('js/jquery.blockUI.js')); ?>
+
+         <!-- bootbox-->
+        <?php echo Html::script('js/bootbox.min.js'); ?>
+
+
+    <?php echo $__env->yieldContent('javascript'); ?>
     <script type="text/javascript">
     </script>
 </body>
