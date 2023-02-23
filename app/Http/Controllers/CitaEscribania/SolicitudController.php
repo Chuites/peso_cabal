@@ -33,7 +33,7 @@ class SolicitudController extends Controller
         return view('citas.inicio');
     }
 
-    public function solicitudIndex()
+    /* public function solicitudIndex()
     {
         //Se consulta los tipos de solicitud desde el catalogo
         $catalogo =  CatalogoItem::where('id_catalogo', config('constantes.ID_C_TIPO_TRAMITE_CITA_LINEA'))->where('esta_activo', true)->pluck('catalogo_item', 'id_catalogo_item')->prepend('Seleccionar opción', '-1');
@@ -721,6 +721,7 @@ class SolicitudController extends Controller
 
     protected function buscarSolicitud(request $request, $cui_busqueda)
     {
+
         //DataTable contador de renderizacion
         $dataTablesResponse['draw'] = intval($request->draw);
 
@@ -796,7 +797,7 @@ class SolicitudController extends Controller
         /* $registros = $registros->whereHas('cita', function ($query){
             $query->where('id_solicitante', 5);
         })->get();
-        logger($registros); */
+        logger($registros); *//*
 
         $registros = Solicitud::select()
                 ->join('cita_escribania.cita', 'solicitud.id_cita', '=', 'cita.id_cita')
@@ -848,9 +849,9 @@ class SolicitudController extends Controller
         ];
 
         return response()->json($response);
-    }
+    } */
 
-    protected function imprimirSolicitud(request $req, $id_solicitud)
+    /* protected function imprimirSolicitud(request $req, $id_solicitud)
     {
         $id_solicitud = decrypt($id_solicitud);
 
@@ -921,6 +922,6 @@ class SolicitudController extends Controller
             return $pdf->download('Boleta Seccion de Tierras.pdf');
         }
 
-    }
+    } */
 
 }

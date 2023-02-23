@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="shortcut icon" href="http://logos.mingob.gob.gt/icono_mingob.png" type="image/x-icon"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>CITAS ESCRIBANIA</title>
+    <title>PESO CABAL</title>
 
     <!-- Fonts -->
     <!-- Font Awesome -->
@@ -21,7 +20,6 @@
     <style>
         body {
             font-family: 'Lato';
-            background: url( {{ asset('img/background_migracion.png') }}) #E5E5E5 ;
 
         }
 

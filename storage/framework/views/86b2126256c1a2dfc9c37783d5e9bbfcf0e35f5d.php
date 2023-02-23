@@ -89,11 +89,11 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row " align="center" style="padding: 10px;">
-                        <img src="<?php echo e(asset('img/min_gob.png')); ?>" width="500" height="200"><br><br>
-                        <h1>Citas en Línea</h><br><br>
-                        <button class="btn btn-success" id="btnCita" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Agendar cita</button>
+                        <img src="<?php echo e(asset('img/bascula.png')); ?>" width="500" height="200"><br><br>
+                        <h1>Peso Cabal</h><br><br>
+                        <button class="btn btn-success" id="btnCita" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;&nbsp;Registrar Ingreso</button>
                         <br>
-                        <a href="#" id="btn_bsolicitud" class="btn btn-info"><i class="fa fa-search"></i>&nbsp;Buscar Solicitud</a>
+                        <a href="#" id="btn_bsolicitud" class="btn btn-info"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar registro</a>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
         });
 
         $("#btnCita").click(function(){
-            window.location="<?php echo e(route('solicitudIndex')); ?>";
+
         });
 
         $("#btn_bsolicitud").click(function(){
@@ -179,7 +179,7 @@
         $('#btn_buscarsolicitud').click(function(){
             if ($("#cui_busqueda").val() != "") {
                 $("#listadoTabla").dataTable().fnDestroy();
-                ruta = "<?php echo e(route('buscarSolicitud')); ?>" + '/' + $("#cui_busqueda").val();
+
                 // CARGA DE DATOS EN LA LISTA
                 $('#listadoTabla').DataTable({
                     columnDefs: [
