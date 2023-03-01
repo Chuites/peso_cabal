@@ -56,7 +56,7 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
+        <div class="header_img"> <img src="https://lacasadelagricultor.com.gt/wp-content/uploads/2020/04/5.png" alt=""> </div>
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
@@ -73,14 +73,48 @@
     <div class="height-100 bg-light" style="padding:7%;" id="">
         <br>
         <h3>DATOS DE ENVIO</h3>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+            </div>
+            <div class="col-md-4">
+            <label for="validationCustomUsername" class="form-label">Numero de DPI</label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">#</span>
+                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+            </div>
+            </div>
+            <div class="col-md-8">
+                <label for="validationCustom03" class="form-label">Transporte</label>
+                <input type="text" class="form-control" id="validationCustom03" required>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom05" class="form-label">Placa</label>
+                <input type="text" class="form-control" id="validationCustom05" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustomUsername" class="form-label">Cantidad de Cafe</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">#</span>
+                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustomUsername" class="form-label">Numero de Parcialidades</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">#</span>
+                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Enviar Carga</button>
+            </div>
+        </form>
     </div>
     <!--Container Main end-->
 </body>
