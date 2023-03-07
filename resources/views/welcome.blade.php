@@ -52,6 +52,11 @@
         }
         linkColor.forEach(l=> l.addEventListener('click', colorLink))
 
+        document.getElementById("bienvenida").style.display = "block";
+        document.getElementById("datos_cuenta").style.display = "none";
+        document.getElementById("datos_envio").style.display = "none";
+        document.getElementById("datos_cuenta").style.display = "none";
+
         $("#btnenviar").click(function(e){
             let datos;
                 $.ajax({
@@ -71,6 +76,27 @@
                 });
         });
 
+        $("#btn_crear_cuenta").click(function(e){
+            document.getElementById("bienvenida").style.display = "none";
+            document.getElementById("datos_cuenta").style.display = "block";
+            document.getElementById("datos_envio").style.display = "none";
+        });
+        $("#btn_crear_cuenta2").click(function(e){
+            document.getElementById("bienvenida").style.display = "none";
+            document.getElementById("datos_cuenta").style.display = "block";
+            document.getElementById("datos_envio").style.display = "none";
+        });
+        $("#btn_inicio").click(function(e){
+            document.getElementById("bienvenida").style.display = "block";
+            document.getElementById("datos_cuenta").style.display = "none";
+            document.getElementById("datos_envio").style.display = "none";
+        });
+        $("#btn_realizar_envios").click(function(e){
+            document.getElementById("bienvenida").style.display = "none";
+            document.getElementById("datos_cuenta").style.display = "none";
+            document.getElementById("datos_envio").style.display = "block";
+        });
+
 
     });
 
@@ -83,64 +109,121 @@
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
-            <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">Agricultor</span> </a>
+            <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name" id="btn_inicio">Agricultor</span> </a>
                 <div class="nav_list"> <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i>
-                    <span class="nav_name">Realizar Envio</span> </a> <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i>
-                    <span class="nav_name">Envios Realizados</span> </a> <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i>
-                    <span class="nav_name">Traking</span> </a>
+                    <span class="nav_name" id="btn_crear_cuenta">Crear Cuenta</span> </a> <a class="nav_link"> <i class='bx bx-user nav_icon'></i>
+                    <span class="nav_name" id="btn_realizar_envios">Realizar Envios</span> </a> <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i>
+                    <span class="nav_name" id="btn_traking">Traking</span> </a>
                 </div>
             </div>
         </nav>
     </div>
-    <!--Container Main start-->
-    <div class="height-100 bg-light" style="padding:7%;" id="">
+
+    <!-- Bienvenida -->
+    <div class="height-100 bg-light" style="padding: 2%;" id="bienvenida">
+        <h3 class="center">AGRICULTORES UNIDOS</h3>
         <br>
-        <h3>DATOS DE ENVIO</h3>
-        <form class="row g-3 needs-validation" novalidate>
-            <div class="col-md-4">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://img.freepik.com/fotos-premium/hombre-latino-recogiendo-granos-cafe-dia-soleado-agricultor-cafe-cosechando-granos-cafe-brasil_63135-1755.jpg?w=2000" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://uncafeci.to/wp-content/uploads/2021/08/guatemala-cafe-historia-origen-sabores-1080x675.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://perfectdailygrind.com/es/wp-content/uploads/sites/2/2019/11/productores-de-cafe-en-el-salvador.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+        <br>
+    </div>
+    <!-- Termina Bienvenida -->
+
+    <!-- Datos de Cuenta -->
+    <div class="height-100 bg-light" style="padding:7%;" id="datos_cuenta">
+        <h3>DATOS DE CUENTA</h3>
+        <form class="row g-4 needs-validation" novalidate>
+            <div class="col-md-12">
                 <label for="validationCustom01" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
-            </div>
-            <div class="col-md-4">
-                <label for="validationCustom02" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
-            </div>
-            <div class="col-md-4">
-            <label for="validationCustomUsername" class="form-label">Numero de DPI</label>
-            <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">#</span>
-                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-            </div>
-            </div>
-            <div class="col-md-8">
-                <label for="validationCustom03" class="form-label">Transporte</label>
-                <input type="text" class="form-control" id="validationCustom03" required>
-            </div>
-            <div class="col-md-4">
-                <label for="validationCustom05" class="form-label">Placa</label>
-                <input type="text" class="form-control" id="validationCustom05" required>
+                <input type="text" class="form-control" id="validationCustom01" placeholder="Introduzca su nombre completo" required>
             </div>
             <div class="col-md-6">
-                <label for="validationCustomUsername" class="form-label">Cantidad de Cafe</label>
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend">#</span>
-                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                </div>
+                <label for="validationCustom01" class="form-label">DPI</label>
+                <input type="number" class="form-control" id="validationCustom01" placeholder="Introduzca su numero de DPI" required>
             </div>
             <div class="col-md-6">
-                <label for="validationCustomUsername" class="form-label">Numero de Parcialidades</label>
-                <div class="input-group has-validation">
-                    <span class="input-group-text" id="inputGroupPrepend">#</span>
-                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                </div>
+                <label for="validationCustom01" class="form-label">Telefono</label>
+                <input type="number" class="form-control" id="validationCustom01" placeholder="Introduzca su numero de telefono" required>
+            </div>
+            <div class="col-md-12">
+                <label for="validationCustom02" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Introduzca su direccion" required>
+            </div>
+            <div class="col-md-12">
+                <label for="validationCustom02" class="form-label">Correo</label>
+                <input type="mail" class="form-control" id="validationCustom02" placeholder="Ingrese su direccion de correo electronico" required>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary">Enviar Carga</button>
+                <button class="btn btn-primary">Solicitud de Cuenta</button>
             </div>
         </form>
-        <br>
-        <button class="btn btn-primary" id="btnenviar">Enviar Carga</button>
     </div>
-    <!--Container Main end-->
+    <!-- Termina Datos de Cuenta -->
+
+    <!-- Datos de Envio -->
+    <div class="height-100 bg-light" style="padding:7%;" id="datos_envio">
+        <h3>DATOS DE ENVIO</h3>
+        <hr>
+        <center><h4>Datos del Transporte</h4></center>
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="col-md-12">
+                <label for="validationCustom01" class="form-label">Nombre del Piloto</label>
+                <input type="text" class="form-control" id="validationCustom01" placeholder="Introduzca su nombre completo" required>
+            </div>
+            <div class="col-md-12">
+                <label for="validationCustom02" class="form-label">Numero de Licencia</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Introduzca su numero de licencia" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom01" class="form-label">Numero de Placa</label>
+                <input type="text" class="form-control" id="validationCustom01" placeholder="Introduzca el numero de placa del transporte" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom02" class="form-label">Marca</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Introduzca la marca del transporte" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom02" class="form-label">Color</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Introduzca el color del transporte" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom02" class="form-label">Modelo</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Introduzca el modelo del transporte" required>
+            </div>
+            <hr>
+            <center><h4>Datos del Cargamento</h4></center>
+            <div class="col-md-6">
+                <label for="validationCustom02" class="form-label">Peso total</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Ingrese el peso total en libras del cargamento" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom02" class="form-label">Parcialidades</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Ingrese el numero de parcialidades" required>
+            </div>
+            <center><button class="btn btn-primary">Enviar Carga</button></center>
+            <br>
+            <br>
+        </form>
+    </div>
+    <!-- Termina Datos de Envio -->
 </body>
 </html>

@@ -22,8 +22,8 @@ class ApiController extends BaseController
 
     public function testapi(Request $request){
         $test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/categoria');
-        Logger("Variable Test: ". $test->status());
-        Logger("Variable Test: ". $test->body());
+        Logger("Estado: ". $test->status());
+        Logger("Consulta: ". $test->body());
 
         return response()->json($test->body());
     }

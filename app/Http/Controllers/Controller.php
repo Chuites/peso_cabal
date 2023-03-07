@@ -11,11 +11,4 @@ use Response;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-
-    public function testapi(Request $request){
-        $test = Http::dd()->post('https://beneficiodecafeapirest.herokuapp.com/categorias');
-        $msg = "This is a simple message.";
-
-        return response()->json(['test' => $msg]);
-    }
 }
