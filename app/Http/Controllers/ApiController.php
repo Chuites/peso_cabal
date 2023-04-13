@@ -21,10 +21,25 @@ class ApiController extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     public function testapi(Request $request){
-        $test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/categoria');
+        $test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
+
         Logger("Estado: ". $test->status());
         Logger("Consulta: ". $test->body());
+        Logger("Completo: " . $test );
 
-        return response()->json($test->body());
+        return response($test->body());
+    }
+
+    public function crearCuenta(Request $request){
+
+        logger("de crear cuenta: " . $request);
+
+        /* $test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
+
+        Logger("Estado: ". $test->status());
+        Logger("Consulta: ". $test->body());
+        Logger("Completo: " . $test ); */
+
+        return $request->nombre;
     }
 }

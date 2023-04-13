@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::post('TestApi', 'App\Http\Controllers\ApiController@testapi')->name("TestApi");
+Route::post('crearCuenta', 'App\Http\Controllers\ApiController@crearCuenta')->name("crearCuenta");
