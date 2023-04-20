@@ -72,12 +72,12 @@
 
                         alert(data.mensaje);
                         //toastr.error(data, 'test');
-                        console.log(test.mensaje);
-
-
+                        console.log(data);
                         console.log(data.mensaje);
                     },
                     error: function(data){
+                        console.log(data);
+                        console.log(data.mensaje);
                         alert("Web Service No Responde");
                     }
                 });
