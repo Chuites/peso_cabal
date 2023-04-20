@@ -56,7 +56,7 @@
         document.getElementById("bienvenida").style.display = "block";
         document.getElementById("datos_cuenta").style.display = "none";
         document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
+        document.getElementById("test_conexion").style.display = "none";
 
         $("#btntestconexion").click(function(e){
             let datos;
@@ -84,20 +84,28 @@
         });
 
         $("#btnCrearCuenta").click(function(e){
-            let nombre = $('#nombre').val();
                 $.ajax({
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                    type: "POST",
-                    url: "{{route('crearCuenta')}}",
-                    data: { 'nombre':nombre },
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data) {
-                        alert("Success");
-                        console.log(data);
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    error: function(data){
-                        alert("Web Service No Responde");
+                    url: '{{ route("crearCuenta") }}',
+                    type: 'POST',
+                    data: {
+                        nombre: $('#nombre').val(),
+                        dpi: $('#dpi').val(),
+                        telefono: $('#telefono').val(),
+                        direccion: $('#direccion').val(),
+                        correo: $('#correo').val(),
+                        nit: $('#nit').val()
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        alert(response);
+                        console.log(response);
+                    },
+                    error: function(response){
+                        alert(response);
+                        console.log(response);
                     }
                 });
         });
@@ -228,7 +236,7 @@
                 <input type="number" class="form-control" id="nit" name="nit" placeholder="Ingrese su NIT" required>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary" id="btnCrearCuenta" name="btnCrearCuenta">Crear Cuenta</button>
+                <a href="#" class="btn btn-primary" id="btnCrearCuenta" name="btnCrearCuenta">Crear Cuenta</a>
             </div>
         </form>
     </div>
@@ -280,7 +288,5 @@
         </form>
     </div>
     <!-- Termina Datos de Envio -->
-
-    Test de Cone
 </body>
 </html>

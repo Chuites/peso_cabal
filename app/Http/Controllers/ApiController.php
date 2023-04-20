@@ -15,6 +15,7 @@ use App\Models\baseModel;
 use Session;
 use View;
 use DB;
+use GuzzleHttp;
 
 class ApiController extends BaseController
 {
@@ -31,15 +32,27 @@ class ApiController extends BaseController
     }
 
     public function crearCuenta(Request $request){
+        $data = [
+            'nombre' => $request->nombre,
+            'dpi' => $request->dpi,
+            'telefono' => $request->telefono,
+            'direccion' => $request->direccion,
+            'correo' => $request->correo,
+            'nit' => $request->nit
+        ];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ],
+            'json' => $data
+        ]);
+        $content = $response->getBody()->getContents();
+        $data = json_decode($content, true);
 
-        logger("de crear cuenta: " . $request);
+        //$test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta');
 
-        /* $test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
-
-        Logger("Estado: ". $test->status());
-        Logger("Consulta: ". $test->body());
-        Logger("Completo: " . $test ); */
-
-        return $request->nombre;
+        return response()->json($data);
     }
 }
