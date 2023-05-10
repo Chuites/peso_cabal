@@ -50,6 +50,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("test_transporte").style.display = "none";
     document.getElementById("test_piloto").style.display = "none";
 
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                type: "POST",
+                url: "{{route('borrarSesion')}}",
+                data: { "id": "testid" },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+            });
+    });
     $("#btntestconexion").click(function(e){
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -61,6 +72,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 success: function(data) {
                     console.log(data.mensaje);
                     alert(data.mensaje);
+                },
+            });
+    });
+
+    $("#logout").click(function(e){
+            $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                type: "POST",
+                url: "{{route('logout')}}",
+                data: { "id": "testid" },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    window.location = "{{ url('/') }}";
                 },
             });
     });

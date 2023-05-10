@@ -22,6 +22,18 @@ class ApiController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    public function logout(Request $request){
+        //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
+        Session::forget('token');
+        return response()->json(200);
+    }
+
+    public function borrarSesion(Request $request){
+        //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
+        Session::forget('token');
+        return;
+    }
+
     public function testapi(Request $request){
         //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
         $response = Http::post('http://127.0.0.1:8081/api/testConectividad');
@@ -30,6 +42,41 @@ class ApiController extends BaseController
         $content = $response->getBody()->getContents();
         $data = json_decode($content, true);
         return response()->json($data);
+    }
+
+    public function login(Request $request){
+        $data = [
+            'email' => $request->username,
+            'password' => $request->password
+        ];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post('http://127.0.0.1:8081/api/login', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
+            ],
+            'json' => $data
+        ]);
+        if($response->getStatusCode() == 200)
+        {
+            $content = $response->getBody()->getContents();
+            $data = json_decode($content, true);
+            Session::put('token', $data['token']);
+
+            return response()->json(['success' => 'Credenciales correctas'], 200);
+        }
+        else {
+            return response()->json(['error' => 'Credenciales incorrectas'], 401);
+        }
+    }
+
+    public function welcome(){
+        if (Session::has('token')) {
+            return \view('welcome');
+        }else{
+            return \view('login/login');
+        }
+
     }
 
     public function testTransporte(Request $request){

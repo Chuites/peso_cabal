@@ -41,6 +41,7 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <a href="#" id="logout">LOGOUT</a>
         <div class="header_img"> <img src="https://lacasadelagricultor.com.gt/wp-content/uploads/2020/04/5.png" alt=""> </div>
     </header>
     @include('menunavegacion')
