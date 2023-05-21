@@ -34,11 +34,75 @@ class ApiController extends BaseController
         return;
     }
 
+
+    public function enviarParcialidad(Request $request){
+        $data = [
+            'id_cargamento' => $request->id_cargamento,
+            'peso_parcialidad' => $request->peso_parcialidad
+        ];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post('http://127.0.0.1:8081/api/recibirParcialidad', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer '. Session::get('token')
+            ],
+            'json' => $data
+        ]);
+        if($response->getStatusCode() == 200)
+        {
+            $content = $response->getBody()->getContents();
+            $data = json_decode($content, true);
+
+            return response()->json($data, 200);
+        }
+        else {
+            $data = [
+                'mensaje' => 'Error al consultar los cargamentos'
+            ];
+            return response()->json($data, 401);
+        }
+    }
+
+    public function listadoCargamentos(Request $request){
+        $data = [
+            'id_cuenta' => Session::get('id_cuenta')
+        ];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post('http://127.0.0.1:8081/api/listadoCargamentos', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer '. Session::get('token')
+            ],
+            'json' => $data
+        ]);
+        if($response->getStatusCode() == 200)
+        {
+            $content = $response->getBody()->getContents();
+            $data = json_decode($content, true);
+
+            return response()->json($data, 200);
+        }
+        else {
+            $data = [
+                'mensaje' => 'Error al consultar los cargamentos'
+            ];
+            return response()->json(401);
+        }
+    }
+
     public function testapi(Request $request){
         //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
-        $response = Http::post('http://127.0.0.1:8081/api/testConectividad');
-        $csp = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';";
-        $response->header('Content-Security-Policy', $csp);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post('http://127.0.0.1:8081/api/testConectividad', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer '. Session::get('token')
+            ],
+            'json' => ''
+        ]);
         $content = $response->getBody()->getContents();
         $data = json_decode($content, true);
         return response()->json($data);
@@ -62,21 +126,21 @@ class ApiController extends BaseController
             $content = $response->getBody()->getContents();
             $data = json_decode($content, true);
             Session::put('token', $data['token']);
+            Session::put('id_cuenta', $data['id']);
 
-            return response()->json(['success' => 'Credenciales correctas'], 200);
+            return response()->json(200);
         }
         else {
-            return response()->json(['error' => 'Credenciales incorrectas'], 401);
+            return response()->json(401);
         }
     }
 
     public function welcome(){
         if (Session::has('token')) {
-            return \view('welcome');
+            return view('welcome');
         }else{
-            return \view('login/login');
+            return view('login/login');
         }
-
     }
 
     public function testTransporte(Request $request){
@@ -100,7 +164,8 @@ class ApiController extends BaseController
             $response = $client->post('http://127.0.0.1:8081/api/confirmarTransporte', [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer '. Session::get('token')
                 ],
                 'json' => $data
             ]);
@@ -133,7 +198,8 @@ class ApiController extends BaseController
             $response = $client->post('http://127.0.0.1:8081/api/confirmarPiloto', [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer '. Session::get('token')
                 ],
                 'json' => $data
             ]);
@@ -169,12 +235,14 @@ class ApiController extends BaseController
         if ($validator->fails()) {
             return response()->json($validator->errors()->all());
         }else{
+            $request;
             $data = [
-                'nombre' => $request->nombre,
+                'name' => $request->nombre,
+                'email' => $request->correo,
+                'password' => $request->password,
                 'dpi' => $request->dpi,
                 'telefono' => $request->telefono,
                 'direccion' => $request->direccion,
-                'correo' => $request->correo,
                 'nit' => $request->nit
             ];
             $client = new \GuzzleHttp\Client();
@@ -182,7 +250,8 @@ class ApiController extends BaseController
             $response = $client->post('http://127.0.0.1:8081/api/crearCuenta', [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer '. Session::get('token')
                 ],
                 'json' => $data
             ]);
@@ -194,49 +263,55 @@ class ApiController extends BaseController
 
     public function enviarCargamento(Request $request){
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
-            'direccion' => 'required',
-            'telefono' => 'required|numeric|digits:8',
-            'dpi' => 'required|numeric|digits:13',
-            'nit' => 'required|numeric|digits:8',
-            'correo' => 'required|email'
+            'dpi_piloto' => 'required',
+            'placa_transporte_envio' => 'required',
+            'peso_total' => 'required|numeric',
+            'parcialidades' => 'required|numeric',
         ],
         [
             //Mensajes a mostrar
-            'nombre.required' => 'Es requerida la informacion de nombre',
-            'direccion.required' => 'Es requerida la informacion de direccion',
-            'telefono.required' => 'Es requerida la informacion de telefono',
-            'telefono.digits' => 'El telefono debe tener 8 digitos',
-            'dpi.required' => 'Es requerida la informacion de dpi',
-            'dpi.digits' => 'El DPI debe contener 13 digitos',
-            'nit.required' => 'Es requerida la informacion de nit',
-            'nit.digits' => 'El nit debe tener 8 digitos',
-            'correo.required' => 'Es requerida la direccion de correo',
-            'correo.email' => 'Formato de correo no valido',
+            'dpi_piloto.required' => 'Es requerida la informacion del dpi del piloto',
+            'placa_transporte_envio.required' => 'Es requerida la informacion de la placa del transporte',
+            'peso_total.required' => 'Es requerida la informacion de peso total',
+            'peso_total.numeric' => 'El peso total debe ser un numero',
+            'parcialidades.required' => 'Es requerida la informacion de parcialidades',
+            'parcialidades.numeric' => 'Parcialidades debe ser un numero',
+            'id_cuenta.required' => 'Es requerida la informacion de el numero de cuenta'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->all());
         }else{
             $data = [
-                'nombre' => $request->nombre,
-                'dpi' => $request->dpi,
-                'telefono' => $request->telefono,
-                'direccion' => $request->direccion,
-                'correo' => $request->correo,
-                'nit' => $request->nit
+                'dpi_piloto' => $request->dpi_piloto,
+                'placa_transporte' => $request->placa_transporte_envio,
+                'peso_total' => $request->peso_total,
+                'parcialidades' => $request->parcialidades,
+                'id_cuenta' => Session::get('id_cuenta'),
             ];
             $client = new \GuzzleHttp\Client();
             //$test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta');
-            $response = $client->post('http://127.0.0.1:8081/api/crearCuenta', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'
-                ],
-                'json' => $data
-            ]);
-            $content = $response->getBody()->getContents();
-            $data = json_decode($content, true);
-            return response()->json($data);
+            try {
+                $response = $client->post('http://127.0.0.1:8081/api/envioCargamento', [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer '. Session::get('token')
+                    ],
+                    'json' => $data
+                ]);
+
+                $content = $response->getBody()->getContents();
+                $data = json_decode($content, true);
+                return response()->json($data);
+
+            } catch (ClientException $e) {
+                if ($e->getResponse()->getStatusCode() === 400) {
+                    return response()->json($data);
+                } else {
+                    return response()->json($data);
+                }
+            }
+
         }
     }
 }

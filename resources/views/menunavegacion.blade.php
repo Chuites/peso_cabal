@@ -5,8 +5,9 @@
                 <span class="nav_name" id="btn_test_conexion">Prueba de Conexion</span> </a> <a class="nav_link"> <i class='bx bxs-truck'></i>
                 <span class="nav_name" id="btn_test_transporte">Estado de Transporte</span> </a> <a class="nav_link"> <i class='bx bx-user nav_icon'></i>
                 <span class="nav_name" id="btn_test_piloto">Estado de Piloto</span> </a> <a class="nav_link"> <i class='bx bx-user-check nav_icon'></i>
-                <span class="nav_name" id="btn_crear_cuenta">Crear Cuenta</span> </a> <a class="nav_link"> <i class='bx bx-user nav_icon'></i>
-                <span class="nav_name" id="btn_realizar_envios">Realizar Envios</span> </a> <a href="#" class="nav_link"> <i class='bx bx-send nav_icon'></i>
+                <span class="nav_name" id="btn_crear_cuenta">Crear Cuenta</span> </a> <a class="nav_link"> <i class='bx bx-package'></i>
+                <span class="nav_name" id="btn_realizar_envios">Crear Cargamento</span> </a> <a href="#" class="nav_link"> <i class='bx bx-send nav_icon'></i>
+                <span class="nav_name" id="btn_enviar_parcialidad">Enviar Parcialidad</span> </a> <a href="#" class="nav_link"> <i class='bx bx-map-alt'></i>
                 <span class="nav_name" id="btn_traking">Traking</span> </a>
             </div>
         </div>

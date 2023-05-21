@@ -4,7 +4,7 @@
         <h3 class="center">PRUEBA DE CONECCIÓN</h3>
         <form class="row g-4 needs-validation" novalidate>
             <div class="col-12">
-                <button class="btn btn-primary" id="btntestconexion" name="btntestconexion">Enviar Prueba</button>
+                <a class="btn btn-primary" id="btntestconexion" name="btntestconexion">Enviar Prueba</a>
             </div>
         </form>
     </div>

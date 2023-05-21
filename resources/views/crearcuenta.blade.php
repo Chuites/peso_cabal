@@ -1,9 +1,13 @@
 <div class="height-100 bg-light" style="padding:7%;" id="datos_cuenta">
     <h3>DATOS DE CUENTA</h3>
     <form class="row g-4 needs-validation" novalidate id="frm_crear_cuenta">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduzca su nombre completo" required>
+        </div>
+        <div class="col-md-6">
+            <label for="nombre" class="form-label">Contrasenia</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Introduzca su contrasenia" required>
         </div>
         <div class="col-md-6">
             <label for="dpi" class="form-label">DPI</label>
