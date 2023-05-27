@@ -17,31 +17,28 @@ use Session;
 use View;
 use DB;
 use GuzzleHttp;
+use PDF;
 
 class ApiController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
     public function logout(Request $request){
-        //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
         Session::forget('token');
         return response()->json(200);
     }
 
     public function borrarSesion(Request $request){
-        //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
         Session::forget('token');
         return;
     }
 
-
-    public function enviarParcialidad(Request $request){
+    public function generarPDF(Request $request, $id_parcialidad){
         $data = [
-            'id_cargamento' => $request->id_cargamento,
-            'peso_parcialidad' => $request->peso_parcialidad
+            'id_parcialidad' => $id_parcialidad
         ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://127.0.0.1:8081/api/recibirParcialidad', [
+        $response = $client->post('http://127.0.0.1:8081/api/infoPesoParcialidad', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
@@ -54,22 +51,31 @@ class ApiController extends BaseController
             $content = $response->getBody()->getContents();
             $data = json_decode($content, true);
 
-            return response()->json($data, 200);
+            $dpi_piloto = $data['dpi'];
+            $nombre_piloto = $data['nombre_completo'];
+            $estado_piloto = $data['justificacion'];
+            $placa_transporte = $data['placa'];
+            $marca_transporte = $data['marca'];
+            $color_transporte = $data['color'];
+            $estado_transporte = $data['justificacion2'];
+            $numero_parcialidad = $data['id_parcialidad'];
+            $peso_recibido = $data['peso'];
+            $peso_certificado = $data['peso_certificado'];
+
+            $pdf = PDF::loadView('pdf.certificado_peso', compact('dpi_piloto','nombre_piloto','estado_piloto',
+            'placa_transporte','marca_transporte','color_transporte','estado_transporte','numero_parcialidad','peso_recibido','peso_certificado'));
+            return $pdf->download('Certificado de Peso.pdf');
         }
-        else {
-            $data = [
-                'mensaje' => 'Error al consultar los cargamentos'
-            ];
-            return response()->json($data, 401);
-        }
+
     }
 
-    public function listadoCargamentos(Request $request){
+    public function certificarPesoParcialidad(Request $request){
         $data = [
-            'id_cuenta' => Session::get('id_cuenta')
+            'id_parcialidad' => $request->id_parcialidad,
+            'peso_certificado' => $request->peso_certificado
         ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://127.0.0.1:8081/api/listadoCargamentos', [
+        $response = $client->post('http://127.0.0.1:8081/api/certificarPesoParcialidad', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
@@ -92,20 +98,33 @@ class ApiController extends BaseController
         }
     }
 
-    public function testapi(Request $request){
-        //$response = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/testConectividad');
+
+    public function listadoParcialidades(Request $request){
+        $data = [
+            'id_cuenta' => Session::get('id_cuenta')
+        ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://127.0.0.1:8081/api/testConectividad', [
+        $response = $client->post('http://127.0.0.1:8081/api/listadoParcialidades', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer '. Session::get('token')
             ],
-            'json' => ''
+            'json' => $data
         ]);
-        $content = $response->getBody()->getContents();
-        $data = json_decode($content, true);
-        return response()->json($data);
+        if($response->getStatusCode() == 200)
+        {
+            $content = $response->getBody()->getContents();
+            $data = json_decode($content, true);
+
+            return response()->json($data, 200);
+        }
+        else {
+            $data = [
+                'mensaje' => 'Error al consultar los cargamentos'
+            ];
+            return response()->json(401);
+        }
     }
 
     public function login(Request $request){
@@ -207,111 +226,6 @@ class ApiController extends BaseController
             $estado = $response->getStatusCode();
             $data = json_decode($content, true);
             return response()->json($data);
-        }
-    }
-
-    public function crearCuenta(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
-            'direccion' => 'required',
-            'telefono' => 'required|numeric|digits:8',
-            'dpi' => 'required|numeric|digits:13',
-            'nit' => 'required|numeric|digits:8',
-            'correo' => 'required|email'
-        ],
-        [
-            //Mensajes a mostrar
-            'nombre.required' => 'Es requerida la informacion de nombre',
-            'direccion.required' => 'Es requerida la informacion de direccion',
-            'telefono.required' => 'Es requerida la informacion de telefono',
-            'telefono.digits' => 'El telefono debe tener 8 digitos',
-            'dpi.required' => 'Es requerida la informacion de dpi',
-            'dpi.digits' => 'El DPI debe contener 13 digitos',
-            'nit.required' => 'Es requerida la informacion de nit',
-            'nit.digits' => 'El nit debe tener 8 digitos',
-            'correo.required' => 'Es requerida la direccion de correo',
-            'correo.email' => 'Formato de correo no valido',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->all());
-        }else{
-            $request;
-            $data = [
-                'name' => $request->nombre,
-                'email' => $request->correo,
-                'password' => $request->password,
-                'dpi' => $request->dpi,
-                'telefono' => $request->telefono,
-                'direccion' => $request->direccion,
-                'nit' => $request->nit
-            ];
-            $client = new \GuzzleHttp\Client();
-            //$test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta');
-            $response = $client->post('http://127.0.0.1:8081/api/crearCuenta', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer '. Session::get('token')
-                ],
-                'json' => $data
-            ]);
-            $content = $response->getBody()->getContents();
-            $data = json_decode($content, true);
-            return response()->json($data);
-        }
-    }
-
-    public function enviarCargamento(Request $request){
-        $validator = Validator::make($request->all(), [
-            'dpi_piloto' => 'required',
-            'placa_transporte_envio' => 'required',
-            'peso_total' => 'required|numeric',
-            'parcialidades' => 'required|numeric',
-        ],
-        [
-            //Mensajes a mostrar
-            'dpi_piloto.required' => 'Es requerida la informacion del dpi del piloto',
-            'placa_transporte_envio.required' => 'Es requerida la informacion de la placa del transporte',
-            'peso_total.required' => 'Es requerida la informacion de peso total',
-            'peso_total.numeric' => 'El peso total debe ser un numero',
-            'parcialidades.required' => 'Es requerida la informacion de parcialidades',
-            'parcialidades.numeric' => 'Parcialidades debe ser un numero',
-            'id_cuenta.required' => 'Es requerida la informacion de el numero de cuenta'
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->all());
-        }else{
-            $data = [
-                'dpi_piloto' => $request->dpi_piloto,
-                'placa_transporte' => $request->placa_transporte_envio,
-                'peso_total' => $request->peso_total,
-                'parcialidades' => $request->parcialidades,
-                'id_cuenta' => Session::get('id_cuenta'),
-            ];
-            $client = new \GuzzleHttp\Client();
-            //$test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta');
-            try {
-                $response = $client->post('http://127.0.0.1:8081/api/envioCargamento', [
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Bearer '. Session::get('token')
-                    ],
-                    'json' => $data
-                ]);
-
-                $content = $response->getBody()->getContents();
-                $data = json_decode($content, true);
-                return response()->json($data);
-
-            } catch (ClientException $e) {
-                if ($e->getResponse()->getStatusCode() === 400) {
-                    return response()->json($data);
-                } else {
-                    return response()->json($data);
-                }
-            }
-
         }
     }
 }

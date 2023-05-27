@@ -26,7 +26,6 @@ Route::post('testPiloto', 'App\Http\Controllers\ApiController@testPiloto')->name
 Route::post('enviarCargamento', 'App\Http\Controllers\ApiController@enviarCargamento')->name("enviarCargamento");
 Route::post('listadoCargamentos', 'App\Http\Controllers\ApiController@listadoCargamentos')->name("listadoCargamentos");
 Route::post('enviarParcialidad', 'App\Http\Controllers\ApiController@enviarParcialidad')->name("enviarParcialidad");
-
-
-
-
+Route::post('listadoParcialidades', 'App\Http\Controllers\ApiController@listadoParcialidades')->name("listadoParcialidades");
+Route::post('certificarPesoParcialidad', 'App\Http\Controllers\ApiController@certificarPesoParcialidad')->name("certificarPesoParcialidad");
+Route::get('generarPDF\{id_parcialidad?}', 'App\Http\Controllers\ApiController@generarPDF')->name("generarPDF");

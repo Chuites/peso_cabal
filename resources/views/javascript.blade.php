@@ -44,104 +44,80 @@ document.addEventListener("DOMContentLoaded", function(event) {
     linkColor.forEach(l=> l.addEventListener('click', colorLink))
 
     document.getElementById("bienvenida").style.display = "block";
-    document.getElementById("datos_cuenta").style.display = "none";
-    document.getElementById("datos_envio").style.display = "none";
-    document.getElementById("test_conexion").style.display = "none";
-    document.getElementById("test_transporte").style.display = "none";
+    document.getElementById("listado_pesaje").style.display = "none";
     document.getElementById("test_piloto").style.display = "none";
-    document.getElementById("datos_parcialidad").style.display = "none";
-    document.getElementById("traking_div").style.display = "none";
 
+    $(document).ready(function() {
 
+    });
 
-    $("#btntestconexion").click(function(e){
+    $("#btnCertificarPeso").click(function(e){
+        if(($("#id_parcialidad").val() == '') && ($("#peso_certificado").val() == '')){
+            alert('Debe llenar todos los campos');
+        }else{
             $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 type: "POST",
-                url: "{{route('TestApi')}}",
-                data: { "id": "testid" },
-                contentType: "application/json; charset=utf-8",
+                url: "{{route('certificarPesoParcialidad')}}",
+                data: {
+                    id_parcialidad: $('#id_parcialidad').val(),
+                    peso_certificado: $('#peso_certificado').val()
+                },
                 dataType: "json",
                 success: function(data) {
-                    alert('El servicio se encuentra en linea');
+                    var tbody = $('#tabla-dinamica tbody');
+                    window.location = "{{ route('generarPDF') }}" + $("#id_parcialidad").val();
                 },
             });
+        }
     });
 
-    $(document).ready(function() {
-        $('#listadoCargamentos').hide();
-    });
-
-    $("#btnEnviarParcialidad").click(function(e){
+    $("#btn_listado_pesaje").click(function(e){
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '{{ route("enviarParcialidad") }}',
             type: 'POST',
+            //url: modifyURLScheme("{{ route('listadoCargamentos') }}", "https"),
+            url: "{{ route('listadoParcialidades') }}",
             data: {
-                id_cargamento: $('#id_cargamento').val(),
-                peso_parcialidad: $('#peso_parcialidad').val(),
+                "id": "testid"
             },
             dataType: 'json',
             success: function(data) {
-                if (data.mensaje) {
-                    alert(data.mensaje);
-                } else {
-                    alert('Todos los campos son requeridos');
-                }
-
+                // Construir la tabla dinámica con los datos recibidos
+                var tbody = $('#tabla-dinamica tbody');
+                tbody.empty();
+                // Recorrer los datos y agregar filas a la tabla
+                $.each(data, function(index, data) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(data.id_parcialidad));
+                    row.append($('<td>').text(data.placa));
+                    row.append($('<td>').text(data.marca));
+                    row.append($('<td>').text(data.color));
+                    row.append($('<td>').text(data.peso));
+                    tbody.append(row);
+                });
             },
-            error: function(response){
-                alert('error');
+            error: function(data) {
+                console.log(data);
+                alert('Error al consultar los datos');
             }
         });
     });
 
-    $("#btnMostrarCargamentos").click(function(e){
-            $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                type: "POST",
-                url: "{{route('listadoCargamentos')}}",
-                data: { "id": "testid" },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                    // Construir la tabla dinámica con los datos recibidos
-                    var tbody = $('#tabla-dinamica tbody');
-                    tbody.empty();
-                    // Recorrer los datos y agregar filas a la tabla
-                    $.each(data, function(index, data) {
-                        console.log(data.id_cargamento);
-                        console.log(index);
-                        var row = $('<tr>');
-                        row.append($('<td>').text(data.id_cargamento));
-                        row.append($('<td>').text(data.peso));
-                        row.append($('<td>').text(data.parcialidades));
-                        tbody.append(row);
-                    });
-                    $('#listadoCargamentos').show();
-                },
-                error: function() {
-                    // Manejar el error en caso de que la solicitud falle
-                    console.log('Error al obtener los datos.');
-                }
-            });
-    });
-
     $("#logout").click(function(e){
-            $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                type: "POST",
-                url: "{{route('logout')}}",
-                data: { "id": "testid" },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data) {
-                    window.location = "{{ url('/') }}";
-                },
-            });
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            type: "POST",
+            url: "{{route('logout')}}",
+            data: { "id": "testid" },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                window.location = "{{ url('/') }}";
+            },
+        });
     });
 
     $("#btntesttransporte").click(function(e){
@@ -192,164 +168,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
         });
     });
 
-    $("#btnEnviarCargamento").click(function(e){
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '{{ route("enviarCargamento") }}',
-            type: 'POST',
-            data: {
-                dpi_piloto: $('#dpi_piloto_envio').val(),
-                placa_transporte_envio: $('#placa_transporte_envio').val(),
-                peso_total: $('#peso_total').val(),
-                parcialidades: $('#parcialidades_envio').val()
-            },
-            dataType: 'json',
-            success: function(data) {
-                let mensaje;
-                console.log(data);
-                if (data.hasOwnProperty('transporte')) {
-                    mensaje = data.transporte.transporte + "\n";
-                }
-                if (data.hasOwnProperty('agricultor')) {
-                    mensaje = mensaje + data.agricultor.agricultor + "\n";
-                }
-                if (data.hasOwnProperty('piloto')) {
-                    mensaje = mensaje + data.piloto.piloto + "\n";
-                }
-                console.log(data);
-                alert(mensaje);
-            },
-            error: function(response){
-                alert("Error al consultar los datos");
-            }
-        });
-    });
-
-    $("#btnCrearCuenta").click(function(e){
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '{{ route("crearCuenta") }}',
-            type: 'POST',
-            data: {
-                nombre: $('#nombre').val(),
-                dpi: $('#dpi').val(),
-                telefono: $('#telefono').val(),
-                direccion: $('#direccion').val(),
-                correo: $('#correo').val(),
-                nit: $('#nit').val(),
-                password: $('#password').val()
-            },
-            dataType: 'json',
-            success: function(data) {
-                    if(data[0] != null)
-                    {
-                        alert(data[0]);
-                    }else{
-                        alert('Cuenta creada correctamente' + '\n' + 'ID de Cuenta: '+ data.user.id + '\n'
-                        + data.user.name +' Por favor ingrese con su usuario');
-                    }
-                },
-            error: function(response){
-                alert(response);
-                console.log(response);
-            }
-        });
-    });
-
-
-    $("#btn_traking").click(function(e){
-        document.getElementById("traking_div").style.display = "block";
-        document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
-        document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-    });
-    $("#btn_enviar_parcialidad").click(function(e){
-        document.getElementById("datos_parcialidad").style.display = "block";
-        document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
-        document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
-    });
-    $("#btn_test_conexion").click(function(e){
-        document.getElementById("test_conexion").style.display = "block";
-        document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
-        document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
-    });
-    $("#btn_crear_cuenta").click(function(e){
-        document.getElementById("datos_cuenta").style.display = "block";
-        document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
-        document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
-    });
-    $("#btn_crear_cuenta2").click(function(e){
-        document.getElementById("datos_cuenta").style.display = "block";
-        document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
-        document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
-    });
     $("#btn_inicio").click(function(e){
         document.getElementById("bienvenida").style.display = "block";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
+        document.getElementById("listado_pesaje").style.display = "none";
         document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
+
     });
-    $("#btn_realizar_envios").click(function(e){
-        document.getElementById("datos_envio").style.display = "block";
+    $("#btn_listado_pesaje").click(function(e){
+        document.getElementById("listado_pesaje").style.display = "block";
         document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
         document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
-    });
-    $("#btn_test_transporte").click(function(e){
-        document.getElementById("test_transporte").style.display = "block";
-        document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_piloto").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
+
     });
     $("#btn_test_piloto").click(function(e){
         document.getElementById("test_piloto").style.display = "block";
         document.getElementById("bienvenida").style.display = "none";
-        document.getElementById("datos_cuenta").style.display = "none";
-        document.getElementById("datos_envio").style.display = "none";
-        document.getElementById("test_conexion").style.display = "none";
-        document.getElementById("test_transporte").style.display = "none";
-        document.getElementById("datos_parcialidad").style.display = "none";
-        document.getElementById("traking_div").style.display = "none";
+        document.getElementById("listado_pesaje").style.display = "none";
+
     });
 });
 

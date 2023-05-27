@@ -1,16 +1,16 @@
 <div class="height-100 bg-light" style="padding: 2%;" id="bienvenida">
-    <h3 class="center">AGRICULTORES UNIDOS</h3>
+    <h3 class="center">CERTIFICADORA PESO CABAL</h3>
     <br>
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://img.freepik.com/fotos-premium/hombre-latino-recogiendo-granos-cafe-dia-soleado-agricultor-cafe-cosechando-granos-cafe-brasil_63135-1755.jpg?w=2000" class="d-block w-100" alt="...">
+                <img src="https://www.revuelta.com.mx/img/soluciones-pesaje/nuevo/pesaje-por-ejes/Bascula-ejes-ERCC_VBB-editada-web.jpg" class="d-block img-fluid" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="https://uncafeci.to/wp-content/uploads/2021/08/guatemala-cafe-historia-origen-sabores-1080x675.jpg" class="d-block w-100" alt="...">
+                <img src="https://i.ytimg.com/vi/bTRPJ9jLxMk/maxresdefault.jpg" class="d-block img-fluid" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="https://perfectdailygrind.com/es/wp-content/uploads/sites/2/2019/11/productores-de-cafe-en-el-salvador.jpg" class="d-block w-100" alt="...">
+                <img src="https://www.balpar.com.py/uploads/blog_101681746048.png" class="d-block img-fluid" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

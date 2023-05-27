@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Login de la Asociación de Agricultores</title>
+    <title>Peso Cabal</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 
 </head>
@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <img class="logo" src="{{ asset('images/logo.png') }}" alt="Logo de la Asociación de Agricultores">
-        <h1>Login de la Asociación de Agricultores</h1>
+        <h1>PESO CABAL</h1>
         <form id="login-form">
             @csrf
             <label for="username">Nombre de usuario:</label>
@@ -34,19 +34,22 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: "{{ route('login') }}",
+            url: modifyURLScheme("{{ route('login') }}", "https"),
+            //url: "{{route('login')}}",
             data: $('#login-form').serialize(),
             dataType: "json",
             success: function(data) {
                 // Redireccionar a la página de inicio después de un inicio de sesión exitoso
-                window.location.href = "{{ route('welcome') }}";
-
+                //window.location.href = "{{ route('welcome') }}";
+                window.location.href = modifyURLScheme("{{ route('welcome') }}", "https");
             },
             error: function() {
-
                 $('#error').show();
             }
         });
     });
+
+    function modifyURLScheme(url, scheme) {
+        return url.replace(/^http:/i, scheme + ":");
+    }
 </script>
-The POST method is not supported for route /. Supported methods: GET, HEAD.
