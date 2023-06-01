@@ -45,8 +45,6 @@
     <script src="{{ secure_asset('js/toastr.min.js') }}"></script>
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <a href="#" id="logout">LOGOUT</a>
-        <div>ID DE CUENTA #{{Session::get('id_cuenta')}}</div>
         <div class="header_img"> <img src="https://lacasadelagricultor.com.gt/wp-content/uploads/2020/04/5.png" alt=""> </div>
     </header>
 

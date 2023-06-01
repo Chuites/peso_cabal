@@ -6,13 +6,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Http;
-use Response;
+use App\Models\baseModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\ParcialidadCertificada;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\baseModel;
 use Session;
 use View;
 use DB;
@@ -38,7 +37,7 @@ class ApiController extends BaseController
             'id_parcialidad' => $id_parcialidad
         ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://beneficiodecafeapirest.herokuapp.com/api/infoPesoParcialidad', [
+        $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/infoPesoParcialidad', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
@@ -62,6 +61,19 @@ class ApiController extends BaseController
             $peso_recibido = $data['peso'];
             $peso_certificado = $data['peso_certificado'];
 
+            $parcialidadCertificada = new ParcialidadCertificada();
+            $parcialidadCertificada->dpi_piloto = $dpi_piloto;
+            $parcialidadCertificada->nombre_piloto = $nombre_piloto;
+            $parcialidadCertificada->estado_piloto = $estado_piloto;
+            $parcialidadCertificada->placa_transporte = $placa_transporte;
+            $parcialidadCertificada->color_transporte = $color_transporte;
+            $parcialidadCertificada->estado_transporte = $estado_transporte;
+            $parcialidadCertificada->estado_transporte = $estado_transporte;
+            $parcialidadCertificada->numero_parcialidad = $numero_parcialidad;
+            $parcialidadCertificada->peso_recibido = $peso_recibido;
+            $parcialidadCertificada->peso_certificado = $peso_certificado;
+            $parcialidadCertificada->save();
+
             $pdf = PDF::loadView('pdf.certificado_peso', compact('dpi_piloto','nombre_piloto','estado_piloto',
             'placa_transporte','marca_transporte','color_transporte','estado_transporte','numero_parcialidad','peso_recibido','peso_certificado'));
             return $pdf->download('Certificado de Peso.pdf');
@@ -75,7 +87,7 @@ class ApiController extends BaseController
             'peso_certificado' => $request->peso_certificado
         ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://beneficiodecafeapirest.herokuapp.com/api/certificarPesoParcialidad', [
+        $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/certificarPesoParcialidad', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
@@ -104,7 +116,7 @@ class ApiController extends BaseController
             'id_cuenta' => Session::get('id_cuenta')
         ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://beneficiodecafeapirest.herokuapp.com/api/listadoParcialidades', [
+        $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/listadoParcialidades', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
@@ -133,7 +145,7 @@ class ApiController extends BaseController
             'password' => $request->password
         ];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://beneficiodecafeapirest.herokuapp.com/api/login', [
+        $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/login', [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json'
@@ -180,7 +192,7 @@ class ApiController extends BaseController
             ];
             $client = new \GuzzleHttp\Client();
             //$test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta');
-            $response = $client->post('http://beneficiodecafeapirest.herokuapp.com/api/confirmarTransporte', [
+            $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/confirmarTransporte', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
@@ -214,7 +226,7 @@ class ApiController extends BaseController
             ];
             $client = new \GuzzleHttp\Client();
             //$test = Http::post('https://beneficiodecafeapirest.herokuapp.com/api/crearCuenta');
-            $response = $client->post('http://beneficiodecafeapirest.herokuapp.com/api/confirmarPiloto', [
+            $response = $client->post('https://beneficiodecafeapirest.herokuapp.com/api/confirmarPiloto', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
