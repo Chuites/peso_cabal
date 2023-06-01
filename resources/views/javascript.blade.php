@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',
-            url: modifyURLScheme("{{ route('listadoParcialidades') }}", "https"),
+            //url: modifyURLScheme("{{ route('listadoParcialidades') }}", "https"),
             url: "{{ route('listadoParcialidades') }}",
             data: {
                 "id": "testid"
